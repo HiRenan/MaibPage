@@ -150,12 +150,30 @@ pnpm typecheck    # tsc --noEmit
 
 ### Tooling Claude Code neste repo
 
-- `.claude/settings.json` — permissions, env, statusline (DOC3)
+- `.claude/settings.json` — permissions + statusLine (✅ DOC3)
+- `.claude/statusline.sh` — script bash: `<branch> · <node version>` (✅ DOC3)
 - `.claude/hooks/` — pre-edit, post-write, post-tool, stop (DOC4)
 - `.claude/agents/` — code-reviewer, security-review, i18n-consistency-checker, mdx-post-scaffolder, test-writer, a11y-checker (DOC5-9)
 - `.claude/skills/` — add-post, add-page, draft-decision, add-component (DOC10)
 - `.mcp.json` — filesystem, github, vercel MCPs (DOC11)
 - `vault/` — Obsidian vault (segundo cérebro · DOC13-15)
+
+**Comandos pré-aprovados** (sem prompt, conforme `.claude/settings.json`):
+
+- Tools: `Read`, `Glob`, `Grep`, `WebFetch`
+- `Bash(pnpm *)` — qualquer subcomando pnpm
+- `Bash(git status|diff|log|branch|checkout|add|commit|push *)` — leitura, staging, commit e push normal
+- `Bash(gh repo view|pr|issue *)` — leitura e ações em PRs/issues
+- `Bash(vercel ls|inspect|logs|whoami|--version)` — Vercel read-only
+
+**Bloqueados** (deny tem precedência sobre allow):
+
+- `Bash(rm -rf *)`
+- `Bash(git push --force*)` / `Bash(git push -f *)`
+- `Bash(git reset --hard*)`
+- `Bash(git checkout .)`
+
+Demais comandos caem em "ask" — Claude pergunta antes. Pra liberar algo localmente sem versionar, usar `.claude/settings.local.json` (gitignored).
 
 ### Quando estiver em dúvida
 
