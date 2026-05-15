@@ -1,8 +1,8 @@
-# CLAUDE.md
+# AGENTS.md
 
-Fonte canônica de instruções para o agente trabalhando no **MaibPage** (site sob `maib.com.br`).
+Fonte canônica de instruções para agentes de codificação trabalhando no **MaibPage** (site sob `maib.com.br`). Compatível com [agents.md](https://agents.md) — Codex, Cursor, Aider, Copilot, Windsurf, Devin e outros.
 
-> **Espelho:** este arquivo tem um par em `AGENTS.md` (genérico, sem a seção `Tooling Claude Code neste repo`). Mudanças agnósticas de agente devem ser refletidas no `AGENTS.md` no mesmo PR.
+> **Espelho:** este arquivo tem um par em `CLAUDE.md` (com seção adicional `Tooling Claude Code neste repo` cobrindo `.claude/`, hooks, sub-agents, skills, MCPs). Mudanças aqui devem ser refletidas no `CLAUDE.md` no mesmo PR.
 
 > **Camada base — comportamento do agente:** os 4 princípios abaixo vêm de [`multica-ai/andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills) (Karpathy guidelines pra reduzir erros comuns de LLM coding). Copiados verbatim aqui pra manter o repo self-contained. Mudanças no comportamento devem **estender**, não substituir, essa base.
 >
@@ -147,15 +147,6 @@ pnpm typecheck    # tsc --noEmit
 - **Commits:** mensagens em PT-BR ou EN, formato conventional commits quando fizer sentido (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`). Mensagem curta e clara > prefixo cerimonial vazio.
 - **Nunca:** `git push --force` (especialmente em `main`/`develop`), `git reset --hard` sem confirmar, pular hooks com `--no-verify`.
 - **Linear:** issue ID no commit/PR quando aplicável (`MAI-N`). Mover status: Backlog → In Progress → In Review → Done.
-
-### Tooling Claude Code neste repo
-
-- `.claude/settings.json` — permissions, env, statusline (DOC3)
-- `.claude/hooks/` — pre-edit, post-write, post-tool, stop (DOC4)
-- `.claude/agents/` — code-reviewer, security-review, i18n-consistency-checker, mdx-post-scaffolder, test-writer, a11y-checker (DOC5-9)
-- `.claude/skills/` — add-post, add-page, draft-decision, add-component (DOC10)
-- `.mcp.json` — filesystem, github, vercel MCPs (DOC11)
-- `vault/` — Obsidian vault (segundo cérebro · DOC13-15)
 
 ### Quando estiver em dúvida
 

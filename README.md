@@ -20,3 +20,10 @@ Tickets e progresso no Linear: [Site MAIB (maib.com.br)](https://linear.app/maib
 ## Stack alvo
 
 Next.js 16 (App Router, RSC) · TypeScript · Tailwind v4 · shadcn/ui · MDX (`@next/mdx` + `gray-matter` + `rehype-pretty-code`/shiki) · next-intl (PT-BR + EN) · cmdk (⌘+K) · Vercel (Fluid Compute, Node 24 LTS, `vercel.ts`).
+
+## Instruções pra agentes
+
+- [`CLAUDE.md`](./CLAUDE.md) — Claude Code (inclui seção `Tooling Claude Code neste repo`: `.claude/`, hooks, sub-agents, skills, MCPs).
+- [`AGENTS.md`](./AGENTS.md) — Codex, Cursor, Aider, Copilot, Windsurf, Devin e outros (espelho genérico, sem a seção Claude-only).
+
+Os dois arquivos compartilham camada base (Karpathy guidelines) e camada projeto (decisões, antipadrões, invariantes, hot files, stack, git workflow). Mudanças agnósticas de agente devem ser aplicadas nos dois arquivos no mesmo PR.
