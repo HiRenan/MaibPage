@@ -14,7 +14,16 @@
     "switchLanguage": "Switch language to {target}"
   },
   "command": {
-    "open": "Open command palette"
+    "open": "Open command palette",
+    "title": "Command palette",
+    "placeholder": "Search commands…",
+    "empty": "No results.",
+    "noPosts": "No posts yet",
+    "group": {
+      "navigation": "Navigation",
+      "settings": "Preferences",
+      "posts": "Posts"
+    }
   },
   "a11y": {
     "skipToContent": "Skip to content",

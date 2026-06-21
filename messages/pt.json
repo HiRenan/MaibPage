@@ -14,7 +14,16 @@
     "switchLanguage": "Mudar idioma para {target}"
   },
   "command": {
-    "open": "Abrir paleta de comandos"
+    "open": "Abrir paleta de comandos",
+    "title": "Paleta de comandos",
+    "placeholder": "Buscar comandos…",
+    "empty": "Nenhum resultado.",
+    "noPosts": "Nenhum post ainda",
+    "group": {
+      "navigation": "Navegação",
+      "settings": "Preferências",
+      "posts": "Posts"
+    }
   },
   "a11y": {
     "skipToContent": "Pular para o conteúdo",

@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-import { CommandTrigger } from '@/components/command-trigger';
+import { CommandMenu } from '@/components/command-menu';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { NavLinks } from '@/components/nav-links';
 import { Container } from '@/components/ui/container';
@@ -33,7 +33,7 @@ export async function SiteHeader() {
         <div className="order-2 flex items-center gap-3 md:order-3">
           <DashedDivider orientation="vertical" className="mx-0 hidden h-5 self-center md:block" />
           <LocaleSwitcher />
-          <CommandTrigger />
+          <CommandMenu />
         </div>
       </Container>
     </header>
