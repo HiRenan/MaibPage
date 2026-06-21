@@ -8,6 +8,8 @@ import { routing } from '@/i18n/routing';
 export const proxy = createMiddleware(routing);
 
 export const config = {
-  // Skip Next.js internals, /api, /_vercel and any file with an extension.
-  matcher: '/((?!api|_next|_vercel|.*\\..*).*)',
+  // Skip Next.js internals, /api, /_vercel, any file with an extension, and the
+  // extensionless `apple-icon` metadata route (else the proxy prefixes a locale
+  // and the apple-touch-icon 404s). icon.svg/manifest.webmanifest have a dot.
+  matcher: '/((?!api|_next|_vercel|apple-icon|.*\\..*).*)',
 };

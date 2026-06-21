@@ -4,6 +4,7 @@
     "description": "Marca pessoal do Renan Mocelin e presença da MAIB: IA, automação, Claude Code e desenvolvimento."
   },
   "nav": {
+    "home": "Início",
     "about": "Sobre",
     "experience": "Experiência",
     "blog": "Blog"
@@ -12,13 +13,37 @@
     "localeName": "Português",
     "switchLanguage": "Mudar idioma para {target}"
   },
+  "command": {
+    "open": "Abrir paleta de comandos"
+  },
+  "a11y": {
+    "skipToContent": "Pular para o conteúdo",
+    "mainNav": "Navegação principal"
+  },
   "footer": {
     "rights": "Todos os direitos reservados.",
-    "builtWith": "Feito com Next.js"
+    "builtWith": "Feito com Next.js",
+    "social": {
+      "github": "Perfil do Renan no GitHub",
+      "linkedin": "Perfil do Renan no LinkedIn",
+      "email": "Enviar email para o Renan"
+    }
   },
   "home": {
     "title": "Em construção",
     "subtitle": "O site da MAIB está sendo construído em público.",
     "intro": "Marca pessoal do Renan Mocelin + MAIB. Bio, CV, blog e conteúdo de IA / Claude Code."
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Página não encontrada",
+    "description": "Esta rota não existe ou foi movida. Pode ser que ainda esteja sendo construída.",
+    "back": "Voltar ao início"
+  },
+  "error": {
+    "title": "Algo quebrou",
+    "description": "Um erro inesperado interrompeu esta página. Você pode tentar de novo.",
+    "retry": "Tentar de novo",
+    "back": "Voltar ao início"
   }
 }

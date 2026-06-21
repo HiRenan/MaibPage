@@ -4,6 +4,7 @@
     "description": "Renan Mocelin's personal brand and the MAIB presence: AI, automation, Claude Code and development."
   },
   "nav": {
+    "home": "Home",
     "about": "About",
     "experience": "Experience",
     "blog": "Blog"
@@ -12,13 +13,37 @@
     "localeName": "English",
     "switchLanguage": "Switch language to {target}"
   },
+  "command": {
+    "open": "Open command palette"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation"
+  },
   "footer": {
     "rights": "All rights reserved.",
-    "builtWith": "Built with Next.js"
+    "builtWith": "Built with Next.js",
+    "social": {
+      "github": "Renan's GitHub profile",
+      "linkedin": "Renan's LinkedIn profile",
+      "email": "Email Renan"
+    }
   },
   "home": {
     "title": "Under construction",
     "subtitle": "The MAIB site is being built in public.",
     "intro": "Renan Mocelin's personal brand + MAIB. Bio, CV, blog and AI / Claude Code content."
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page not found",
+    "description": "This route doesn't exist or was moved. It may still be under construction.",
+    "back": "Back home"
+  },
+  "error": {
+    "title": "Something broke",
+    "description": "An unexpected error interrupted this page. You can try again.",
+    "retry": "Try again",
+    "back": "Back home"
   }
 }

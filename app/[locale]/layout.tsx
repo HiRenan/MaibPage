@@ -1,9 +1,12 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { SiteFooter } from '@/components/site-footer';
+import { SiteHeader } from '@/components/site-header';
+import { SkipToContent } from '@/components/skip-to-content';
 import { routing } from '@/i18n/routing';
 
 import '../globals.css';
@@ -26,6 +29,11 @@ type Props = {
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+// theme-color = carvão quente (--background, hex do token OKLCH oklch(0.17 0.006 70)).
+export const viewport: Viewport = {
+  themeColor: '#110f0d',
+};
 
 export async function generateMetadata({ params }: Omit<Props, 'children'>): Promise<Metadata> {
   const { locale } = await params;
@@ -64,7 +72,14 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <SkipToContent />
+          <SiteHeader />
+          <main id="main-content" className="flex flex-1 flex-col">
+            {children}
+          </main>
+          <SiteFooter />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
