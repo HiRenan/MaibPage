@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "title": "MAIB — Renan Mocelin",
+    "description": "Renan Mocelin's personal brand and the MAIB presence: AI, automation, Claude Code and development."
+  },
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "blog": "Blog"
+  },
+  "common": {
+    "localeName": "English",
+    "switchLanguage": "Switch language to {target}"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js"
+  },
+  "home": {
+    "title": "Under construction",
+    "subtitle": "The MAIB site is being built in public.",
+    "intro": "Renan Mocelin's personal brand + MAIB. Bio, CV, blog and AI / Claude Code content."
+  }
+}
