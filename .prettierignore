@@ -1,0 +1,11 @@
+pnpm-lock.yaml
+.next/
+out/
+build/
+coverage/
+next-env.d.ts
+public/
+
+# curated agent docs — preserve verbatim formatting (CLAUDE.md ↔ AGENTS.md mirror)
+CLAUDE.md
+AGENTS.md

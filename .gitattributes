@@ -1,0 +1,17 @@
+# Normalize line endings to LF in the working tree on every platform.
+# CI runs on Linux (LF); dev may be on Windows. Forcing eol=lf keeps Prettier
+# (--check) consistent and prevents CRLF from breaking the husky shell hook.
+* text=auto eol=lf
+
+# Binary assets — never normalize.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
