@@ -1,9 +1,9 @@
-## <!-- SEED: re-rode /impeccable document quando houver código (tokens em globals.css, componentes em components/ui) pra extrair os valores reais e gerar o sidecar .impeccable/design.json. -->
-
+---
 name: maib.com.br
 description: Hub de autoridade do Renan Mocelin + presença da MAIB. Dark anti-neon, tipografia de instrumento, vidro só no ⌘+K.
-
 ---
+
+<!-- SEED: re-rode /impeccable document quando houver código (tokens em globals.css, componentes em components/ui) pra extrair os valores reais e gerar o sidecar .impeccable/design.json. -->
 
 # Design System: maib.com.br
 
