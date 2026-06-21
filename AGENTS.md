@@ -119,8 +119,8 @@ Repositório: [`HiRenan/MaibPage`](https://github.com/HiRenan/MaibPage) · Branc
 Mudanças nesses arquivos têm blast radius alto. Antes de editar, parar e perguntar:
 
 - `app/[locale]/layout.tsx` — root layout, providers, fontes
-- `middleware.ts` — detecção de locale, redirects globais
-- `next.config.mjs` — config Next, MDX plugin, rewrites
+- `proxy.ts` — detecção de locale, redirects globais (Next 16; ex-`middleware.ts`)
+- `next.config.ts` — config Next, MDX plugin, rewrites
 - `vercel.ts` — config de deploy, headers, redirects, cache
 - `messages/pt.json` e `messages/en.json` — schemas i18n (renomes quebram chamadas)
 - `.gitignore`, `.env.example` — escopo do que vaza pro git/runtime
