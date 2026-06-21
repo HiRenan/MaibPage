@@ -1,26 +1,115 @@
 @import 'tailwindcss';
 
+/*
+  MaibPage design system — dark mono anti-neon, tema único (D6: sem light no v1).
+  "A Oficina Noturna": carvão quente quase-preto -> papel, um único sinal ember.
+  Tudo em OKLCH, jamais #000/#fff puros. Ember <=10% da tela (links, foco, ativo).
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Neutros quentes — carvão -> papel */
+  --background: oklch(0.17 0.006 70);
+  --foreground: oklch(0.92 0.012 85);
+
+  --card: oklch(0.205 0.007 70);
+  --card-foreground: oklch(0.92 0.012 85);
+
+  --popover: oklch(0.215 0.008 70);
+  --popover-foreground: oklch(0.92 0.012 85);
+
+  --muted: oklch(0.255 0.008 70);
+  --muted-foreground: oklch(0.722 0.014 75);
+
+  --secondary: oklch(0.255 0.008 70);
+  --secondary-foreground: oklch(0.92 0.012 85);
+
+  /* Superfície de hover/seleção — NÃO é o acento de marca */
+  --accent: oklch(0.275 0.009 70);
+  --accent-foreground: oklch(0.92 0.012 85);
+
+  --border: oklch(0.32 0.008 72);
+  --input: oklch(0.32 0.008 72);
+
+  /* Sinal Ember — o único croma de marca, família quente */
+  --primary: oklch(0.7 0.142 58);
+  --primary-foreground: oklch(0.18 0.022 60);
+  --ring: oklch(0.7 0.142 58);
+
+  /* Destrutivo — raro, vermelho quente compatível */
+  --destructive: oklch(0.585 0.17 25);
+  --destructive-foreground: oklch(0.96 0.01 80);
+
+  /* Raio mínimo — daviaviss: cantos quase retos, max ~sm */
+  --radius: 0.25rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+
+  /* Ease-out exponencial — a curva de assinatura (Regra da Entrada Única) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings:
+      'liga' 1,
+      'calt' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Foco visível em ember — a11y inegociável, consistente em tudo */
+  :focus-visible {
+    @apply outline-ring outline-2 outline-offset-2;
+  }
+
+  /* Seleção quente, sem glow */
+  ::selection {
+    background-color: color-mix(in oklch, var(--primary) 28%, transparent);
+    color: var(--foreground);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Regra da Entrada Única: reduced-motion entrega o estático */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
