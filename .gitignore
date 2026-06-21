@@ -53,3 +53,7 @@ next-env.d.ts
 
 # claude code
 .claude/settings.local.json
+
+# personal docs (não versionar — repo público)
+/Curriculo-Renan.pdf
+/Profile.pdf
