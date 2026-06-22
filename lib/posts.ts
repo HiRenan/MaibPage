@@ -44,6 +44,7 @@ export type PostCommandItem = {
   title: string;
   href: string; // '/blog/<slug>'
   date: string;
+  tags: string[]; // alimenta o fuzzy match da paleta (título + tags)
 };
 
 function isLocale(value: string): value is Locale {
@@ -186,5 +187,6 @@ export function getPostCommandItems(locale: Locale, dir: string = POSTS_DIR): Po
     title: post.title,
     href: `/blog/${post.slug}`,
     date: post.date,
+    tags: post.tags,
   }));
 }

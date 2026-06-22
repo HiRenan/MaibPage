@@ -17,11 +17,13 @@ import {
 } from '@/components/ui/command';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import type { PostCommandItem } from '@/lib/posts';
 
 type CommandPaletteProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   triggerRef?: RefObject<HTMLButtonElement | null>;
+  posts: PostCommandItem[];
 };
 
 const navItems = [
@@ -35,7 +37,7 @@ const navItems = [
 // (metáfora Spotlight/Raycast) sobre um scrim quente que escurece a página.
 // Vidro = --popover translúcido + backdrop-blur; NUNCA luz colorida atrás (= neon).
 // Entrada coreografada (ease-out-expo) via globals.css; reduced-motion zera lá.
-export function CommandPalette({ open, onOpenChange, triggerRef }: CommandPaletteProps) {
+export function CommandPalette({ open, onOpenChange, triggerRef, posts }: CommandPaletteProps) {
   const t = useTranslations('command');
   const tNav = useTranslations('nav');
   const tCommon = useTranslations('common');
@@ -107,17 +109,30 @@ export function CommandPalette({ open, onOpenChange, triggerRef }: CommandPalett
                 </CommandItem>
               </CommandGroup>
 
-              {/* Estado vazio honesto: o indexador real de posts chega na F6 (MDX). */}
-              {search.trim() === '' && (
-                <>
-                  <CommandSeparator />
-                  <CommandGroup heading={t('group.posts')}>
-                    <p className="text-muted-foreground px-2.5 py-2 font-mono text-sm">
-                      {t('noPosts')}
-                    </p>
-                  </CommandGroup>
-                </>
-              )}
+              <CommandSeparator />
+
+              {/* Posts do locale atual (MAI-483): cmdk filtra por título + tags (value). */}
+              <CommandGroup heading={t('group.posts')}>
+                {posts.length === 0 ? (
+                  <p className="text-muted-foreground px-2.5 py-2 font-mono text-sm">
+                    {t('noPosts')}
+                  </p>
+                ) : (
+                  posts.map((post) => (
+                    <CommandItem
+                      key={post.slug}
+                      value={`${post.title} ${post.tags.join(' ')}`}
+                      onSelect={() => run(() => router.push(post.href))}
+                    >
+                      <FileText aria-hidden />
+                      <span>{post.title}</span>
+                      <span className="text-muted-foreground ml-auto font-mono text-xs tabular-nums">
+                        {post.date}
+                      </span>
+                    </CommandItem>
+                  ))
+                )}
+              </CommandGroup>
             </CommandList>
           </Command>
         </Dialog.Content>

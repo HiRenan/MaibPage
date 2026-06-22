@@ -83,11 +83,12 @@ describe('getAllPosts / getPostCommandItems (conteúdo real)', () => {
     expect(pt.some((post) => post.slug === 'hello-world')).toBe(true);
   });
 
-  it('expõe itens da paleta ⌘K com href /blog/<slug>', () => {
+  it('expõe itens da paleta ⌘K com href /blog/<slug> + tags pro filtro', () => {
     const hello = getPostCommandItems('en').find((item) => item.slug === 'hello-world');
     expect(hello?.href).toBe('/blog/hello-world');
     expect(hello?.title).toBeTruthy();
     expect(hello?.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(hello?.tags).toContain('meta');
   });
 });
 
