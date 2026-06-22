@@ -151,6 +151,12 @@ export function getAllPosts(locale: Locale, dir: string = POSTS_DIR): Post[] {
   return getPostIndex(dir).filter((post) => post.lang === locale);
 }
 
+// Os N posts mais recentes de um locale, pra vitrine da home (MAI-496). Thin sobre
+// getAllPosts (já date desc); default 3. Com menos posts que o limite, devolve o que há.
+export function getFeaturedPosts(locale: Locale, limit = 3, dir: string = POSTS_DIR): Post[] {
+  return getAllPosts(locale, dir).slice(0, limit);
+}
+
 // Tags únicas de um locale, ordenadas asc. Alimenta o filtro do índice (MAI-510)
 // e, depois, as páginas por tag (MAI-560). Derivado do índice já validado.
 export function getAllTags(locale: Locale, dir: string = POSTS_DIR): string[] {

@@ -6,6 +6,7 @@ import {
   frontmatterSchema,
   getAllPosts,
   getAllTags,
+  getFeaturedPosts,
   getPostBySlug,
   getPostCommandItems,
   parsePostFilename,
@@ -90,6 +91,28 @@ describe('getAllPosts / getPostCommandItems (conteúdo real)', () => {
     expect(hello?.title).toBeTruthy();
     expect(hello?.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(hello?.tags).toContain('meta');
+  });
+});
+
+describe('getFeaturedPosts (conteúdo real)', () => {
+  it('é exatamente getAllPosts(locale).slice(0, limit) — vitrine da home (MAI-496)', () => {
+    // Equivalência ao slice prova o corte pra qualquer contagem, mesmo com 1 post real.
+    expect(getFeaturedPosts('pt', 2)).toEqual(getAllPosts('pt').slice(0, 2));
+  });
+
+  it('default = 3', () => {
+    expect(getFeaturedPosts('en')).toEqual(getAllPosts('en').slice(0, 3));
+  });
+
+  it('com menos posts que o limite, devolve o que há (1 post -> 1, nunca passa do limite)', () => {
+    const featured = getFeaturedPosts('pt', 99);
+    expect(featured).toHaveLength(getAllPosts('pt').length);
+    expect(featured.length).toBeLessThanOrEqual(99);
+  });
+
+  it('mantém a ordem date desc herdada de getAllPosts', () => {
+    const dates = getFeaturedPosts('pt', 3).map((post) => post.date);
+    expect(dates).toEqual([...dates].sort((a, b) => (a < b ? 1 : -1)));
   });
 });
 

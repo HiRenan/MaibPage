@@ -52,9 +52,30 @@
     }
   },
   "home": {
-    "title": "Em construção",
-    "subtitle": "O site da MAIB está sendo construído em público.",
-    "intro": "Marca pessoal do Renan Mocelin + MAIB. Bio, CV, blog e conteúdo de IA / Claude Code."
+    "hero": {
+      "name": "Renan Mocelin",
+      "role": "engenheiro de IA · MAIB",
+      "social": {
+        "github": "github",
+        "linkedin": "linkedin",
+        "email": "email"
+      }
+    },
+    "about": {
+      "lead": "Engenheiro de IA. Construo sistemas que colocam modelos de linguagem em produção: programação determinística de LLM, RAG e automação que precisa funcionar fora do demo.",
+      "p2": "Toco a MAIB, consultoria e automação de IA. Hoje sou engenheiro de IA na Freedom.AI e fiz residência em IA no SENAI/SC.",
+      "p3": "1º lugar no ActInSpace 2026, representando o Brasil na final na França. 2º no AKCIT 2025. Aqui eu escrevo o que aprendo construindo.",
+      "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"]
+    },
+    "featured": {
+      "heading": "Escrita recente",
+      "viewAll": "Ver todos"
+    },
+    "contact": {
+      "heading": "Contato",
+      "body": "Consultoria e automação de IA pela MAIB. Pra falar sobre um projeto, escreve pra mim.",
+      "email": "renanryuakame@gmail.com"
+    }
   },
   "notFound": {
     "code": "404",

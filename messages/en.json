@@ -52,9 +52,30 @@
     }
   },
   "home": {
-    "title": "Under construction",
-    "subtitle": "The MAIB site is being built in public.",
-    "intro": "Renan Mocelin's personal brand + MAIB. Bio, CV, blog and AI / Claude Code content."
+    "hero": {
+      "name": "Renan Mocelin",
+      "role": "AI engineer · MAIB",
+      "social": {
+        "github": "github",
+        "linkedin": "linkedin",
+        "email": "email"
+      }
+    },
+    "about": {
+      "lead": "AI engineer. I build systems that put language models into production: deterministic LLM programming, RAG, and automation that has to work outside the demo.",
+      "p2": "I run MAIB, AI consulting and automation. I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC.",
+      "p3": "1st place at ActInSpace 2026, representing Brazil in the global final in France. 2nd at AKCIT 2025. Here I write what I learn building.",
+      "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"]
+    },
+    "featured": {
+      "heading": "Recent writing",
+      "viewAll": "View all"
+    },
+    "contact": {
+      "heading": "Contact",
+      "body": "AI consulting and automation through MAIB. To talk about a project, write to me.",
+      "email": "renanryuakame@gmail.com"
+    }
   },
   "notFound": {
     "code": "404",
