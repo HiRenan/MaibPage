@@ -1,0 +1,40 @@
+---
+title: 'Primeiro commit'
+description: 'Por que este site existe e como ele é construído, em público, peça por peça.'
+date: '2026-06-21'
+tags: ['meta', 'build-in-public']
+---
+
+Este é o primeiro post do blog. Ele existe por um motivo simples: o site é a prova.
+Um lugar sobre engenharia de IA precisa ser, ele mesmo, precisamente engenheirado.
+
+## O que vive aqui
+
+Notas técnicas sobre Claude Code, programação determinística de LLM e o que eu
+descubro construindo a MAIB. Sem marketing, sem floreio: o trabalho fala.
+
+- POV sobre IA e fluxo de dev
+- Decisões de arquitetura, com o porquê
+- Experimentos, inclusive os que falham
+
+> A vanguarda vem da execução, não da decoração. Cada risco aqui é deliberado.
+
+### Como o conteúdo é escrito
+
+Cada post é um arquivo MDX no repositório, validado no build. O frontmatter passa
+por um schema; se algo estiver errado, o build quebra de propósito. O indexador
+vive em `lib/posts.ts` e é a fonte única da verdade:
+
+```ts
+import { getAllPosts } from '@/lib/posts';
+
+const posts = getAllPosts('pt'); // ordenados por data, já validados
+```
+
+O pipeline também destaca o código com tema escuro e respeita a largura de leitura.
+O código deste site é aberto no [repositório](https://github.com/HiRenan/MaibPage),
+e você sempre pode voltar pra [home](/).
+
+---
+
+Próximo: as rotas do blog e a paleta de comandos puxando estes posts.
