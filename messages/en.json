@@ -113,6 +113,24 @@
       "body": "To talk about an AI project through MAIB, write to me. Email and LinkedIn are the fastest way."
     }
   },
+  "experience": {
+    "metaTitle": "Experience · MAIB",
+    "lead": "Where I've worked, what I studied, and the tools I use to put AI into production.",
+    "present": "present",
+    "sections": {
+      "experience": "Experience",
+      "awards": "Awards",
+      "education": "Education",
+      "skills": "Skills"
+    },
+    "categories": {
+      "frameworks": "Frameworks",
+      "languages": "Languages",
+      "tools": "Tools",
+      "ai-ml": "AI / ML",
+      "infra": "Infra"
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "Page not found",

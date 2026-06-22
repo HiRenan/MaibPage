@@ -113,6 +113,24 @@
       "body": "Pra falar sobre um projeto de IA pela MAIB, escreve pra mim. Email e LinkedIn são o caminho mais rápido."
     }
   },
+  "experience": {
+    "metaTitle": "Experiência · MAIB",
+    "lead": "Onde trabalhei, o que estudei e as ferramentas que uso pra colocar IA em produção.",
+    "present": "presente",
+    "sections": {
+      "experience": "Experiência",
+      "awards": "Prêmios",
+      "education": "Educação",
+      "skills": "Skills"
+    },
+    "categories": {
+      "frameworks": "Frameworks",
+      "languages": "Linguagens",
+      "tools": "Ferramentas",
+      "ai-ml": "IA / ML",
+      "infra": "Infra"
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "Página não encontrada",
