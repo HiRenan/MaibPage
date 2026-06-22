@@ -51,21 +51,22 @@
       "email": "Email Renan"
     }
   },
+  "social": {
+    "github": "github",
+    "linkedin": "linkedin",
+    "email": "email"
+  },
   "home": {
     "hero": {
       "name": "Renan Mocelin",
-      "role": "AI engineer · MAIB",
-      "social": {
-        "github": "github",
-        "linkedin": "linkedin",
-        "email": "email"
-      }
+      "role": "AI engineer · MAIB"
     },
     "about": {
       "lead": "AI engineer. I build systems that put language models into production: deterministic LLM programming, RAG, and automation that has to work outside the demo.",
       "p2": "I run MAIB, AI consulting and automation. I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC.",
       "p3": "1st place at ActInSpace 2026, representing Brazil in the global final in France. 2nd at AKCIT 2025. Here I write what I learn building.",
-      "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"]
+      "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"],
+      "readMore": "Read more"
     },
     "featured": {
       "heading": "Recent writing",
@@ -75,6 +76,41 @@
       "heading": "Contact",
       "body": "AI consulting and automation through MAIB. To talk about a project, write to me.",
       "email": "renanryuakame@gmail.com"
+    }
+  },
+  "about": {
+    "metaTitle": "About · MAIB",
+    "title": "About",
+    "lead": "AI engineer. I build systems that put language models into production and keep working outside the demo.",
+    "bio": {
+      "p1": "I run MAIB, AI consulting and automation. The work is taking LLMs from prototype to production: deterministic model programming, RAG, automation that holds up in the real world.",
+      "p2": "I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC. MAIB is where this becomes a service for people who need the result, not the demo.",
+      "p3": "Here I write what I learn building: Claude Code, LLM programming, what breaks in production and how I fix it."
+    },
+    "values": {
+      "heading": "Values",
+      "items": [
+        {
+          "term": "Precise",
+          "description": "Every detail is evidence. What ships is what holds on its own, not what merely looks ready."
+        },
+        {
+          "term": "Technical",
+          "description": "I speak the language of people who build, without diluting it and without marketing layered over engineering."
+        },
+        {
+          "term": "Experimental",
+          "description": "Deliberate risk, never mess: I test what's ahead of the curve and measure the result."
+        }
+      ]
+    },
+    "journey": {
+      "heading": "Journey",
+      "body": "The most recent track record: 1st place at ActInSpace 2026, representing Brazil in the global final in France, and 2nd at AKCIT 2025. Along the way, an AI residency at SENAI/SC and my current role as AI engineer at Freedom.AI, while running MAIB."
+    },
+    "contact": {
+      "heading": "Contact",
+      "body": "To talk about an AI project through MAIB, write to me. Email and LinkedIn are the fastest way."
     }
   },
   "notFound": {

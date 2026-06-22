@@ -51,21 +51,22 @@
       "email": "Enviar email para o Renan"
     }
   },
+  "social": {
+    "github": "github",
+    "linkedin": "linkedin",
+    "email": "email"
+  },
   "home": {
     "hero": {
       "name": "Renan Mocelin",
-      "role": "engenheiro de IA · MAIB",
-      "social": {
-        "github": "github",
-        "linkedin": "linkedin",
-        "email": "email"
-      }
+      "role": "engenheiro de IA · MAIB"
     },
     "about": {
       "lead": "Engenheiro de IA. Construo sistemas que colocam modelos de linguagem em produção: programação determinística de LLM, RAG e automação que precisa funcionar fora do demo.",
       "p2": "Toco a MAIB, consultoria e automação de IA. Hoje sou engenheiro de IA na Freedom.AI e fiz residência em IA no SENAI/SC.",
       "p3": "1º lugar no ActInSpace 2026, representando o Brasil na final na França. 2º no AKCIT 2025. Aqui eu escrevo o que aprendo construindo.",
-      "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"]
+      "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"],
+      "readMore": "Leia mais"
     },
     "featured": {
       "heading": "Escrita recente",
@@ -75,6 +76,41 @@
       "heading": "Contato",
       "body": "Consultoria e automação de IA pela MAIB. Pra falar sobre um projeto, escreve pra mim.",
       "email": "renanryuakame@gmail.com"
+    }
+  },
+  "about": {
+    "metaTitle": "Sobre · MAIB",
+    "title": "Sobre",
+    "lead": "Engenheiro de IA. Construo sistemas que põem modelos de linguagem em produção e continuam funcionando fora do demo.",
+    "bio": {
+      "p1": "Toco a MAIB, consultoria e automação de IA. O trabalho é tirar LLM de protótipo e botar em produção: programação determinística de modelo, RAG, automação que aguenta caso real.",
+      "p2": "Hoje sou engenheiro de IA na Freedom.AI e fiz residência em IA no SENAI/SC. A MAIB é onde isso vira serviço pra quem precisa do resultado, não do demo.",
+      "p3": "Aqui eu escrevo o que aprendo construindo: Claude Code, programação de LLM, o que quebra em produção e como conserto."
+    },
+    "values": {
+      "heading": "Valores",
+      "items": [
+        {
+          "term": "Preciso",
+          "description": "Cada detalhe é evidência. Entra em produção o que se sustenta sozinho, não o que só parece pronto."
+        },
+        {
+          "term": "Técnico",
+          "description": "Falo a língua de quem constrói, sem diluir e sem marketing em cima de engenharia."
+        },
+        {
+          "term": "Experimental",
+          "description": "Risco deliberado, nunca bagunça: testo o que está à frente e meço o resultado."
+        }
+      ]
+    },
+    "journey": {
+      "heading": "Jornada",
+      "body": "A trajetória mais recente: 1º lugar no ActInSpace 2026, representando o Brasil na final na França, e 2º no AKCIT 2025. No caminho, residência em IA no SENAI/SC e a posição atual de engenheiro de IA na Freedom.AI, enquanto toco a MAIB."
+    },
+    "contact": {
+      "heading": "Contato",
+      "body": "Pra falar sobre um projeto de IA pela MAIB, escreve pra mim. Email e LinkedIn são o caminho mais rápido."
     }
   },
   "notFound": {
