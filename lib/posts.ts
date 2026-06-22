@@ -151,6 +151,16 @@ export function getAllPosts(locale: Locale, dir: string = POSTS_DIR): Post[] {
   return getPostIndex(dir).filter((post) => post.lang === locale);
 }
 
+// Tags únicas de um locale, ordenadas asc. Alimenta o filtro do índice (MAI-510)
+// e, depois, as páginas por tag (MAI-560). Derivado do índice já validado.
+export function getAllTags(locale: Locale, dir: string = POSTS_DIR): string[] {
+  const tags = new Set<string>();
+  for (const post of getAllPosts(locale, dir)) {
+    for (const tag of post.tags) tags.add(tag);
+  }
+  return [...tags].sort((a, b) => a.localeCompare(b));
+}
+
 // Post de um slug+locale, ou null se o arquivo daquele locale não existe.
 // A rota usa o null pra cair em notFound() — nunca renderiza o outro idioma no lugar.
 export function getPostBySlug(slug: string, locale: Locale, dir: string = POSTS_DIR): Post | null {

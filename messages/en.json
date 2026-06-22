@@ -30,6 +30,13 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "blog": {
+    "description": "Technical notes on AI, Claude Code, and what I learn building MAIB.",
+    "metaTitle": "Blog · MAIB",
+    "filterLabel": "Filter by tag",
+    "allTag": "All",
+    "clearFilter": "Clear filter"
+  },
   "a11y": {
     "skipToContent": "Skip to content",
     "mainNav": "Main navigation",

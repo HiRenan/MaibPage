@@ -5,6 +5,7 @@ import {
   buildPostIndex,
   frontmatterSchema,
   getAllPosts,
+  getAllTags,
   getPostBySlug,
   getPostCommandItems,
   parsePostFilename,
@@ -89,6 +90,21 @@ describe('getAllPosts / getPostCommandItems (conteúdo real)', () => {
     expect(hello?.title).toBeTruthy();
     expect(hello?.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(hello?.tags).toContain('meta');
+  });
+});
+
+describe('getAllTags (conteúdo real)', () => {
+  it('retorna as tags do locale únicas e ordenadas asc', () => {
+    const tags = getAllTags('pt');
+    expect(tags).toContain('meta');
+    expect(tags).toContain('build-in-public');
+    expect(tags).toEqual([...tags].sort((a, b) => a.localeCompare(b))); // ordenado asc
+    expect(new Set(tags).size).toBe(tags.length); // sem duplicatas
+  });
+
+  it('ordena de fato (build-in-public antes de meta)', () => {
+    const tags = getAllTags('en');
+    expect(tags.indexOf('build-in-public')).toBeLessThan(tags.indexOf('meta'));
   });
 });
 

@@ -30,6 +30,13 @@
     "previous": "Anterior",
     "next": "Próximo"
   },
+  "blog": {
+    "description": "Notas técnicas sobre IA, Claude Code e o que descubro construindo a MAIB.",
+    "metaTitle": "Blog · MAIB",
+    "filterLabel": "Filtrar por tag",
+    "allTag": "Todas",
+    "clearFilter": "Limpar filtro"
+  },
   "a11y": {
     "skipToContent": "Pular para o conteúdo",
     "mainNav": "Navegação principal",
