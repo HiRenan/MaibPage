@@ -32,6 +32,20 @@ pnpm format       # Prettier --write
 
 Copie `.env.example` → `.env.local` e preencha. `.env.local` é gitignored (nunca commitar). Em produção/preview, sincronize com `vercel env pull`. Apenas `NEXT_PUBLIC_*` vai pro browser; segredos ficam server-only.
 
+## Conteúdo (blog)
+
+Posts são arquivos MDX no repositório, em `content/posts/`, um por idioma:
+
+```
+content/posts/<slug>.<lang>.mdx   # lang ∈ pt | en
+```
+
+- **`<lang>` vem do nome do arquivo** — é a fonte da verdade do idioma (não há campo `lang` no frontmatter).
+- **Frontmatter** (validado por schema zod em `lib/posts.ts`; inválido quebra o build): `title`, `description`, `date` (ISO, ex. `'2026-06-21'`), `tags` (`string[]`, default `[]`), `fallback` (`boolean`, default `false`).
+- **Simetria i18n (invariante):** cada `slug` existe em `pt` E `en`. Um slug presente só num idioma quebra o build, a menos que declare `fallback: true` no frontmatter pra documentar a lacuna.
+
+O indexador em `lib/posts.ts` é a fonte única: lê, valida, ordena por data desc e expõe `getAllPosts(locale)` (índice do blog) e `getPostCommandItems(locale)` (paleta ⌘K).
+
 ## Stack alvo
 
 Next.js 16 (App Router, RSC) · TypeScript · Tailwind v4 · shadcn/ui · MDX (`@next/mdx` + `gray-matter` + `rehype-pretty-code`/shiki) · next-intl (PT-BR + EN) · cmdk (⌘+K) · Vercel (Fluid Compute, Node 24 LTS, `vercel.ts`).
