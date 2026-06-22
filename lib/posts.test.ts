@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  adjacentInIndex,
   buildPostIndex,
   frontmatterSchema,
   getAllPosts,
+  getPostBySlug,
   getPostCommandItems,
   parsePostFilename,
 } from '@/lib/posts';
@@ -86,5 +88,61 @@ describe('getAllPosts / getPostCommandItems (conteúdo real)', () => {
     expect(hello?.href).toBe('/blog/hello-world');
     expect(hello?.title).toBeTruthy();
     expect(hello?.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+});
+
+describe('getPostBySlug', () => {
+  it('acha o post no locale pedido', () => {
+    const post = getPostBySlug('hello-world', 'pt');
+    expect(post?.slug).toBe('hello-world');
+    expect(post?.lang).toBe('pt');
+  });
+
+  it('retorna null pra slug inexistente (a rota cai em notFound)', () => {
+    expect(getPostBySlug('nao-existe', 'pt')).toBeNull();
+  });
+});
+
+describe('readingTime', () => {
+  it('computa minutos pelo corpo (~200 palavras/min), ignorando o frontmatter', () => {
+    const body = Array.from({ length: 400 }, () => 'palavra').join(' ');
+    const [post] = buildPostIndex([
+      {
+        filename: 'longo.pt.mdx',
+        content: `---\ntitle: 't'\ndescription: 'd'\ndate: '2026-01-01'\nfallback: true\n---\n${body}`,
+      },
+    ]);
+    expect(post?.readingTime).toBe(2); // 400 / 200
+  });
+
+  it('arredonda pra no mínimo 1 min em corpo curto (hello-world real)', () => {
+    expect(getPostBySlug('hello-world', 'pt')?.readingTime).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe('adjacentInIndex', () => {
+  // Índice pt de dois posts, já ordenado por data desc: [newer, older].
+  const index = buildPostIndex([
+    rawPost('newer', 'pt', '2026-06-01'),
+    rawPost('newer', 'en', '2026-06-01'),
+    rawPost('older', 'pt', '2025-01-01'),
+    rawPost('older', 'en', '2025-01-01'),
+  ]).filter((post) => post.lang === 'pt');
+
+  it('no post mais novo: previous = o mais antigo, next = null', () => {
+    const { previous, next } = adjacentInIndex(index, 'newer');
+    expect(previous?.slug).toBe('older');
+    expect(next).toBeNull();
+  });
+
+  it('no post mais antigo: previous = null, next = o mais novo', () => {
+    const { previous, next } = adjacentInIndex(index, 'older');
+    expect(previous).toBeNull();
+    expect(next?.slug).toBe('newer');
+  });
+
+  it('post único: ambos os lados somem (null)', () => {
+    const solo = buildPostIndex([rawPost('solo', 'pt', '2026-01-01', 'fallback: true\n')]);
+    expect(adjacentInIndex(solo, 'solo')).toEqual({ previous: null, next: null });
   });
 });

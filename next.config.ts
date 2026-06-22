@@ -13,7 +13,10 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 // strings / tuplas-string com options JSON, nunca funções importadas.
 const withMDX = createMDX({
   options: {
-    remarkPlugins: ['remark-gfm'],
+    // remark-frontmatter transforma o bloco `---...---` num nó yaml: sem ele, o loader
+    // renderiza o frontmatter como conteúdo (--- vira <hr>, campos viram texto). A meta
+    // continua vindo do gray-matter em lib/posts.ts; aqui só evitamos o vazamento visual.
+    remarkPlugins: ['remark-gfm', 'remark-frontmatter'],
     rehypePlugins: [
       // Superfície do bloco vem dos nossos tokens (keepBackground:false); o tema
       // só colore os tokens de sintaxe. Vitesse Dark: off-white quente, anti-neon.

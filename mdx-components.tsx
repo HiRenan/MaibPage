@@ -1,4 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
@@ -17,6 +18,10 @@ const linkClass = cn(
 );
 
 function MdxAnchor({ href = '', children, className, ...props }: ComponentPropsWithoutRef<'a'>) {
+  // Server Component: useTranslations resolve o locale do request no RSC. Hook no
+  // topo (regras de hooks); o texto sr-only só é usado no ramo externo.
+  const t = useTranslations('a11y');
+
   // Interno: navegação locale-aware (invariante — nunca <a href> cru).
   if (href.startsWith('/')) {
     return (
@@ -26,7 +31,8 @@ function MdxAnchor({ href = '', children, className, ...props }: ComponentPropsW
     );
   }
 
-  // Externo: nova aba, rel seguro + glifo ↗ (sinal além da cor, como o ↵ na ⌘K).
+  // Externo: nova aba, rel seguro + glifo ↗ (sinal além da cor, como o ↵ na ⌘K) +
+  // texto sr-only pro leitor de tela anunciar que o link abre numa nova aba.
   const isExternal = /^https?:\/\//.test(href);
   return (
     <a
@@ -37,9 +43,12 @@ function MdxAnchor({ href = '', children, className, ...props }: ComponentPropsW
     >
       {children}
       {isExternal && (
-        <span aria-hidden className="ml-0.5 font-mono text-sm">
-          ↗
-        </span>
+        <>
+          <span aria-hidden className="ml-0.5 font-mono text-sm">
+            ↗
+          </span>
+          <span className="sr-only">{t('opensInNewTab')}</span>
+        </>
       )}
     </a>
   );

@@ -25,9 +25,15 @@
       "posts": "Posts"
     }
   },
+  "post": {
+    "readingTime": "{minutes} min read",
+    "previous": "Previous",
+    "next": "Next"
+  },
   "a11y": {
     "skipToContent": "Skip to content",
-    "mainNav": "Main navigation"
+    "mainNav": "Main navigation",
+    "opensInNewTab": "opens in a new tab"
   },
   "footer": {
     "rights": "All rights reserved.",

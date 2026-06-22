@@ -35,6 +35,7 @@ export type Post = {
   date: string; // 'YYYY-MM-DD'
   tags: string[];
   fallback: boolean;
+  readingTime: number; // minutos, ~200 palavras/min, mínimo 1
 };
 
 // Item consumível pela paleta ⌘K (MAI-483) e pelo índice do blog (fase seguinte).
@@ -65,6 +66,14 @@ function toIsoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+// Tempo de leitura inline (sem dep): ~200 palavras/min sobre o corpo, mínimo 1 min.
+const WORDS_PER_MINUTE = 200;
+
+function computeReadingTime(body: string): number {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE));
+}
+
 type RawPost = { filename: string; content: string };
 
 // Núcleo puro e testável: valida frontmatter, deriva slug/lang, garante simetria
@@ -72,7 +81,8 @@ type RawPost = { filename: string; content: string };
 export function buildPostIndex(files: RawPost[]): Post[] {
   const posts = files.map(({ filename, content }) => {
     const { slug, lang } = parsePostFilename(filename);
-    const parsed = frontmatterSchema.safeParse(matter(content).data);
+    const file = matter(content);
+    const parsed = frontmatterSchema.safeParse(file.data);
     if (!parsed.success) {
       throw new Error(`Frontmatter inválido em "${filename}": ${parsed.error.message}`);
     }
@@ -85,6 +95,7 @@ export function buildPostIndex(files: RawPost[]): Post[] {
       date: toIsoDate(date),
       tags,
       fallback,
+      readingTime: computeReadingTime(file.content),
     } satisfies Post;
   });
 
@@ -137,6 +148,35 @@ export function getPostIndex(dir: string = POSTS_DIR): Post[] {
 // Posts de um locale, por data desc. Consumido pelo índice do blog (fase seguinte).
 export function getAllPosts(locale: Locale, dir: string = POSTS_DIR): Post[] {
   return getPostIndex(dir).filter((post) => post.lang === locale);
+}
+
+// Post de um slug+locale, ou null se o arquivo daquele locale não existe.
+// A rota usa o null pra cair em notFound() — nunca renderiza o outro idioma no lugar.
+export function getPostBySlug(slug: string, locale: Locale, dir: string = POSTS_DIR): Post | null {
+  return getAllPosts(locale, dir).find((post) => post.slug === slug) ?? null;
+}
+
+// Puro e testável: vizinhos num índice já ordenado (date desc). `previous` é o post
+// mais antigo (←), `next` o mais recente (→); bordas viram null (1 post = ambos null).
+export function adjacentInIndex(
+  posts: Post[],
+  slug: string,
+): { previous: Post | null; next: Post | null } {
+  const index = posts.findIndex((post) => post.slug === slug);
+  if (index === -1) return { previous: null, next: null };
+  return {
+    previous: posts[index + 1] ?? null,
+    next: posts[index - 1] ?? null,
+  };
+}
+
+// Vizinhança cronológica de um post no índice do seu locale.
+export function getAdjacentPosts(
+  slug: string,
+  locale: Locale,
+  dir: string = POSTS_DIR,
+): { previous: Post | null; next: Post | null } {
+  return adjacentInIndex(getAllPosts(locale, dir), slug);
 }
 
 // Itens de comando da paleta ⌘K (MAI-483): { slug, title, href, date }.

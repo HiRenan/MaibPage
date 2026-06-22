@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -16,6 +17,17 @@ vi.mock('@/i18n/navigation', () => ({
   },
 }));
 
+// MdxAnchor lê a11y.opensInNewTab via useTranslations (RSC). No teste, o provider
+// client entrega as mensagens síncronas.
+const messages = { a11y: { opensInNewTab: 'abre em nova aba' } };
+function renderWithIntl(ui: ReactNode) {
+  return render(
+    <NextIntlClientProvider locale="pt" messages={messages}>
+      {ui}
+    </NextIntlClientProvider>,
+  );
+}
+
 // useMDXComponents é um acessor estático do Next (retorna um objeto fixo), não um hook.
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const components = useMDXComponents();
@@ -30,18 +42,20 @@ describe('mdx-components', () => {
   });
 
   it('roteia link interno pelo Link locale-aware (não <a> cru)', () => {
-    render(<Anchor href="/about">sobre</Anchor>);
+    renderWithIntl(<Anchor href="/about">sobre</Anchor>);
     const link = screen.getByRole('link', { name: 'sobre' });
     expect(link).toHaveAttribute('data-intl-link'); // passou pelo Link do next-intl
     expect(link).toHaveAttribute('href', '/about');
     expect(link.className).toContain('underline'); // daltônico-safe: não só por cor
   });
 
-  it('abre link externo em nova aba com rel seguro, fora do Link', () => {
-    render(<Anchor href="https://github.com/HiRenan/MaibPage">repo</Anchor>);
+  it('abre link externo em nova aba com rel seguro + dica sr-only, fora do Link', () => {
+    renderWithIntl(<Anchor href="https://github.com/HiRenan/MaibPage">repo</Anchor>);
     const link = screen.getByRole('link', { name: /repo/ });
     expect(link).not.toHaveAttribute('data-intl-link'); // não passou pelo Link
     expect(link).toHaveAttribute('target', '_blank');
     expect(link.getAttribute('rel')).toContain('noopener');
+    // a11y: leitor de tela sabe que abre nova aba (texto sr-only, não só o glifo ↗).
+    expect(screen.getByText('abre em nova aba')).toHaveClass('sr-only');
   });
 });
