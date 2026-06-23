@@ -6,7 +6,7 @@ import type { VercelConfig } from '@vercel/config/v1';
 //     (pnpm vem do `packageManager` do package.json; Fluid Compute é default).
 //   - Headers de segurança vivem no next.config.ts (`headers()`) — idiomático Next
 //     e testável localmente com `next start`, sem depender da Vercel.
-//   - Redirect www -> apex é resolvido no nível de domínio da Vercel (apex como
+//   - Redirect apex -> www é resolvido no nível de domínio da Vercel (www como
 //     primário), não como regra aqui.
 // Este arquivo é a casa pra config Vercel-specific futura (crons, rewrites, regions).
 export const config: VercelConfig = {
