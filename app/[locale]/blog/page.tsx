@@ -6,33 +6,35 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { BlogList } from '@/components/blog/blog-list';
 import { Container } from '@/components/ui/container';
 import { routing } from '@/i18n/routing';
-import { getAllPosts, getAllTags, type Locale } from '@/lib/posts';
+import { getAllPosts, getAllTags } from '@/lib/posts';
+import { hreflangAlternates, ogImagePath } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-// hreflang por locale, espelhando o root layout (pt -> 'pt-BR', en -> 'en').
-const HREFLANG: Record<Locale, string> = { pt: 'pt-BR', en: 'en' };
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: 'blog' });
+  const tNav = await getTranslations({ locale, namespace: 'nav' });
 
-  // O índice existe em todos os locales (é rota, não post) -> hreflang completo.
-  const languages: Record<string, string> = {};
-  for (const l of routing.locales) languages[HREFLANG[l]] = `/${l}/blog`;
-  languages['x-default'] = `/${routing.defaultLocale}/blog`;
+  // O índice existe em todos os locales (é rota, não post) -> hreflang completo (lib/seo).
+  const ogTitle = tNav('blog');
 
   return {
     title: t('metaTitle'),
     description: t('description'),
     alternates: {
       canonical: `/${locale}/blog`,
-      languages,
+      languages: hreflangAlternates((l) => `/${l}/blog`),
     },
-    // TODO(OG): sem `images` até a fase do endpoint de OG (/api/og + opengraph-image).
+    openGraph: {
+      type: 'website',
+      url: `/${locale}/blog`,
+      images: [{ url: ogImagePath(ogTitle), width: 1200, height: 630, alt: ogTitle }],
+    },
+    twitter: { card: 'summary_large_image' },
     // TODO(RSS): sem <link rel="alternate" type="application/rss+xml"> até a fase do feed (/api/rss).
   };
 }

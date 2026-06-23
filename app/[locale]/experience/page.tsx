@@ -19,33 +19,34 @@ import {
   type SkillCategory,
 } from '@/data/experience';
 import { routing } from '@/i18n/routing';
-import type { Locale } from '@/lib/posts';
+import { hreflangAlternates, ogImagePath } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-// hreflang por locale, espelhando about/blog e o root layout (pt -> 'pt-BR', en -> 'en').
-const HREFLANG: Record<Locale, string> = { pt: 'pt-BR', en: 'en' };
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: 'experience' });
+  const tNav = await getTranslations({ locale, namespace: 'nav' });
 
-  // Rota (não post) -> existe em todos os locales -> hreflang completo.
-  const languages: Record<string, string> = {};
-  for (const l of routing.locales) languages[HREFLANG[l]] = `/${l}/experience`;
-  languages['x-default'] = `/${routing.defaultLocale}/experience`;
+  // Rota (não post) -> existe em todos os locales -> hreflang completo (lib/seo).
+  const ogTitle = tNav('experience');
 
   return {
     title: t('metaTitle'),
     description: t('lead'),
     alternates: {
       canonical: `/${locale}/experience`,
-      languages,
+      languages: hreflangAlternates((l) => `/${l}/experience`),
     },
-    // TODO(OG): sem `images` até /api/og + opengraph-image (MAI-521 / F12), igual à about.
+    openGraph: {
+      type: 'website',
+      url: `/${locale}/experience`,
+      images: [{ url: ogImagePath(ogTitle), width: 1200, height: 630, alt: ogTitle }],
+    },
+    twitter: { card: 'summary_large_image' },
   };
 }
 

@@ -5,30 +5,35 @@ import { notFound } from 'next/navigation';
 
 import { FeaturedPosts } from '@/components/home/featured-posts';
 import { Hero } from '@/components/home/hero';
+import { JsonLd } from '@/components/json-ld';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { getFeaturedPosts, type Locale } from '@/lib/posts';
+import { ogImagePath, personJsonLd } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
 // Title/description/canonical/hreflang vêm do root layout. Aqui só o que falta na
-// home: openGraph (type website) + twitter card. og:title/og:description e os
-// equivalentes do twitter caem por fallback no title/description herdados — sem
-// redefinir. Imagem fica pro endpoint de OG (MAI-521 / F12); sem ref quebrada.
+// home: openGraph (type website) + card OG + twitter. og:title/og:description caem
+// por fallback no title/description herdados — sem redefinir. A imagem é o card
+// dinâmico (/api/og); título = posicionamento do hero, kicker fixo = maib.com.br.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
+  const t = await getTranslations({ locale, namespace: 'home' });
+
+  const ogTitle = t('hero.role');
 
   return {
     openGraph: {
       type: 'website',
       url: `/${locale}`,
-      // TODO(OG): sem `images` até /api/og + opengraph-image (MAI-521 / F12).
+      images: [{ url: ogImagePath(ogTitle), width: 1200, height: 630, alt: ogTitle }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -49,6 +54,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <Container size="sm" className="flex flex-col py-20 sm:py-28">
+      <JsonLd data={personJsonLd(locale as Locale)} />
       <Hero />
 
       <DashedDivider className="my-12" />

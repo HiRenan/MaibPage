@@ -4,12 +4,14 @@ import { hasLocale } from 'next-intl';
 import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/server';
 import type { ComponentType } from 'react';
 
+import { JsonLd } from '@/components/json-ld';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-import { adjacentInIndex, getAllPosts, getPostBySlug, type Locale } from '@/lib/posts';
+import { adjacentInIndex, getAllPosts, getPostBySlug } from '@/lib/posts';
+import { blogPostingJsonLd, hreflangAlternates, ogImagePath } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -24,9 +26,6 @@ export function generateStaticParams() {
   );
 }
 
-// hreflang por locale, espelhando o root layout (pt -> 'pt-BR', en -> 'en').
-const HREFLANG: Record<Locale, string> = { pt: 'pt-BR', en: 'en' };
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
@@ -34,22 +33,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug, locale);
   if (!post) notFound();
 
-  // alternates só pros locales onde o post existe; x-default no default se ele existir.
+  // alternates só pros locales onde o post existe (respeita fallback); x-default no
+  // default se existir, senão no primeiro existente (lib/seo).
   const existing = routing.locales.filter((l) => getPostBySlug(slug, l) != null);
-  const languages: Record<string, string> = {};
-  for (const l of existing) languages[HREFLANG[l]] = `/${l}/blog/${slug}`;
-  const xDefault = existing.includes(routing.defaultLocale) ? routing.defaultLocale : existing[0];
-  if (xDefault) languages['x-default'] = `/${xDefault}/blog/${slug}`;
 
   return {
     title: post.title,
     description: post.description,
     alternates: {
       canonical: `/${locale}/blog/${slug}`,
-      languages,
+      languages: hreflangAlternates((l) => `/${l}/blog/${slug}`, existing),
     },
-    // TODO(OG): sem `images` até a fase do endpoint de OG (/api/og + opengraph-image
-    // dedicados). O card já fica large_image pro endpoint futuro só preencher a imagem.
+    openGraph: {
+      type: 'article',
+      url: `/${locale}/blog/${slug}`,
+      publishedTime: post.date,
+      images: [{ url: ogImagePath(post.title), width: 1200, height: 630, alt: post.title }],
+    },
     twitter: { card: 'summary_large_image' },
   };
 }
@@ -85,6 +85,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <Container size="prose" className="py-16 sm:py-24">
+      <JsonLd data={blogPostingJsonLd(post, locale)} />
       <article>
         <header>
           <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
