@@ -29,6 +29,10 @@
   --accent: oklch(0.275 0.009 70);
   --accent-foreground: oklch(0.92 0.012 85);
 
+  /* border/background = 1.51:1 (< 3:1), mas isento por WCAG SC 1.4.11: os usos
+     são decorativos — dashed dividers (role="separator") e contornos de card
+     sobre bg distinto, não delimitam controles. Input funcional futuro deve usar
+     uma variante >= 3:1, não este token (--input compartilha o valor hoje). */
   --border: oklch(0.32 0.008 72);
   --input: oklch(0.32 0.008 72);
 
@@ -37,8 +41,9 @@
   --primary-foreground: oklch(0.18 0.022 60);
   --ring: oklch(0.7 0.142 58);
 
-  /* Destrutivo — raro, vermelho quente compatível */
-  --destructive: oklch(0.585 0.17 25);
+  /* Destrutivo — raro, vermelho quente compatível.
+     L 0.585 -> 0.52: contraste AA com destructive-foreground (>= 4.5:1; era 4.06). */
+  --destructive: oklch(0.52 0.17 25);
   --destructive-foreground: oklch(0.96 0.01 80);
 
   /* Raio mínimo — daviaviss: cantos quase retos, max ~sm */
