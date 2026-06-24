@@ -53,6 +53,9 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
         en: '/en',
         'x-default': '/pt',
       },
+      types: {
+        'application/rss+xml': `/api/rss/${locale}.xml`,
+      },
     },
   };
 }

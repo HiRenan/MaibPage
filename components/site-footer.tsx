@@ -1,12 +1,12 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
-import { GithubIcon, LinkedinIcon, MailIcon } from '@/components/icons';
+import { GithubIcon, LinkedinIcon, MailIcon, RssIcon } from '@/components/icons';
 import { Container } from '@/components/ui/container';
 import { socialLinks, type SocialKey } from '@/lib/social';
 
-// Chrome global base. Sociais + copyright. Slot de RSS reservado pra F13 (feed).
-// As URLs vêm de lib/social.ts (MAI-499, fonte única); o footer mantém os ÍCONES
-// e os aria-labels descritivos de footer.social.* — não vira texto.
+// Chrome global base. Sociais + RSS + copyright. As URLs sociais vêm de lib/social.ts
+// (MAI-499, fonte única); o RSS aponta pro feed do locale (/api/rss/{locale}.xml). O footer
+// mantém os ÍCONES e os aria-labels descritivos de footer.social.* — não vira texto.
 const ICONS: Record<SocialKey, typeof GithubIcon> = {
   github: GithubIcon,
   linkedin: LinkedinIcon,
@@ -15,6 +15,7 @@ const ICONS: Record<SocialKey, typeof GithubIcon> = {
 
 export async function SiteFooter() {
   const t = await getTranslations('footer');
+  const locale = await getLocale();
   const year = new Date().getFullYear();
 
   return (
@@ -43,7 +44,15 @@ export async function SiteFooter() {
               </li>
             );
           })}
-          {/* RSS slot reservado pra F13 */}
+          <li>
+            <a
+              href={`/api/rss/${locale}.xml`}
+              aria-label={t('social.rss')}
+              className="text-muted-foreground hover:text-primary inline-flex size-9 items-center justify-center rounded-sm transition-colors"
+            >
+              <RssIcon className="size-[18px]" />
+            </a>
+          </li>
         </ul>
       </Container>
     </footer>
