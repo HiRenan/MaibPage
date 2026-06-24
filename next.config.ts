@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
   // .md/.mdx contam como extensões válidas de página/conteúdo, ao lado de TS/JS.
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 
+  // AVIF/WebP servidos por padrão pelo otimizador do next/image (peso/CLS). Sem
+  // imagem no v1 ainda — convenção de uso documentada no README; otimização real
+  // (priority, blur) fica pro F17.
+  images: { formats: ['image/avif', 'image/webp'] },
+
   // O route /api/og lê as fontes .woff via fs em runtime (app/api/og/fonts). Sem
   // isto, o output tracing da Vercel pode não incluí-las no bundle da function e o
   // card OG cai na fonte default do Satori em vez da Geist (F16 / MAI-541).

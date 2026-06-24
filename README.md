@@ -46,6 +46,17 @@ content/posts/<slug>.<lang>.mdx   # lang ∈ pt | en
 
 O indexador em `lib/posts.ts` é a fonte única: lê, valida, ordena por data desc e expõe `getAllPosts(locale)` (índice do blog) e `getPostCommandItems(locale)` (paleta ⌘K).
 
+## Imagens
+
+Sempre `next/image` — nunca `<img>` cru. Convenção pra evitar CLS e peso:
+
+- **`sizes` correto** sempre que a imagem é responsiva (`fill` ou `width`/`height` fluido), pro browser baixar a resolução certa.
+- **`width`/`height` explícitos** (ou `fill` + container com dimensão) — reserva o espaço e evita layout shift.
+- **`priority`** só na imagem do LCP (above-the-fold); o resto carrega lazy por default.
+- AVIF/WebP saem automáticos do otimizador (`images.formats` no `next.config.ts`).
+
+Em MDX, o componente `MdxImage` (`mdx-components.tsx`) já aplica isso: passe `width`/`height` no markdown (`![alt](src){ width=W height=H }`) pra modo dimensionado, ou omita pra modo responsivo (`sizes="100vw"`).
+
 ## Stack alvo
 
 Next.js 16 (App Router, RSC) · TypeScript · Tailwind v4 · shadcn/ui · MDX (`@next/mdx` + `gray-matter` + `rehype-pretty-code`/shiki) · next-intl (PT-BR + EN) · cmdk (⌘+K) · Vercel (Fluid Compute, Node 24 LTS, `vercel.ts`).
