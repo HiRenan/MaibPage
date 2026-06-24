@@ -28,7 +28,9 @@
   "post": {
     "readingTime": "{minutes} min de leitura",
     "previous": "Anterior",
-    "next": "Próximo"
+    "next": "Próximo",
+    "tocTitle": "Neste post",
+    "tocAriaLabel": "Índice do conteúdo"
   },
   "blog": {
     "description": "Notas técnicas sobre IA, Claude Code e o que descubro construindo a MAIB.",

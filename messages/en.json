@@ -28,7 +28,9 @@
   "post": {
     "readingTime": "{minutes} min read",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "tocTitle": "On this page",
+    "tocAriaLabel": "Table of contents"
   },
   "blog": {
     "description": "Technical notes on AI, Claude Code, and what I learn building MAIB.",

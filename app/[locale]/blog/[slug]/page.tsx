@@ -5,12 +5,13 @@ import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/serve
 import type { ComponentType } from 'react';
 
 import { JsonLd } from '@/components/json-ld';
+import { TableOfContents } from '@/components/table-of-contents';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-import { adjacentInIndex, getAllPosts, getPostBySlug } from '@/lib/posts';
+import { adjacentInIndex, getAllPosts, getPostBySlug, getPostHeadings } from '@/lib/posts';
 import { blogPostingJsonLd, hreflangAlternates, ogImagePath } from '@/lib/seo';
 
 type Props = {
@@ -64,6 +65,7 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   const { previous, next } = adjacentInIndex(posts, slug);
+  const headings = getPostHeadings(slug, locale);
 
   const t = await getTranslations();
   const format = await getFormatter();
@@ -84,7 +86,7 @@ export default async function PostPage({ params }: Props) {
   };
 
   return (
-    <Container size="prose" className="py-16 sm:py-24">
+    <Container size="prose" className="relative py-16 sm:py-24">
       <JsonLd data={blogPostingJsonLd(post, locale)} />
       <article>
         <header>
@@ -120,6 +122,8 @@ export default async function PostPage({ params }: Props) {
         </header>
 
         <DashedDivider />
+
+        <TableOfContents headings={headings} />
 
         <PostBody />
       </article>

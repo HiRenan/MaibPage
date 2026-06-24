@@ -48,6 +48,9 @@ const withMDX = createMDX({
     // continua vindo do gray-matter em lib/posts.ts; aqui só evitamos o vazamento visual.
     remarkPlugins: ['remark-gfm', 'remark-frontmatter'],
     rehypePlugins: [
+      // Injeta id slug nos headings (h2/h3) pras âncoras do ToC. github-slugger
+      // por baixo → bate com lib/posts.ts (mesma lib, mesmo dedup). MAI-515.
+      'rehype-slug',
       // Superfície do bloco vem dos nossos tokens (keepBackground:false); o tema
       // só colore os tokens de sintaxe. Vitesse Dark: off-white quente, anti-neon.
       ['rehype-pretty-code', { theme: 'vitesse-dark', keepBackground: false }],

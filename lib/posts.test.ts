@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   adjacentInIndex,
   buildPostIndex,
+  extractHeadings,
   frontmatterSchema,
   getAllPosts,
   getAllTags,
@@ -184,5 +185,57 @@ describe('adjacentInIndex', () => {
   it('post único: ambos os lados somem (null)', () => {
     const solo = buildPostIndex([rawPost('solo', 'pt', '2026-01-01', 'fallback: true\n')]);
     expect(adjacentInIndex(solo, 'solo')).toEqual({ previous: null, next: null });
+  });
+});
+
+describe('extractHeadings', () => {
+  it('capta só h2 e h3 — ignora h1 e h4+', () => {
+    const md = ['# Title', '## Section', '### Subsection', '#### Too deep'].join('\n');
+    expect(extractHeadings(md)).toEqual([
+      { depth: 2, text: 'Section', id: 'section' },
+      { depth: 3, text: 'Subsection', id: 'subsection' },
+    ]);
+  });
+
+  it('ignora # dentro de code fence (``` e ~~~)', () => {
+    const md = [
+      '## Real',
+      '```bash',
+      '# comentário shell, não heading',
+      '## nem isto',
+      '```',
+      '~~~',
+      '### também não',
+      '~~~',
+      '## Outro',
+    ].join('\n');
+    expect(extractHeadings(md).map((h) => h.text)).toEqual(['Real', 'Outro']);
+  });
+
+  it('normaliza formatação inline pro id bater com o rehype-slug', () => {
+    expect(extractHeadings('## **Foo** `bar`')).toEqual([
+      { depth: 2, text: 'Foo bar', id: 'foo-bar' },
+    ]);
+  });
+
+  it('reduz link [txt](url) ao texto antes de gerar o id', () => {
+    expect(extractHeadings('## Veja o [guia](https://x.dev)')).toEqual([
+      { depth: 2, text: 'Veja o guia', id: 'veja-o-guia' },
+    ]);
+  });
+
+  it('deduplica ids na ordem do documento (setup, setup-1)', () => {
+    expect(extractHeadings('## Setup\n## Setup').map((h) => h.id)).toEqual(['setup', 'setup-1']);
+  });
+
+  it('markdown sem headings → []', () => {
+    expect(extractHeadings('Só um parágrafo.\n\nE mais um, sem títulos.')).toEqual([]);
+  });
+
+  it('limitação conhecida: `_ênfase_` não é normalizada e diverge do rehype-slug', () => {
+    // rehype-slug parseia _Foo_ → <em>Foo</em> → id "foo"; aqui o `_` sobrevive e
+    // vira id "_foo_". Pinado de propósito: um fix ingênuo (strip de todo `_`)
+    // quebraria `snake_case` em heading, que casa nos dois lados hoje.
+    expect(extractHeadings('## _Foo_')).toEqual([{ depth: 2, text: '_Foo_', id: '_foo_' }]);
   });
 });
