@@ -1,0 +1,92 @@
+---
+title: 'The second terminal'
+description: 'Why I run two Claude Code sessions at once: one builds, the other distrusts.'
+date: '2026-06-25'
+tags: ['claude-code', 'workflow']
+---
+
+Coding agents are fast and plausibly wrong. That's the hard part: the error
+doesn't show up looking like an error. It shows up with green tests, a clean diff,
+and a report that says "done, everything passes."
+
+The report is the least trustworthy part of the flow.
+
+## One builds, the other distrusts
+
+So I run two Claude Code sessions at once, in separate terminals. One is the
+**builder**: takes the task, writes the code, runs its own tests. The other is the
+**verifier** — it writes no production code; it distrusts.
+
+The separation is the point. The verifier never watched the builder work, carries
+none of the bias of whoever wrote it. It starts from the diff and its own criteria:
+
+- typecheck, lint, test and build — from scratch, on its own machine;
+- reads every changed line, not the summary;
+- re-runs the audits (Lighthouse, contrast, links) instead of trusting the reported numbers;
+- checks the scope: only the files the ticket asked for, nothing more.
+
+Only then does the work become a commit. The builder's report is never proof — it's
+a claim to be checked.
+
+## The discipline lives in a file
+
+Both terminals read the same `CLAUDE.md`, and it has two layers. The base is four
+principles that override the model's default behavior:
+
+```md
+## Base layer
+
+1. Think before coding — don't assume, surface tradeoffs, ask
+2. Simplicity first — the minimum that solves it, nothing speculative
+3. Surgical changes — touch only what the request requires
+4. Goal-driven — define the success criterion, loop until verified
+```
+
+On top of it, the project layer: locked decisions, anti-patterns ("don't do"),
+invariants (always true — symmetric i18n, server-first, design-system tokens) and
+the **hot files** — high-blast-radius files that require confirmation before any edit.
+
+A rule that isn't in the file doesn't exist. Agent memory is volatile; the file isn't.
+
+## Lock the decision before the line
+
+Before writing code, the builder goes through a grill: one question at a time, each
+with a recommendation, until the decision is locked. Ambiguity becomes a question —
+not an assumption buried in the commit.
+
+It's the first principle in action: the confusion surfaces **before** the
+implementation, not after the diff reveals the mistake.
+
+## Guardrails that don't rely on memory
+
+Not everything fits in "remember to." What's mechanical becomes a hook or a permission:
+
+```jsonc
+// .claude/settings.json
+"deny": [
+  "Bash(rm -rf *)",
+  "Bash(git push --force*)",
+  "Bash(git reset --hard*)"
+]
+```
+
+Hooks confirm hot files before an edit and run lint/format after every write. The
+human doesn't have to remember to ask — the environment enforces it.
+
+## Why it pays
+
+The gain isn't speed. It's trust.
+
+This week the verifier ran a Lighthouse audit. The pages cleared the ≥ 95 gate
+across the board — done, the report would say. But it didn't stop at the number: it
+read the individual audits and found two real accessibility bugs the score was
+masking. A code comment at 3.74:1 (WCAG AA requires 4.5). Three controls whose
+visible text differed from their accessible name.
+
+Two WCAG defects that survived the builder _and_ the score itself — one because it
+carried zero weight in the calculation, the other because it only nicked one page
+down to 96. The second terminal caught both.
+
+> The edge isn't the agent. It's the mesh around it.
+
+Trust the diff, not the report.

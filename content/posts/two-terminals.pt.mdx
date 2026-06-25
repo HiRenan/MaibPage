@@ -1,0 +1,93 @@
+---
+title: 'O segundo terminal'
+description: 'Por que eu rodo dois Claude Code ao mesmo tempo: um constrói, o outro desconfia.'
+date: '2026-06-25'
+tags: ['claude-code', 'workflow']
+---
+
+Agentes de código são rápidos e plausivelmente errados. Essa é a parte difícil:
+o erro não chega com cara de erro. Chega com testes verdes, um diff limpo e um
+relatório que diz "pronto, tudo passa".
+
+O relatório é a parte menos confiável do fluxo.
+
+## Um constrói, o outro desconfia
+
+Então eu rodo dois Claude Code ao mesmo tempo, em terminais separados. Um é o
+**builder**: recebe a tarefa, escreve o código, roda os próprios testes. O outro é
+o **verificador**: não escreve nada de produção — ele desconfia.
+
+A separação é o ponto. O verificador não viu o builder trabalhar, não carrega o
+viés de quem escreveu. Ele parte do diff e dos próprios critérios:
+
+- typecheck, lint, teste e build — do zero, na máquina dele;
+- lê cada linha mudada, não o resumo;
+- re-roda os audits (Lighthouse, contraste, links) em vez de acreditar nos números relatados;
+- confere o escopo: só os arquivos que o ticket pedia, nada a mais.
+
+Só depois disso o trabalho vira commit. O relatório do builder nunca é prova — é
+uma alegação a ser checada.
+
+## A disciplina mora num arquivo
+
+Os dois terminais leem o mesmo `CLAUDE.md`, e ele tem duas camadas. A base são
+quatro princípios que sobrepõem o comportamento default do modelo:
+
+```md
+## Camada base
+
+1. Think before coding — não assuma, exponha tradeoffs, pergunte
+2. Simplicity first — o mínimo que resolve, nada especulativo
+3. Surgical changes — toque só no que o pedido exige
+4. Goal-driven — defina o critério de sucesso, faça loop até verificar
+```
+
+Em cima dela, a camada do projeto: decisões travadas, antipadrões ("não fazer"),
+invariantes (sempre verdadeiros — i18n simétrico, server-first, tokens do design
+system) e os **hot files** — arquivos de alto raio de impacto que exigem
+confirmação antes de qualquer edição.
+
+Regra que não está no arquivo não existe. Memória de agente é volátil; o arquivo, não.
+
+## Travar a decisão antes da linha
+
+Antes de escrever código, o builder passa por um grill: uma pergunta de cada vez,
+cada uma com uma recomendação, até a decisão estar travada. Ambiguidade vira
+pergunta — não vira suposição enterrada no commit.
+
+É o primeiro princípio em ação: a confusão aparece **antes** da implementação, não
+depois que o diff revela o engano.
+
+## Guardrails que não dependem de memória
+
+Nem tudo cabe em "lembre-se de". O que é mecânico vira hook ou permissão:
+
+```jsonc
+// .claude/settings.json
+"deny": [
+  "Bash(rm -rf *)",
+  "Bash(git push --force*)",
+  "Bash(git reset --hard*)"
+]
+```
+
+Hooks confirmam hot files antes da edição e rodam lint/format depois de cada
+escrita. O humano não precisa lembrar de pedir — o ambiente cobra.
+
+## Por que isso paga
+
+O ganho não é velocidade. É confiança.
+
+Esta semana o verificador rodou um audit Lighthouse. As páginas passaram o gate de
+≥ 95 em tudo — fim, diria o relatório. Mas ele não parou no número: leu os audits
+individuais e achou dois bugs reais de acessibilidade que o score mascarava. Um
+comentário de código em 3.74:1 (WCAG AA exige 4.5). Três controles com texto
+visível diferente do nome acessível.
+
+Dois defeitos WCAG que sobreviveram ao builder _e_ ao próprio score — um porque
+tinha peso zero no cálculo, o outro porque só arranhou uma página pra 96. O segundo
+terminal pegou os dois.
+
+> A vanguarda não é o agente. É a malha que o cerca.
+
+Confie no diff, não no relato.
