@@ -55,6 +55,9 @@ export function personJsonLd(locale: Locale): Record<string, unknown> {
     '@type': 'Person',
     name: 'Renan Mocelin',
     url: SITE_URL,
+    // Foto do Person (MAI-547): 512 quadrado absoluto. Sinal estruturado pro Google
+    // (knowledge panel); não toca o card OG visual nem o favicon, que seguem a marca.
+    image: `${SITE_URL}/avatar-512.jpg`,
     jobTitle: JOB_TITLE[locale],
     worksFor: { '@type': 'Organization', name: 'MAIB', url: SITE_URL },
     sameAs: socialLinks.filter((link) => link.external).map((link) => link.href),

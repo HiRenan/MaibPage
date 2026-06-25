@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import { SocialLinks } from '@/components/social-links';
@@ -9,6 +10,11 @@ import { DashedDivider } from '@/components/ui/dashed-divider';
 import { routing } from '@/i18n/routing';
 import { hreflangAlternates, ogImagePath } from '@/lib/seo';
 import { cn } from '@/lib/utils';
+
+// Placeholder blur do avatar (MAI-547): 16x16 inlined porque /avatar.jpg vive em
+// public/ (não é import estático, então o next/image não gera o blur sozinho).
+const AVATAR_BLUR =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBl55uDGiBJSwBZx90H2qHzJoWaNyvnZwQEAWpdVZpL5xcZGHC5Q4PXis7U2lgvVlDE7gOvOSOOaSjJ6oV1Y//Z';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -44,11 +50,22 @@ export default async function AboutPage({ params }: Props) {
   setRequestLocale(locale);
 
   const t = await getTranslations('about');
+  // alt do avatar = o nome (SSOT em home.hero.name); reuso evita duplicar string i18n.
+  const tName = await getTranslations('home');
   const values = t.raw('values.items') as { term: string; description: string }[];
 
   return (
     <Container size="sm" className="flex flex-col py-20 sm:py-28">
       <header className="flex flex-col gap-4">
+        <Image
+          src="/avatar.jpg"
+          alt={tName('hero.name')}
+          width={128}
+          height={128}
+          placeholder="blur"
+          blurDataURL={AVATAR_BLUR}
+          className="border-border rounded-xl border"
+        />
         <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
           {t('title')}
         </h1>

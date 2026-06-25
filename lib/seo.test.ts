@@ -58,6 +58,7 @@ describe('personJsonLd', () => {
     expect(ld['@type']).toBe('Person');
     expect(ld.name).toBe('Renan Mocelin');
     expect(ld.url).toBe(SITE_URL);
+    expect(ld.image).toBe(`${SITE_URL}/avatar-512.jpg`);
     expect(ld.worksFor).toMatchObject({ '@type': 'Organization', name: 'MAIB', url: SITE_URL });
     const sameAs = ld.sameAs as string[];
     expect(sameAs).toContain('https://github.com/HiRenan');
