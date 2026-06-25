@@ -30,7 +30,12 @@
     "previous": "Previous",
     "next": "Next",
     "tocTitle": "On this page",
-    "tocAriaLabel": "Table of contents"
+    "tocAriaLabel": "Table of contents",
+    "share": "Share",
+    "shareOnX": "Share on X",
+    "shareOnLinkedin": "Share on LinkedIn",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied"
   },
   "blog": {
     "description": "Technical notes on AI, Claude Code, and what I learn building MAIB.",

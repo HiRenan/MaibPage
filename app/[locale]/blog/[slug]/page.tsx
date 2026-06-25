@@ -5,6 +5,7 @@ import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/serve
 import type { ComponentType } from 'react';
 
 import { JsonLd } from '@/components/json-ld';
+import { ShareLinks } from '@/components/share-links';
 import { TableOfContents } from '@/components/table-of-contents';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
@@ -12,7 +13,7 @@ import { MonoTag } from '@/components/ui/mono-tag';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { adjacentInIndex, getAllPosts, getPostBySlug, getPostHeadings } from '@/lib/posts';
-import { blogPostingJsonLd, hreflangAlternates, ogImagePath } from '@/lib/seo';
+import { blogPostingJsonLd, hreflangAlternates, ogImagePath, SITE_URL } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -85,6 +86,8 @@ export default async function PostPage({ params }: Props) {
     default: ComponentType;
   };
 
+  const shareUrl = `${SITE_URL}/${locale}/blog/${slug}`;
+
   return (
     <Container size="prose" className="relative py-16 sm:py-24">
       <JsonLd data={blogPostingJsonLd(post, locale)} />
@@ -127,6 +130,9 @@ export default async function PostPage({ params }: Props) {
 
         <PostBody />
       </article>
+
+      <DashedDivider />
+      <ShareLinks url={shareUrl} title={post.title} />
 
       {(previous || next) && (
         <>

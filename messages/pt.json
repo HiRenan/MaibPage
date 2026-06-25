@@ -30,7 +30,12 @@
     "previous": "Anterior",
     "next": "Próximo",
     "tocTitle": "Neste post",
-    "tocAriaLabel": "Índice do conteúdo"
+    "tocAriaLabel": "Índice do conteúdo",
+    "share": "Compartilhar",
+    "shareOnX": "Compartilhar no X",
+    "shareOnLinkedin": "Compartilhar no LinkedIn",
+    "copyLink": "Copiar link",
+    "linkCopied": "Link copiado"
   },
   "blog": {
     "description": "Notas técnicas sobre IA, Claude Code e o que descubro construindo a MAIB.",
