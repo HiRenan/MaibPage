@@ -57,3 +57,6 @@ next-env.d.ts
 # personal docs (não versionar — repo público)
 /Curriculo-Renan.pdf
 /Profile.pdf
+
+# playwright mcp (artefatos de validação local)
+.playwright-mcp/

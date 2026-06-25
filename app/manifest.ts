@@ -4,7 +4,7 @@ import type { MetadataRoute } from 'next';
 // OKLCH). Ícones apontam pros routes gerados (icon.svg + apple-icon).
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'MAIB — Renan Mocelin',
+    name: 'MAIB · Renan Mocelin',
     short_name: 'MAIB',
     description:
       'Marca pessoal do Renan Mocelin e presença da MAIB: IA, automação, Claude Code e desenvolvimento.',

@@ -24,7 +24,7 @@ export async function SiteHeader() {
       >
         <Link
           href="/"
-          aria-label={`MAIB — ${t('nav.home')}`}
+          aria-label={`MAIB · ${t('nav.home')}`}
           className="text-foreground hover:text-primary order-1 font-mono text-base font-semibold tracking-[0.15em] uppercase transition-colors"
         >
           MAIB
