@@ -1,6 +1,7 @@
 import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { bundledThemes } from 'shiki/themes';
 
 const nextConfig: NextConfig = {
   // .md/.mdx contam como extensões válidas de página/conteúdo, ao lado de TS/JS.
@@ -39,24 +40,37 @@ const nextConfig: NextConfig = {
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
-// Turbopack serializa a config (JS -> Rust): plugins remark/rehype vão como
-// strings / tuplas-string com options JSON, nunca funções importadas.
-const withMDX = createMDX({
-  options: {
-    // remark-frontmatter transforma o bloco `---...---` num nó yaml: sem ele, o loader
-    // renderiza o frontmatter como conteúdo (--- vira <hr>, campos viram texto). A meta
-    // continua vindo do gray-matter em lib/posts.ts; aqui só evitamos o vazamento visual.
-    remarkPlugins: ['remark-gfm', 'remark-frontmatter'],
-    rehypePlugins: [
-      // Injeta id slug nos headings (h2/h3) pras âncoras do ToC. github-slugger
-      // por baixo → bate com lib/posts.ts (mesma lib, mesmo dedup). MAI-515.
-      'rehype-slug',
-      // Superfície do bloco vem dos nossos tokens (keepBackground:false); o tema
-      // só colore os tokens de sintaxe. Vitesse Dark: off-white quente, anti-neon.
-      ['rehype-pretty-code', { theme: 'vitesse-dark', keepBackground: false }],
-    ],
-  },
-});
+// AA do comentário (MAI-661, achado no audit MAI-556): o vitesse-dark pinta o token
+// `comment` com #758575dd → só 3.74:1 sobre --card. Subimos pra #7d8d7d → 5.09:1
+// (AA WCAG ≥ 4.5:1), mantendo o mesmo cinza-esverdeado mudo, só mais legível.
+const CODE_COMMENT_AA = '#7d8d7d';
 
-// next-intl permanece o wrapper externo já existente; o MDX entra por dentro.
-export default withNextIntl(withMDX(nextConfig));
+// Config async só pra resolver o tema bundlado do shiki no load. Turbopack serializa a
+// config (JS -> Rust): plugins remark/rehype vão como strings / tuplas-string com options
+// JSON, nunca funções importadas — e o theme do rehype-pretty-code é um objeto JSON puro
+// (vitesse-dark + colorReplacements), que serializa igual. O colorReplacements troca só a
+// cor do comentário (escopo `comment`); os demais tokens do tema ficam intactos.
+export default async function buildConfig() {
+  const vitesseDark = (await bundledThemes['vitesse-dark']()).default;
+  const codeTheme = { ...vitesseDark, colorReplacements: { '#758575dd': CODE_COMMENT_AA } };
+
+  const withMDX = createMDX({
+    options: {
+      // remark-frontmatter transforma o bloco `---...---` num nó yaml: sem ele, o loader
+      // renderiza o frontmatter como conteúdo (--- vira <hr>, campos viram texto). A meta
+      // continua vindo do gray-matter em lib/posts.ts; aqui só evitamos o vazamento visual.
+      remarkPlugins: ['remark-gfm', 'remark-frontmatter'],
+      rehypePlugins: [
+        // Injeta id slug nos headings (h2/h3) pras âncoras do ToC. github-slugger
+        // por baixo → bate com lib/posts.ts (mesma lib, mesmo dedup). MAI-515.
+        'rehype-slug',
+        // Superfície do bloco vem dos nossos tokens (keepBackground:false); o tema
+        // só colore os tokens de sintaxe. Vitesse Dark: off-white quente, anti-neon.
+        ['rehype-pretty-code', { theme: codeTheme, keepBackground: false }],
+      ],
+    },
+  });
+
+  // next-intl permanece o wrapper externo já existente; o MDX entra por dentro.
+  return withNextIntl(withMDX(nextConfig));
+}

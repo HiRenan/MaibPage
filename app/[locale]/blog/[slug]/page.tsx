@@ -112,10 +112,12 @@ export default async function PostPage({ params }: Props) {
               </ul>
             )}
             {hasOther && (
+              // aria-label leads with the visible "{locale} → {otherLocale}" so it's a
+              // substring of the accessible name (WCAG 2.5.3 Label in Name — MAI-661).
               <Link
                 href={`/blog/${slug}`}
                 locale={otherLocale}
-                aria-label={t('common.switchLanguage', { target: otherLocale.toUpperCase() })}
+                aria-label={`${locale} → ${otherLocale}, ${t('common.switchLanguage', { target: otherLocale.toUpperCase() })}`}
                 className="hover:text-primary ml-auto uppercase transition-colors"
               >
                 {locale} → {otherLocale}

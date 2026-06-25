@@ -17,12 +17,16 @@ const getServerIsMac = () => true;
 export function CommandTrigger({ className, ref, ...props }: ComponentProps<'button'>) {
   const t = useTranslations('command');
   const isMac = useSyncExternalStore(subscribe, getIsMac, getServerIsMac);
+  const shortcut = isMac ? '⌘K' : 'Ctrl K';
 
+  // O glifo visível entra no nome acessível (WCAG 2.5.3 Label in Name): o axe compara
+  // o texto visível ao nome e ignora aria-hidden, então o atalho precisa estar no
+  // aria-label. O <kbd> fica aria-hidden pra não duplicar pro leitor de tela. MAI-661.
   return (
     <button
       ref={ref}
       type="button"
-      aria-label={t('open')}
+      aria-label={`${t('open')} ${shortcut}`}
       aria-keyshortcuts="Meta+K Control+K"
       className={cn(
         'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 inline-flex h-8 items-center gap-2 rounded-sm border px-2 transition-colors sm:px-2.5',
@@ -31,8 +35,8 @@ export function CommandTrigger({ className, ref, ...props }: ComponentProps<'but
       {...props}
     >
       <Search aria-hidden className="size-4" />
-      <kbd className="hidden font-mono text-xs tracking-wider sm:inline-block">
-        {isMac ? '⌘K' : 'Ctrl K'}
+      <kbd aria-hidden className="hidden font-mono text-xs tracking-wider sm:inline-block">
+        {shortcut}
       </kbd>
     </button>
   );

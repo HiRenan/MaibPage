@@ -41,11 +41,9 @@ Auditoria Lighthouse 13.4.0, preset **desktop**, contra um build de produção l
 | Home (`/pt`)                  |     100     |      100       |      96 ¹      | 100 |
 | Experience (`/pt/experience`) |     100     |      100       |      96 ¹      | 100 |
 | Blog (`/pt/blog`)             |     100     |      100       |      96 ¹      | 100 |
-| Post (`/pt/blog/hello-world`) |     100     |      96 ²      |      96 ¹      | 100 |
+| Post (`/pt/blog/hello-world`) |     100     |      100       |      96 ¹      | 100 |
 
 ¹ **Best Practices** — o único desconto é `errors-in-console`: os scripts `/_vercel/insights/script.js` e `/_vercel/speed-insights/script.js` (Analytics + Speed Insights) retornam 404 sob `next start` local, pois são servidos pela infra da Vercel. Em produção carregam normalmente → **100**.
-
-² **Acessibilidade (Post)** — dois itens em acompanhamento (F15), abaixo da barra mas sem bloquear o gate ≥ 95: contraste de comentário em code-block (tema Shiki `vitesse-dark`, 3.74:1 vs 4.5:1 exigido) e `label-content-name-mismatch` no LocaleSwitcher e no gatilho ⌘K (texto visível ≠ nome acessível). As demais páginas pontuam 100 em a11y.
 
 > **SEO/canonical:** medido contra build servido em `localhost` com `canonical` = origem. Um build com `NEXT_PUBLIC_SITE_URL` = `www.maib.com.br` servido em localhost mostra SEO **92** (o audit `rel=canonical` acusa origem divergente) — artefato de ambiente que não ocorre em produção, onde a origem é o próprio www.
 
