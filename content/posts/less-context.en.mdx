@@ -1,0 +1,67 @@
+---
+title: 'Less context'
+description: 'The reflex is to give the agent more context. Almost always, the right move is to cut.'
+date: '2026-06-25'
+tags: ['ai', 'context-engineering']
+---
+
+When the agent gets it wrong, the reflex is to give it more context: one more
+document, one more example, one more instruction. It feels like help.
+
+It's almost always the wrong move. Context engineering isn't maximizing what the
+agent sees — it's curating.
+
+## Why more hurts
+
+The model doesn't weigh context the way you do. It treats almost everything in the
+window with similar weight, so the noise comes in with the signal. Dump the whole
+repo and the instruction that matters drowns in the middle.
+
+Three effects stacking:
+
+- **Dilution:** the more you pile on, the less weight each piece carries.
+- **Contradiction:** an old doc fighting the new one, an example pointing the opposite way from the rule — the model doesn't know which wins.
+- **Lost in the middle:** what lands in the middle of a long context is exactly what the model ignores most.
+
+More context isn't more information. Often it's less signal.
+
+## Pruning is the skill
+
+The skill isn't writing the perfect prompt. It's deciding what stays **out**.
+
+Give the right file, not the repo. The function, not the module. The rule that
+applies to this task, not the whole manual. A tight scope keeps the instruction
+that matters at the top of the stack, where it carries weight.
+
+Pruning feels like you're hiding something from the agent. You are — and that's the point.
+
+## Outsource the search: sub-agents
+
+Sometimes the task means sweeping a lot: finding where a pattern shows up across
+thirty files, mapping a scattered convention. The sweep is expensive in context —
+and almost everything it reads is disposable.
+
+So dispatch a sub-agent. It burns its own context on the search and returns just
+the conclusion: the file, the line, the answer. The main context never sees the
+junk along the way — only the result.
+
+It's outsourced pruning: the dirty work happens in a window you throw away.
+
+## Durable and ephemeral
+
+Separate what lasts from what passes. A permanent rule goes in the context file or
+in memory — entered once, always available, out of the hot window. What belongs to
+the task dies with the task; don't let it settle into the conversation.
+
+Polluting the durable layer is the most expensive prune to miss: the noise comes
+back every time.
+
+## Context is a budget
+
+Treat the window as a budget, not a warehouse — everything that goes in competes
+for attention with everything else.
+
+It holds across time too. A long conversation doesn't need to carry the whole path:
+summarize, drop the route, keep the conclusion. History is a draft; state is what matters.
+
+> Context is a budget, not a warehouse. What you take out weighs more than what you put in.
