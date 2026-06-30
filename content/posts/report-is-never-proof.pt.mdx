@@ -1,0 +1,82 @@
+---
+title: 'O relatório nunca é prova'
+description: 'O agente entrega com testes verdes e diz que está pronto. O relatório nunca é prova: a verificação parte do diff.'
+date: '2026-06-30'
+tags: ['ai', 'claude-code']
+---
+
+Agentes de código são rápidos e plausivelmente errados. A velocidade esconde o
+defeito: ele chega com testes verdes, diff limpo e um relatório dizendo "pronto".
+
+A resposta não é confiar menos no agente. É verificar por fora, partindo do diff,
+não do relato.
+
+## O agente plausível e errado
+
+O modo de falha não é o agente travar. É ele entregar algo plausível e sutilmente
+errado, rápido demais pra você duvidar.
+
+Um teste que cobre o caso óbvio e ignora a borda. Uma cor literal onde devia entrar
+um token. Uma string de UI que só existe em PT. Cada defeito passa no que o agente
+rodou, e o relatório soma tudo num "pronto" confiante.
+
+A velocidade é o disfarce. Resposta em segundos convida a aceitar sem ler. O defeito
+viaja junto, escondido na pressa.
+
+## O relatório nunca é prova
+
+"Pronto" é uma afirmação do agente sobre o próprio trabalho. Afirmação não é
+evidência.
+
+A prova é outra coisa. É o diff, lido linha a linha, e os gates rodados do zero numa
+máquina que não viu o agente trabalhar: `pnpm typecheck`, `pnpm lint`, `pnpm test`,
+`pnpm build`. A prova não é o número que o relatório cita. É o número que você
+reproduz.
+
+Isso já era o trabalho do [segundo terminal](/blog/two-terminals): um Claude Code constrói, outro
+desconfia. O que mudou foi a forma. A desconfiança saiu da minha cabeça e virou três
+verificadores, cada um com uma lente fixa, todos partindo do diff.
+
+## Três verificadores
+
+Três sub-agentes, em `.claude/agents/`. Cada um é read-only: lê, roda, reporta, não
+edita. A lente de cada um é estreita de propósito.
+
+- **code-reviewer** roda os gates do zero (typecheck, lint, test, build no
+  Turbopack), lê cada linha do diff e checa escopo: cada linha rastreia ao que o
+  ticket pediu? Cobre convenção Next 16 e token do design system. O mantra: confie
+  no diff, não no relato.
+- **i18n-consistency-checker** cuida da simetria PT/EN. Compara a paridade das
+  chaves entre `messages/pt.json` e `messages/en.json`, que o build não trava: esse
+  é o gap real. Confere a simetria dos posts e o `<Link>` locale-aware no lugar do
+  `<a>` cru.
+- **a11y-checker** mira WCAG 2.1 AA: `alt`, label-in-name e contraste calculado na
+  mão a partir do OKLCH. Não confia no score agregado do Lighthouse: lê o audit
+  individual.
+
+## Por que três, e não um
+
+Um reviewer genérico dilui. Pedir "revise tudo" espalha a atenção fina por correção,
+i18n, a11y, escopo e estilo ao mesmo tempo, e cada um recebe um olhar raso.
+
+Três lentes estreitas fazem o oposto. Cada agente carrega um critério e o aplica
+fundo. O code-reviewer não se distrai com contraste OKLCH; o a11y-checker não opina
+sobre escopo. Classes de erro diferentes pedem leitores diferentes.
+
+A desconfiança vira sistema, não heroísmo. Não depende de eu lembrar de checar
+label-in-name às duas da manhã. Está num arquivo, dispara sempre, do mesmo jeito.
+
+## O que isso custa
+
+O custo é honesto: três agentes lendo o mesmo diff gastam mais tokens e mais tempo
+que um commit direto. Toda mudança fica mais cara.
+
+O que paga é o que o score esconde. No MAI-661, dois defeitos passaram pelo build e
+pelo Lighthouse: um comentário em bloco de código a 3.74:1, abaixo do 4.5:1 que o AA
+exige, e um label-in-name quebrado, com o texto visível fora do nome acessível.
+
+O número agregado dizia ok. O audit individual, não. Build verde, Lighthouse verde,
+e dois bugs reais de acessibilidade vivos no meio. É essa classe de coisa que o
+a11y-checker pega: a que sobrevive ao verde.
+
+> Relatório é alegação. Prova é o diff que três céticos não derrubam.

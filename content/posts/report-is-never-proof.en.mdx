@@ -1,0 +1,83 @@
+---
+title: 'The report is never proof'
+description: 'The agent ships with green tests and says it is done. The report is never proof: verification starts from the diff.'
+date: '2026-06-30'
+tags: ['ai', 'claude-code']
+---
+
+Coding agents are fast and plausibly wrong. Speed hides the defect: it arrives with
+green tests, a clean diff, and a report saying "done".
+
+The answer isn't to trust the agent less. It's to verify from the outside, starting
+from the diff, not the report.
+
+## The plausibly wrong agent
+
+The failure mode isn't the agent crashing. It's the agent shipping something
+plausible and subtly wrong, too fast for you to doubt it.
+
+A test that covers the obvious case and skips the edge. A literal color where a token
+belongs. A UI string that only exists in PT. Each defect passes whatever the agent
+ran, and the report sums them into a confident "done".
+
+Speed is the disguise. An answer in seconds invites you to accept it unread. The
+defect travels along, hidden in the hurry.
+
+## The report is never proof
+
+"Done" is the agent's claim about its own work. A claim isn't evidence.
+
+Proof is something else. It's the diff, read line by line, and the gates run from
+scratch on a machine that never watched the agent work: `pnpm typecheck`, `pnpm
+lint`, `pnpm test`, `pnpm build`. Proof isn't the number the report cites. It's the
+number you reproduce.
+
+This was already the [second terminal](/blog/two-terminals)'s job: one Claude Code builds, another
+distrusts. What changed is the shape. The distrust left my head and became three
+verifiers, each with a fixed lens, all starting from the diff.
+
+## Three verifiers
+
+Three sub-agents, in `.claude/agents/`. Each one is read-only: it reads, runs,
+reports, never edits. Each lens is narrow on purpose.
+
+- **code-reviewer** runs the gates from scratch (typecheck, lint, test, build on
+  Turbopack), reads every line of the diff, and checks scope: does each line trace to
+  what the ticket asked for? It covers Next 16 conventions and design-system tokens.
+  The mantra: trust the diff, not the report.
+- **i18n-consistency-checker** owns PT/EN symmetry. It diffs key parity between
+  `messages/pt.json` and `messages/en.json`, which the build doesn't enforce: that's
+  the real gap. It checks post symmetry and the locale-aware `<Link>` in place of a
+  raw `<a>`.
+- **a11y-checker** targets WCAG 2.1 AA: `alt`, label-in-name, and contrast computed
+  by hand from OKLCH. It doesn't trust Lighthouse's aggregate score: it reads the
+  individual audit.
+
+## Why three, not one
+
+A generic reviewer dilutes. Asking it to "review everything" spreads thin attention
+across correctness, i18n, a11y, scope, and style at once, and each gets a shallow
+look.
+
+Three narrow lenses do the opposite. Each agent carries one criterion and applies it
+deep. The code-reviewer isn't distracted by OKLCH contrast; the a11y-checker has no
+opinion on scope. Different error classes need different readers.
+
+The distrust becomes a system, not heroics. It doesn't depend on me remembering to
+check label-in-name at two in the morning. It's in a file, it fires every time, the
+same way.
+
+## What it costs
+
+The cost is honest: three agents reading the same diff burn more tokens and more time
+than a direct commit. Every change gets more expensive.
+
+What pays is what the score hides. In MAI-661, two defects passed both the build and
+Lighthouse: a comment in a code block at 3.74:1, below the 4.5:1 that AA requires, and
+a broken label-in-name, with visible text outside the accessible name.
+
+The aggregate number said ok. The individual audit didn't. Green build, green
+Lighthouse, and two real accessibility bugs alive in the middle. That's the class of
+thing the a11y-checker catches: the kind that survives the green.
+
+> A report is a claim. Proof is the diff three skeptics can't take down.
