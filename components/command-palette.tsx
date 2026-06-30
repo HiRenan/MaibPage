@@ -1,6 +1,6 @@
 'use client';
 
-import { Briefcase, FileText, Home, Languages, User } from 'lucide-react';
+import { Briefcase, FileText, FolderGit2, Home, Languages, User } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { type RefObject, useState } from 'react';
 import { Dialog } from 'radix-ui';
@@ -30,6 +30,7 @@ const navItems = [
   { href: '/', key: 'home', Icon: Home },
   { href: '/about', key: 'about', Icon: User },
   { href: '/experience', key: 'experience', Icon: Briefcase },
+  { href: '/projects', key: 'projects', Icon: FolderGit2 },
   { href: '/blog', key: 'blog', Icon: FileText },
 ] as const;
 

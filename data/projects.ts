@@ -37,8 +37,7 @@ export const projects: Project[] = [
   {
     name: 'IGNITE',
     year: '2026',
-    // rascunho — Renan confere o papel exato no time do hackathon.
-    role: { pt: 'Equipe (hackathon)', en: 'Team (hackathon)' },
+    role: { pt: 'Desenvolvedor', en: 'Developer' },
     description: {
       // Conquista reusada do award ActInSpace (data/experience.ts): o mesmo Airbus Prize.
       pt: "Imageria de satélite, no tema 'seeing the unseen, from space'. Ganhou o Airbus Prize, o prêmio especial da Airbus na final mundial do ActInSpace 2026, em Bordeaux, representando o Brasil.",
@@ -69,28 +68,22 @@ export const projects: Project[] = [
   {
     name: 'CortAI',
     year: '2025',
-    // rascunho — Renan confere papel e stack.
     role: { pt: 'Desenvolvedor', en: 'Developer' },
     description: {
-      pt: 'Geração de múltiplos cortes de mídia em tempo real com inteligência multimodal.',
-      en: 'Real-time generation of multiple media clips with multimodal intelligence.',
+      // Colocação confirmada pelo Renan: CortAI é o projeto do AKCIT 2025 (2º lugar).
+      pt: 'Geração de múltiplos cortes de mídia em tempo real com inteligência multimodal. Levou o 2º lugar no AKCIT 2025.',
+      en: 'Real-time generation of multiple media clips with multimodal intelligence. It took 2nd place at AKCIT 2025.',
     },
-    // rascunho — stack a confirmar.
     stack: ['Python', 'IA generativa', 'Multimodal'],
     links: [{ kind: 'repo', href: 'https://github.com/HiRenan/CortAI' }],
-    // TODO (Renan): confirmar se este é o projeto do AKCIT 2025. Se for, anexar à
-    // description o texto EXATO do award em data/experience.ts:
-    //   pt "2º lugar, com projeto de IA generativa." / en "2nd place, with a generative AI project."
-    // A colocação já é fato verificado; só a ligação CortAI <-> AKCIT falta confirmar.
   },
   {
     name: 'TinyML HAR',
     year: '2026',
-    // rascunho — Renan confere papel e stack.
     role: { pt: 'Desenvolvedor', en: 'Developer' },
     description: {
-      pt: 'Reconhecimento de atividade humana (dataset UCI HAR) rodando direto num microcontrolador ESP32-S3 com TinyML, lendo um sensor MPU6050. IA na borda, sem nuvem.',
-      en: 'Human activity recognition (UCI HAR dataset) running directly on an ESP32-S3 microcontroller with TinyML, reading an MPU6050 sensor. AI at the edge, no cloud.',
+      pt: 'Projeto da residência em IA no SENAI: reconhecimento de atividade humana (dataset UCI HAR) rodando direto num microcontrolador ESP32-S3 com TinyML, lendo um sensor MPU6050. IA na borda, sem nuvem.',
+      en: 'A project from my AI residency at SENAI: human activity recognition (UCI HAR dataset) running directly on an ESP32-S3 microcontroller with TinyML, reading an MPU6050 sensor. AI at the edge, no cloud.',
     },
     stack: ['C', 'ESP32-S3', 'TensorFlow Lite Micro', 'TinyML'],
     links: [{ kind: 'repo', href: 'https://github.com/HiRenan/uci_har_tinyml' }],
