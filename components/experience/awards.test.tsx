@@ -7,7 +7,8 @@ const entries: AwardEntry[] = [
   {
     year: '2026',
     event: 'ActInSpace',
-    result: '1º lugar, representando o Brasil na final na França.',
+    result:
+      'Airbus Prize, o prêmio especial da Airbus na final mundial, em Bordeaux, representando o Brasil.',
   },
   { year: '2025', event: 'AKCIT', result: '2º lugar, com projeto de IA generativa.' },
 ];
@@ -24,7 +25,9 @@ describe('Awards', () => {
     render(<Awards entries={entries} />);
     expect(screen.getByRole('heading', { name: 'ActInSpace' })).toBeInTheDocument();
     expect(
-      screen.getByText('1º lugar, representando o Brasil na final na França.'),
+      screen.getByText(
+        'Airbus Prize, o prêmio especial da Airbus na final mundial, em Bordeaux, representando o Brasil.',
+      ),
     ).toBeInTheDocument();
   });
 

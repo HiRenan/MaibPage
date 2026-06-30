@@ -13,7 +13,7 @@ noite, em contexto técnico. Bilíngue (PT-BR nativo, EN profissional):
   LLM determinística, RAG) no editor escuro de madrugada, foco profundo. Avaliam
   credibilidade técnica de verdade.
 - **Recrutadores / hiring managers** — avaliando o Renan como AI Engineer. Querem
-  sinal rápido: CV + prova (1º ActInSpace 2026 / Brasil na França, 2º AKCIT 2025,
+  sinal rápido: CV + prova (Airbus Prize no ActInSpace 2026 / Bordeaux, 2º AKCIT 2025,
   Freedom.AI como empregador atual, residência em IA no SENAI/SC).
 - **Clientes potenciais de consultoria (MAIB)** — chegam pela autoridade do Renan
   e avaliam contratar a MAIB pra consultoria/automação de IA.

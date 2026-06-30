@@ -127,8 +127,8 @@ export const awards: AwardItem[] = [
     year: '2026',
     event: 'ActInSpace',
     result: {
-      pt: '1º lugar, representando o Brasil na final mundial na França.',
-      en: '1st place, representing Brazil in the global final in France.',
+      pt: 'Airbus Prize, o prêmio especial da Airbus na final mundial, em Bordeaux, representando o Brasil.',
+      en: "Airbus Prize, Airbus's special award at the world final in Bordeaux, representing Brazil.",
     },
   },
   {

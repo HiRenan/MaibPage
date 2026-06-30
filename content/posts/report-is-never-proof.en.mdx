@@ -25,11 +25,11 @@ defect travels along, hidden in the hurry.
 
 ## The report is never proof
 
-"Done" is the agent's claim about its own work. A claim isn't evidence.
+"Done" is the agent's claim about its own work. And a claim isn't proof.
 
 Proof is something else. It's the diff, read line by line, and the gates run from
 scratch on a machine that never watched the agent work: `pnpm typecheck`, `pnpm
-lint`, `pnpm test`, `pnpm build`. Proof isn't the number the report cites. It's the
+lint`, `pnpm test`, `pnpm build`. Proof isn't the number the report cites, it's the
 number you reproduce.
 
 This was already the [second terminal](/blog/two-terminals)'s job: one Claude Code builds, another
@@ -72,7 +72,7 @@ same way.
 The cost is honest: three agents reading the same diff burn more tokens and more time
 than a direct commit. Every change gets more expensive.
 
-What pays is what the score hides. In MAI-661, two defects passed both the build and
+What pays is what the score hides. Recently, two defects passed both the build and
 Lighthouse: a comment in a code block at 3.74:1, below the 4.5:1 that AA requires, and
 a broken label-in-name, with visible text outside the accessible name.
 
@@ -80,4 +80,4 @@ The aggregate number said ok. The individual audit didn't. Green build, green
 Lighthouse, and two real accessibility bugs alive in the middle. That's the class of
 thing the a11y-checker catches: the kind that survives the green.
 
-> A report is a claim. Proof is the diff three skeptics can't take down.
+> In the end, a report is just a claim. Proof is the diff three skeptics can't take down.

@@ -70,9 +70,9 @@
       "role": "AI engineer · MAIB"
     },
     "about": {
-      "lead": "AI engineer. I build systems that put language models into production: deterministic LLM programming, RAG, and automation that has to work outside the demo.",
+      "lead": "AI engineer. I take language models and get them running in production, outside the demo: deterministic LLM programming, RAG, automation that has to work when it counts.",
       "p2": "I run MAIB, AI consulting and automation. I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC.",
-      "p3": "1st place at ActInSpace 2026, representing Brazil in the global final in France. 2nd at AKCIT 2025. Here I write what I learn building.",
+      "p3": "I won the Airbus Prize at ActInSpace 2026 with the IGNITE team, at the world final in Bordeaux, representing Brazil. And 2nd at AKCIT 2025. Here I write what I'm learning as I build.",
       "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"],
       "readMore": "Read more"
     },
@@ -89,9 +89,9 @@
   "about": {
     "metaTitle": "About · MAIB",
     "title": "About",
-    "lead": "AI engineer. I build systems that put language models into production and keep working outside the demo.",
+    "lead": "AI engineer. I put language models into production and keep them working outside the demo.",
     "bio": {
-      "p1": "I run MAIB, AI consulting and automation. The work is taking LLMs from prototype to production: deterministic model programming, RAG, automation that holds up in the real world.",
+      "p1": "I run MAIB, AI consulting and automation. My work is taking LLMs from prototype to real production: deterministic model programming, RAG, automation that holds up in the real world.",
       "p2": "I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC. MAIB is where this becomes a service for people who need the result, not the demo.",
       "p3": "Here I write what I learn building: Claude Code, LLM programming, what breaks in production and how I fix it."
     },
@@ -100,21 +100,21 @@
       "items": [
         {
           "term": "Precise",
-          "description": "Every detail is evidence. What ships is what holds on its own, not what merely looks ready."
+          "description": "To me, every detail is evidence. Only what holds on its own ships. If it just looks ready, I don't count it as ready."
         },
         {
           "term": "Technical",
-          "description": "I speak the language of people who build, without diluting it and without marketing layered over engineering."
+          "description": "I speak the language of people who build, without watering it down. Engineering doesn't need marketing on top."
         },
         {
           "term": "Experimental",
-          "description": "Deliberate risk, never mess: I test what's ahead of the curve and measure the result."
+          "description": "I like testing what's ahead of the curve, always measuring the result. It's calculated risk, with method."
         }
       ]
     },
     "journey": {
       "heading": "Journey",
-      "body": "The most recent track record: 1st place at ActInSpace 2026, representing Brazil in the global final in France, and 2nd at AKCIT 2025. Along the way, an AI residency at SENAI/SC and my current role as AI engineer at Freedom.AI, while running MAIB."
+      "body": "Most recent: I won the Airbus Prize at ActInSpace 2026 with the IGNITE team, at the world final in Bordeaux, and came 2nd at AKCIT 2025. Along the way, an AI residency at SENAI/SC, and today I'm an AI engineer at Freedom.AI, while running MAIB."
     },
     "contact": {
       "heading": "Contact",

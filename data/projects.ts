@@ -40,9 +40,9 @@ export const projects: Project[] = [
     // rascunho — Renan confere o papel exato no time do hackathon.
     role: { pt: 'Equipe (hackathon)', en: 'Team (hackathon)' },
     description: {
-      // Colocação reusada VERBATIM do award ActInSpace (data/experience.ts).
-      pt: "Imageria de satélite, 'seeing the unseen, from space'. 1º lugar, representando o Brasil na final mundial na França.",
-      en: "Satellite imagery, 'seeing the unseen, from space'. 1st place, representing Brazil in the global final in France.",
+      // Conquista reusada do award ActInSpace (data/experience.ts): o mesmo Airbus Prize.
+      pt: "Imageria de satélite, no tema 'seeing the unseen, from space'. Ganhou o Airbus Prize, o prêmio especial da Airbus na final mundial do ActInSpace 2026, em Bordeaux, representando o Brasil.",
+      en: "Satellite imagery, on the theme 'seeing the unseen, from space'. It won the Airbus Prize, Airbus's special award at the ActInSpace 2026 world final in Bordeaux, representing Brazil.",
     },
     stack: ['React', 'Vite', 'JavaScript'],
     links: [

@@ -9,7 +9,7 @@ A paleta do site é dark anti-neon, escolhida token a token em OKLCH. OKLCH é
 perceptualmente uniforme: mexer no L move o brilho de um jeito previsível pro olho.
 
 O WCAG não mede em OKLCH. Mede luminância em sRGB. E o olho não sabe dizer se um par
-texto/fundo passa de 4.5:1. Então não se opina sobre contraste. Calcula-se. O repo
+texto/fundo passa de 4.5:1. Então eu não fico opinando sobre contraste. Eu calculo. O repo
 tem um script que faz isso.
 
 ## OKLCH não é sRGB
@@ -108,7 +108,7 @@ em 13 de 13 pares obrigatórios em PASS, 1 isento.
 
 ## O que o número me obrigou a fazer
 
-O caso concreto foi o `destructive`, o vermelho de erro (MAI-661). Eu tinha posto o L
+O caso concreto foi o `destructive`, o vermelho de erro. Eu tinha posto o L
 em 0.585, um vermelho que parecia certo no olho. O script discordou: contra o
 `destructive-foreground`, a razão era `4.06:1`. Abaixo do 4.5. Reprova no AA de texto,
 por pouco, exatamente o "por pouco" que o olho não pega.
@@ -122,4 +122,4 @@ raramente, num PR de design, não a cada commit. Rodar `node scripts/check-contr
 quando mexo na paleta cobre o risco real sem pendurar a checagem em todo build. A
 disciplina é rodar quando importa, não automatizar o que quase nunca muda.
 
-> Cor bonita é opinião. Contraste é número. Uma você discute, o outro você mede.
+> No fim, cor bonita todo mundo acha que sabe. Contraste não: dá pra medir. Foi o que eu fiz aqui.

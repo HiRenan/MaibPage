@@ -9,7 +9,7 @@ Quando o agente erra, o reflexo é dar mais contexto: mais um documento, mais um
 exemplo, mais uma instrução. Parece ajuda.
 
 Quase sempre é o movimento errado. Engenharia de contexto não é maximizar o que o
-agente vê — é curar.
+agente vê. É escolher o que entra.
 
 ## Por que mais piora
 
@@ -20,7 +20,7 @@ instrução que importa afoga no meio.
 São três efeitos somando:
 
 - **Diluição:** quanto mais você empilha, menos peso cada parte carrega.
-- **Contradição:** doc velho que briga com o novo, exemplo que aponta pro lado oposto da regra — o modelo não sabe qual vence.
+- **Contradição:** doc velho que briga com o novo, exemplo que aponta pro lado oposto da regra. O modelo não sabe qual vence.
 - **Lost in the middle:** o que cai no meio de um contexto longo é justo o que o modelo mais ignora.
 
 Mais contexto não é mais informação. Muitas vezes é menos sinal.
@@ -33,35 +33,35 @@ Dê o arquivo certo, não o repositório. A função, não o módulo. A regra qu
 esta tarefa, não o manual inteiro. Escopo apertado é o que mantém a instrução que
 importa no topo da pilha, onde ela pesa.
 
-Podar parece que você está escondendo coisa do agente. Está — e é o ponto.
+Podar parece que você está escondendo coisa do agente. E está mesmo. Esse é exatamente o ponto.
 
 ## Terceirizar a busca: sub-agentes
 
 Às vezes a tarefa exige varrer muita coisa: achar onde um padrão aparece em trinta
-arquivos, mapear uma convenção espalhada. A varredura é cara em contexto — e quase
+arquivos, mapear uma convenção espalhada. A varredura é cara em contexto, e quase
 tudo que ela lê é descartável.
 
 Então mande um sub-agente. Ele queima o próprio contexto na busca e devolve só a
 conclusão: o arquivo, a linha, a resposta. O contexto principal nunca vê o lixo do
-caminho — só o resultado.
+caminho, só o resultado.
 
 É poda terceirizada: o trabalho sujo acontece numa janela que você joga fora.
 
 ## Durável e efêmero
 
 Separe o que dura do que passa. Regra permanente vai pro arquivo de contexto ou pra
-memória — entra uma vez, fica sempre disponível, fora da janela quente. O que é da
-tarefa morre com a tarefa; não deixe virar sedimento na conversa.
+memória: entra uma vez, fica sempre disponível, fora da janela quente. O que é da
+tarefa morre com a tarefa, não deixa virar sedimento na conversa.
 
 Poluir o durável é a poda mais cara de perder: o ruído passa a voltar toda vez.
 
 ## Contexto é orçamento
 
-Trate a janela como orçamento, não depósito — cada coisa que entra compete por
+Trata a janela como orçamento, não como depósito. Cada coisa que entra compete por
 atenção com as outras.
 
 Vale no tempo também. Conversa longa não precisa carregar o caminho inteiro:
 resuma, descarte o percurso, guarde a conclusão. O histórico é rascunho; o estado é
 o que importa.
 
-> Contexto é orçamento, não depósito. O que você tira pesa mais do que o que você põe.
+> No fim, o que você tira do contexto pesa mais do que o que você coloca.

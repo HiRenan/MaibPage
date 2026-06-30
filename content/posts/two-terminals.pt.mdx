@@ -15,18 +15,18 @@ O relatório é a parte menos confiável do fluxo.
 
 Então eu rodo dois Claude Code ao mesmo tempo, em terminais separados. Um é o
 **builder**: recebe a tarefa, escreve o código, roda os próprios testes. O outro é
-o **verificador**: não escreve nada de produção — ele desconfia.
+o **verificador**: ele não escreve nada de produção, o trabalho dele é desconfiar.
 
 A separação é o ponto. O verificador não viu o builder trabalhar, não carrega o
 viés de quem escreveu. Ele parte do diff e dos próprios critérios:
 
-- typecheck, lint, teste e build — do zero, na máquina dele;
+- typecheck, lint, teste e build, do zero, na máquina dele;
 - lê cada linha mudada, não o resumo;
 - re-roda os audits (Lighthouse, contraste, links) em vez de acreditar nos números relatados;
 - confere o escopo: só os arquivos que o ticket pedia, nada a mais.
 
-Só depois disso o trabalho vira commit. O relatório do builder nunca é prova — é
-uma alegação a ser checada.
+Só depois disso o trabalho vira commit. O relatório do builder nunca é prova. É
+uma alegação que precisa ser checada.
 
 ## A disciplina mora num arquivo
 
@@ -36,15 +36,15 @@ quatro princípios que sobrepõem o comportamento default do modelo:
 ```md
 ## Camada base
 
-1. Think before coding — não assuma, exponha tradeoffs, pergunte
-2. Simplicity first — o mínimo que resolve, nada especulativo
-3. Surgical changes — toque só no que o pedido exige
-4. Goal-driven — defina o critério de sucesso, faça loop até verificar
+1. Think before coding: não assuma, exponha tradeoffs, pergunte
+2. Simplicity first: o mínimo que resolve, nada especulativo
+3. Surgical changes: toque só no que o pedido exige
+4. Goal-driven: defina o critério de sucesso, faça loop até verificar
 ```
 
 Em cima dela, a camada do projeto: decisões travadas, antipadrões ("não fazer"),
-invariantes (sempre verdadeiros — i18n simétrico, server-first, tokens do design
-system) e os **hot files** — arquivos de alto raio de impacto que exigem
+invariantes (sempre verdadeiros: i18n simétrico, server-first, tokens do design
+system) e os **hot files**, arquivos de alto raio de impacto que exigem
 confirmação antes de qualquer edição.
 
 Regra que não está no arquivo não existe. Memória de agente é volátil; o arquivo, não.
@@ -53,7 +53,7 @@ Regra que não está no arquivo não existe. Memória de agente é volátil; o a
 
 Antes de escrever código, o builder passa por um grill: uma pergunta de cada vez,
 cada uma com uma recomendação, até a decisão estar travada. Ambiguidade vira
-pergunta — não vira suposição enterrada no commit.
+pergunta, não vira suposição enterrada no commit.
 
 É o primeiro princípio em ação: a confusão aparece **antes** da implementação, não
 depois que o diff revela o engano.
@@ -72,22 +72,22 @@ Nem tudo cabe em "lembre-se de". O que é mecânico vira hook ou permissão:
 ```
 
 Hooks confirmam hot files antes da edição e rodam lint/format depois de cada
-escrita. O humano não precisa lembrar de pedir — o ambiente cobra.
+escrita. O humano não precisa lembrar de pedir. O ambiente cobra por ele.
 
 ## Por que isso paga
 
 O ganho não é velocidade. É confiança.
 
 Esta semana o verificador rodou um audit Lighthouse. As páginas passaram o gate de
-≥ 95 em tudo — fim, diria o relatório. Mas ele não parou no número: leu os audits
+≥ 95 em tudo. Pronto, diria o relatório. Mas ele não parou no número: leu os audits
 individuais e achou dois bugs reais de acessibilidade que o score mascarava. Um
 comentário de código em 3.74:1 (WCAG AA exige 4.5). Três controles com texto
 visível diferente do nome acessível.
 
-Dois defeitos WCAG que sobreviveram ao builder _e_ ao próprio score — um porque
+Dois defeitos WCAG que sobreviveram ao builder _e_ ao próprio score: um porque
 tinha peso zero no cálculo, o outro porque só arranhou uma página pra 96. O segundo
 terminal pegou os dois.
 
-> A vanguarda não é o agente. É a malha que o cerca.
+> No fim, o que faz a diferença não é o agente. É a malha que eu montei em volta dele.
 
 Confie no diff, não no relato.
