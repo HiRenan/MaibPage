@@ -5,7 +5,7 @@ import { getAllPosts, type Locale } from '@/lib/posts';
 import { hreflangAlternates, SITE_URL } from '@/lib/seo';
 
 // Segmentos de rota (não posts). '' = a home /[locale].
-const STATIC_SEGMENTS = ['', '/about', '/experience', '/blog'] as const;
+const STATIC_SEGMENTS = ['', '/about', '/experience', '/projects', '/blog'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];

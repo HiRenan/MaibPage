@@ -139,6 +139,15 @@
       "infra": "Infra"
     }
   },
+  "projects": {
+    "title": "Projects",
+    "metaTitle": "Projects · MAIB",
+    "lead": "A selection of what I've built: products, hackathon projects, and technical experiments.",
+    "links": {
+      "repo": "Code",
+      "demo": "Live"
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "Page not found",

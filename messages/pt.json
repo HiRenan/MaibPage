@@ -139,6 +139,15 @@
       "infra": "Infra"
     }
   },
+  "projects": {
+    "title": "Projetos",
+    "metaTitle": "Projetos · MAIB",
+    "lead": "Uma seleção do que construí: produtos, projetos de hackathon e experimentos técnicos.",
+    "links": {
+      "repo": "Código",
+      "demo": "Demo"
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "Página não encontrada",
