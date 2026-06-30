@@ -161,11 +161,13 @@ pnpm typecheck    # tsc --noEmit
 
 - `.claude/settings.json` — permissions + statusLine (✅ DOC3)
 - `.claude/statusline.sh` — script bash: `<branch> · <node version>` (✅ DOC3)
-- `.claude/hooks/` — pre-edit, post-write, post-tool, stop (DOC4)
-- `.claude/agents/` — code-reviewer, security-review, i18n-consistency-checker, mdx-post-scaffolder, test-writer, a11y-checker (DOC5-9)
-- `.claude/skills/` — add-post, add-page, draft-decision, add-component (DOC10)
-- `.mcp.json` — filesystem, github, vercel MCPs (DOC11)
-- `vault/` — Obsidian vault (segundo cérebro · DOC13-15)
+- `.claude/agents/` — ✅ **construídos:** `code-reviewer` (verificador: convenções Next 16, tokens, escopo, roda os gates), `i18n-consistency-checker` (simetria PT/EN, roteamento locale), `a11y-checker` (WCAG AA: alt, label-in-name, contraste OKLCH). _Planejados, não construídos:_ `security-review`, `test-writer`, `mdx-post-scaffolder` (DOC5-9).
+- `.claude/skills/` — ✅ **construído:** `/add-post` (scaffold de post MDX pt+en, frontmatter válido pelo zod). _Planejados:_ `add-page`, `draft-decision`, `add-component` (DOC10).
+- `.claude/hooks/` — _planejado, não construído_ (DOC4)
+- `.mcp.json` — _planejado, não construído_ (DOC11)
+- `vault/` — _planejado, não construído_ (DOC13-15)
+
+**Como invocar:** agents via `Agent(subagent_type: '<nome>')`, `@agent-<nome>`, ou auto-disparo quando o trabalho casa com a `description`; skill via `/add-post`. Editar arquivos em `.claude/` exige reabrir a sessão pra registrar.
 
 **Comandos pré-aprovados** (sem prompt, conforme `.claude/settings.json`):
 
