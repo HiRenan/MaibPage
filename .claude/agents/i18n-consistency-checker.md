@@ -24,9 +24,9 @@ achados acionáveis. Não escreve código.
 - **Navegação:** sempre `<Link>` de `@/i18n/navigation` (preserva locale), nunca
   `<a href="/...">` cru. `LocaleSwitcher` preserva o pathname ao trocar.
 - **SEO/hreflang:** helpers em `lib/seo.ts` — `HREFLANG` (`pt`→`pt-BR`, `en`→`en`),
-  `hreflangAlternates()` (inclui `x-default`). Toda rota seta `alternates.canonical`
-  - `alternates.languages` no `generateMetadata`, e `generateStaticParams` cobre os
-    2 locales.
+  `hreflangAlternates()` (inclui `x-default`). Toda rota seta `alternates.canonical` e
+  `alternates.languages` no `generateMetadata`; `generateStaticParams` cobre os 2
+  locales.
 
 ## Cheques (rode todos contra o diff ou os arquivos indicados)
 
