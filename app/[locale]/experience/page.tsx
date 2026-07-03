@@ -151,10 +151,12 @@ export default async function ExperiencePage({ params }: Props) {
   return (
     <Container size="sm" className="flex flex-col py-20 sm:py-28">
       <header className="flex flex-col gap-4">
-        <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
           {t('nav.experience')}
         </h1>
-        <p className="text-muted-foreground text-lg text-pretty">{t('experience.lead')}</p>
+        <p className="enter-rise enter-rise-2 text-muted-foreground text-lg text-pretty">
+          {t('experience.lead')}
+        </p>
       </header>
 
       {sections.map(({ key, node }) => (

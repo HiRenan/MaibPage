@@ -61,10 +61,12 @@ export default async function BlogIndexPage({ params }: Props) {
   return (
     <Container size="prose" className="py-16 sm:py-24">
       <header>
-        <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
           {t('nav.blog')}
         </h1>
-        <p className="text-muted-foreground mt-5 text-lg text-pretty">{t('blog.description')}</p>
+        <p className="enter-rise enter-rise-2 text-muted-foreground mt-5 text-lg text-pretty">
+          {t('blog.description')}
+        </p>
       </header>
 
       <div className="mt-12">

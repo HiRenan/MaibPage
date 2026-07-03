@@ -93,10 +93,12 @@ export default async function PostPage({ params }: Props) {
       <JsonLd data={blogPostingJsonLd(post, locale)} />
       <article>
         <header>
-          <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
             {post.title}
           </h1>
-          <p className="text-muted-foreground mt-5 text-lg text-pretty">{post.description}</p>
+          <p className="enter-rise enter-rise-2 text-muted-foreground mt-5 text-lg text-pretty">
+            {post.description}
+          </p>
 
           <div className="text-muted-foreground mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm">
             <time dateTime={post.date}>{formattedDate}</time>

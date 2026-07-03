@@ -165,9 +165,37 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/*
+  Entrada-assinatura (Regra da Entrada Única) — uma coreografia por jornada:
+  hero da home em 3 passos, header das demais rotas em 2 (título + lead), e
+  nada mais. CSS-only, server-first. O bloco reduced-motion acima zera duração
+  E delay -> entrega o estático sem flash. h1 nunca leva delay (candidato a LCP).
+*/
+@keyframes enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@layer components {
+  .enter-rise {
+    animation: enter-rise var(--duration-enter) var(--ease-out-expo) both;
+  }
+
+  .enter-rise-2 {
+    animation-delay: var(--enter-stagger);
+  }
+
+  .enter-rise-3 {
+    animation-delay: calc(var(--enter-stagger) * 2);
   }
 }
 

@@ -66,10 +66,12 @@ export default async function AboutPage({ params }: Props) {
           blurDataURL={AVATAR_BLUR}
           className="border-border rounded-xl border"
         />
-        <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
           {t('title')}
         </h1>
-        <p className="text-muted-foreground text-lg text-pretty">{t('lead')}</p>
+        <p className="enter-rise enter-rise-2 text-muted-foreground text-lg text-pretty">
+          {t('lead')}
+        </p>
       </header>
 
       <DashedDivider className="my-12" />

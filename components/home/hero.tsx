@@ -11,13 +11,15 @@ export async function Hero() {
 
   return (
     <header className="flex flex-col gap-6">
-      <h1 className="text-foreground text-5xl font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl">
+      <h1 className="enter-rise text-foreground text-5xl font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl">
         {t('name')}
       </h1>
 
       <div className="flex flex-col gap-3">
-        <p className="text-muted-foreground font-mono text-sm sm:text-base">{t('role')}</p>
-        <SocialLinks variant="inline" />
+        <p className="enter-rise enter-rise-2 text-muted-foreground font-mono text-sm sm:text-base">
+          {t('role')}
+        </p>
+        <SocialLinks variant="inline" className="enter-rise enter-rise-3" />
       </div>
     </header>
   );
