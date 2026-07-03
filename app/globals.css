@@ -48,6 +48,14 @@
 
   /* Raio mínimo — daviaviss: cantos quase retos, max ~sm */
   --radius: 0.25rem;
+
+  /* Luz tonal de bancada — ~1.5 passos de luminosidade acima do --background,
+     mesma família quente. Profundidade tonal, não glow (Regra da Luz). */
+  --bench-light: oklch(0.205 0.008 70);
+
+  /* Grain de precisão — ruído estático dessaturado. Filtro em 0/0/100%/100% pro
+     stitch tilear sem emenda (0.75 × 128 = 96 células, inteiro). Nunca animar. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @theme inline {
@@ -104,6 +112,39 @@
   ::selection {
     background-color: color-mix(in oklch, var(--primary) 28%, transparent);
     color: var(--foreground);
+  }
+}
+
+/*
+  Fundo com profundidade — duas camadas fixas atrás de todo conteúdo. O bg do
+  body propaga pro canvas (html não tem bg), então pseudos com z-index negativo
+  pintam acima dele e abaixo do conteúdo — sem tocar no layout.
+  Grain em compositing normal de propósito: soft-light/overlay sobre L=0.17 é
+  matematicamente imperceptível e fixed+blend tem histórico de bug no WebKit.
+  @media screen: o fundo não deve repetir em toda página impressa.
+*/
+@media screen {
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  body::before {
+    background: radial-gradient(
+      120% 65% at 50% -12%,
+      var(--bench-light),
+      oklch(from var(--bench-light) l c h / 0) 62%
+    );
+  }
+
+  body::after {
+    background-image: var(--grain);
+    background-repeat: repeat;
+    opacity: 0.04;
   }
 }
 
