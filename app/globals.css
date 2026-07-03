@@ -56,6 +56,11 @@
   /* Grain de precisão — ruído estático dessaturado. Filtro em 0/0/100%/100% pro
      stitch tilear sem emenda (0.75 × 128 = 96 células, inteiro). Nunca animar. */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Motion da entrada-assinatura — consumidos por CSS raw, não geram utility.
+     Em :root de propósito: imunes ao tree-shaking do @theme. */
+  --duration-enter: 480ms;
+  --enter-stagger: 80ms;
 }
 
 @theme inline {
@@ -88,6 +93,12 @@
 
   /* Ease-out exponencial — a curva de assinatura (Regra da Entrada Única) */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Escala de durações — todo efeito usa estes tokens, nada de valor mágico.
+     Namespace do v4 (--transition-duration-*): gera duration-fast/base/slow. */
+  --transition-duration-fast: 120ms;
+  --transition-duration-base: 200ms;
+  --transition-duration-slow: 320ms;
 }
 
 @layer base {
