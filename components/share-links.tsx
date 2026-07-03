@@ -13,7 +13,7 @@ type ShareLinksProps = { url: string; title: string };
 // Mesma classe da social-row do footer (site-footer.tsx): alvo de toque size-9, icon-only,
 // rótulo via aria-label. O estado copiado realça em text-primary (sem neon).
 const action =
-  'text-muted-foreground hover:text-primary inline-flex size-9 items-center justify-center rounded-sm transition-colors';
+  'text-muted-foreground hover:text-primary hover:bg-accent focus-visible:bg-accent duration-base ease-out-expo inline-flex size-9 items-center justify-center rounded-sm transition-colors';
 
 export function ShareLinks({ url, title }: ShareLinksProps) {
   const t = useTranslations('post');

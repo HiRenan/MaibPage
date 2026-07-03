@@ -48,7 +48,8 @@
   "a11y": {
     "skipToContent": "Pular para o conteúdo",
     "mainNav": "Navegação principal",
-    "opensInNewTab": "abre em nova aba"
+    "opensInNewTab": "abre em nova aba",
+    "headingAnchor": "Link direto para esta seção"
   },
   "footer": {
     "rights": "Todos os direitos reservados.",

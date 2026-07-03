@@ -120,7 +120,7 @@ export default async function PostPage({ params }: Props) {
                 href={`/blog/${slug}`}
                 locale={otherLocale}
                 aria-label={`${locale} → ${otherLocale}, ${t('common.switchLanguage', { target: otherLocale.toUpperCase() })}`}
-                className="hover:text-primary ml-auto uppercase transition-colors"
+                className="hover:text-primary duration-base ease-out-expo ml-auto uppercase transition-colors"
               >
                 {locale} → {otherLocale}
               </Link>
@@ -145,9 +145,15 @@ export default async function PostPage({ params }: Props) {
             {previous ? (
               <Link href={`/blog/${previous.slug}`} className="group flex flex-col gap-1">
                 <span className="text-muted-foreground font-mono text-xs tracking-wide uppercase">
-                  ← {t('post.previous')}
+                  <span
+                    aria-hidden
+                    className="duration-base ease-out-expo inline-block transition group-hover:-translate-x-1 group-focus-visible:-translate-x-1"
+                  >
+                    ←
+                  </span>{' '}
+                  {t('post.previous')}
                 </span>
-                <span className="text-foreground group-hover:text-primary text-pretty transition-colors">
+                <span className="text-foreground group-hover:text-primary group-focus-visible:text-primary duration-base ease-out-expo text-pretty transition-colors">
                   {previous.title}
                 </span>
               </Link>
@@ -160,9 +166,15 @@ export default async function PostPage({ params }: Props) {
                 className="group flex flex-col gap-1 sm:items-end sm:text-right"
               >
                 <span className="text-muted-foreground font-mono text-xs tracking-wide uppercase">
-                  {t('post.next')} →
+                  {t('post.next')}{' '}
+                  <span
+                    aria-hidden
+                    className="duration-base ease-out-expo inline-block transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
+                  >
+                    →
+                  </span>
                 </span>
-                <span className="text-foreground group-hover:text-primary text-pretty transition-colors">
+                <span className="text-foreground group-hover:text-primary group-focus-visible:text-primary duration-base ease-out-expo text-pretty transition-colors">
                   {next.title}
                 </span>
               </Link>

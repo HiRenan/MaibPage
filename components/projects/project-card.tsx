@@ -21,7 +21,7 @@ export type ProjectCardProps = {
 // daltônico-safe), espelhando o linkClass do MdxAnchor.
 const linkClass = cn(
   'text-primary decoration-primary/40 font-medium underline underline-offset-2',
-  'transition-colors hover:decoration-primary',
+  'duration-base ease-out-expo transition-colors hover:decoration-primary',
 );
 
 // Card de um projeto: ano em mono na coluna fixa à esquerda (alinha com Timeline/Awards),
@@ -74,9 +74,18 @@ export function ProjectCard({
 // seguro, glifo ↗ (sinal além da cor) + texto sr-only pro leitor anunciar a nova aba.
 function ProjectLinkAnchor({ link, newTabLabel }: { link: ProjectCardLink; newTabLabel: string }) {
   return (
-    <a href={link.href} className={linkClass} target="_blank" rel="noopener noreferrer">
+    <a
+      href={link.href}
+      className={cn('group', linkClass)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {link.label}
-      <span aria-hidden className="ml-0.5 font-mono text-sm">
+      {/* ↗ desliza na própria diagonal no hover — sinal que aponta, não preenche. */}
+      <span
+        aria-hidden
+        className="duration-base ease-out-expo ml-0.5 inline-block font-mono text-sm transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+      >
         ↗
       </span>
       <span className="sr-only">{newTabLabel}</span>

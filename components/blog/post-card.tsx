@@ -28,13 +28,21 @@ export function PostCard({
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group hover:bg-accent focus-visible:bg-accent -mx-4 block rounded-sm px-4 py-5 transition-colors"
+      className="group hover:bg-accent focus-visible:bg-accent duration-base ease-out-expo -mx-4 block rounded-sm px-4 py-5 transition-colors"
     >
-      <h3 className="text-foreground group-hover:text-primary text-xl font-medium tracking-tight text-pretty transition-colors">
+      <h3 className="text-foreground group-hover:text-primary group-focus-visible:text-primary duration-base ease-out-expo text-xl font-medium tracking-tight text-pretty transition-colors">
         {title}
+        {/* Indicador visível em repouso (affordance de link sem hover — crítica P2);
+            no hover desliza e acende junto do título. Decorativo: aria-hidden. */}
+        <span
+          aria-hidden
+          className="text-muted-foreground/60 group-hover:text-primary group-focus-visible:text-primary duration-base ease-out-expo ml-2 inline-block font-mono transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
+        >
+          →
+        </span>
       </h3>
 
-      <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-x-2 font-mono text-sm">
+      <div className="text-muted-foreground group-hover:text-foreground group-focus-visible:text-foreground duration-base ease-out-expo mt-2 flex flex-wrap items-center gap-x-2 font-mono text-sm transition-colors">
         <time dateTime={dateTime}>{dateLabel}</time>
         <span aria-hidden>·</span>
         <span>{readingTimeLabel}</span>

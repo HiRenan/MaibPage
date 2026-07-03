@@ -37,7 +37,7 @@ export async function SiteFooter() {
                   href={href}
                   aria-label={t(`social.${key}`)}
                   {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
-                  className="text-muted-foreground hover:text-primary inline-flex size-9 items-center justify-center rounded-sm transition-colors"
+                  className="text-muted-foreground hover:text-primary hover:bg-accent focus-visible:bg-accent duration-base ease-out-expo inline-flex size-9 items-center justify-center rounded-sm transition-colors"
                 >
                   <Icon className="size-[18px]" />
                 </a>
@@ -48,7 +48,7 @@ export async function SiteFooter() {
             <a
               href={`/api/rss/${locale}.xml`}
               aria-label={t('social.rss')}
-              className="text-muted-foreground hover:text-primary inline-flex size-9 items-center justify-center rounded-sm transition-colors"
+              className="text-muted-foreground hover:text-primary hover:bg-accent focus-visible:bg-accent duration-base ease-out-expo inline-flex size-9 items-center justify-center rounded-sm transition-colors"
             >
               <RssIcon className="size-[18px]" />
             </a>

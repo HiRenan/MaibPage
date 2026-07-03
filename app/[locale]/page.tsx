@@ -76,10 +76,15 @@ export default async function HomePage({ params }: Props) {
         </ul>
         <Link
           href="/about"
-          className="text-muted-foreground hover:text-primary self-start font-mono text-sm underline-offset-4 transition-colors hover:underline"
+          className="group text-muted-foreground hover:text-primary focus-visible:text-primary duration-base ease-out-expo self-start font-mono text-sm underline-offset-4 transition-colors hover:underline"
         >
-          {t('about.readMore')}
-          <span aria-hidden> →</span>
+          {t('about.readMore')}{' '}
+          <span
+            aria-hidden
+            className="duration-base ease-out-expo inline-block transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
+          >
+            →
+          </span>
         </Link>
       </section>
 
@@ -106,9 +111,15 @@ export default async function HomePage({ params }: Props) {
         <p className="text-muted-foreground max-w-prose text-pretty">{t('contact.body')}</p>
         <a
           href={`mailto:${t('contact.email')}`}
-          className="text-foreground hover:text-primary self-start font-mono text-base underline-offset-4 transition-colors hover:underline sm:text-lg"
+          className="group text-foreground hover:text-primary focus-visible:text-primary duration-base ease-out-expo self-start font-mono text-base underline-offset-4 transition-colors hover:underline sm:text-lg"
         >
-          {t('contact.email')}
+          {t('contact.email')}{' '}
+          <span
+            aria-hidden
+            className="duration-base ease-out-expo inline-block transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
+          >
+            →
+          </span>
         </a>
       </section>
     </Container>

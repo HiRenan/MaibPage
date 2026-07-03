@@ -29,7 +29,9 @@ export function CommandTrigger({ className, ref, ...props }: ComponentProps<'but
       aria-label={`${t('open')} ${shortcut}`}
       aria-keyshortcuts="Meta+K Control+K"
       className={cn(
-        'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 inline-flex h-8 items-center gap-2 rounded-sm border px-2 transition-colors sm:px-2.5',
+        // Press state: translate-y de 1px no :active — resposta de instrumento,
+        // duration-fast pro toque ser imediato. transition cobre cor + translate.
+        'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 duration-fast ease-out-expo inline-flex h-8 items-center gap-2 rounded-sm border px-2 transition active:translate-y-px sm:px-2.5',
         className,
       )}
       {...props}

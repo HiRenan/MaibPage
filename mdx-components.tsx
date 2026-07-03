@@ -54,6 +54,35 @@ function MdxAnchor({ href = '', children, className, ...props }: ComponentPropsW
   );
 }
 
+// Headings com âncora (#): o id vem do rehype-slug via props. O anchor é focável
+// e rotulado (a11y.headingAnchor) — esconder da AT removeria o affordance de
+// teclado de quem mais precisa. Revela por opacity no hover do heading e no foco.
+// scroll-mt-24 preservado: o rootMargin do TOC (-96px) é calibrado com ele.
+function createMdxHeading(Tag: 'h2' | 'h3', headingClass: string) {
+  return function MdxHeading({
+    className,
+    children,
+    id,
+    ...props
+  }: ComponentPropsWithoutRef<'h2'>) {
+    const t = useTranslations('a11y');
+    return (
+      <Tag id={id} className={cn('group', headingClass, className)} {...props}>
+        {children}
+        {id && (
+          <a
+            href={`#${id}`}
+            aria-label={t('headingAnchor')}
+            className="text-primary duration-base ease-out-expo ml-2 font-mono font-normal opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+          >
+            #
+          </a>
+        )}
+      </Tag>
+    );
+  };
+}
+
 function MdxImage({ src, alt = '', width, height, className }: ComponentPropsWithoutRef<'img'>) {
   if (typeof src !== 'string' || src.length === 0) return null;
 
@@ -82,21 +111,11 @@ const components: MDXComponents = {
       {...props}
     />
   ),
-  h2: ({ className, ...props }: ComponentPropsWithoutRef<'h2'>) => (
-    <h2
-      className={cn(
-        'text-foreground mt-12 mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight',
-        className,
-      )}
-      {...props}
-    />
+  h2: createMdxHeading(
+    'h2',
+    'text-foreground mt-12 mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight',
   ),
-  h3: ({ className, ...props }: ComponentPropsWithoutRef<'h3'>) => (
-    <h3
-      className={cn('text-foreground mt-8 mb-3 scroll-mt-24 text-xl font-medium', className)}
-      {...props}
-    />
-  ),
+  h3: createMdxHeading('h3', 'text-foreground mt-8 mb-3 scroll-mt-24 text-xl font-medium'),
   p: ({ className, ...props }: ComponentPropsWithoutRef<'p'>) => (
     <p className={cn('text-foreground my-5 leading-7 text-pretty', className)} {...props} />
   ),

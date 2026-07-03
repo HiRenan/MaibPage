@@ -29,7 +29,11 @@ export function NavLinks() {
               href={href}
               aria-current={active ? 'page' : undefined}
               className={cn(
-                'text-sm transition-colors',
+                'duration-base ease-out-expo relative text-sm transition-colors',
+                // Underline animado por pseudo-elemento: transform-only (scale-x,
+                // origem à esquerda), nunca width — física do vocabulário.
+                'after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-current',
+                'after:duration-base after:ease-out-expo after:transition-transform hover:after:scale-x-100 focus-visible:after:scale-x-100',
                 active ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground',
               )}
             >

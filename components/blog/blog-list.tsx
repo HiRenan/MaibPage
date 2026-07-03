@@ -54,7 +54,7 @@ export function BlogList({ posts, tags }: BlogListProps) {
           <button
             type="button"
             onClick={() => setSelected(null)}
-            className="text-muted-foreground hover:text-primary ml-1 font-mono text-xs underline-offset-4 transition-colors hover:underline"
+            className="text-muted-foreground hover:text-primary duration-base ease-out-expo ml-1 font-mono text-xs underline-offset-4 transition-colors hover:underline"
           >
             {t('clearFilter')}
           </button>
@@ -118,7 +118,7 @@ function TagChip({
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        'inline-flex h-8 items-center rounded-sm border px-3 font-mono text-sm leading-none transition-colors',
+        'duration-base ease-out-expo inline-flex h-8 items-center rounded-sm border px-3 font-mono text-sm leading-none transition active:translate-y-px',
         active
           ? 'border-primary bg-primary/10 text-primary'
           : 'border-border text-muted-foreground hover:border-foreground/30 hover:bg-accent hover:text-foreground',

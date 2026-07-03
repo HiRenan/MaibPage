@@ -26,11 +26,11 @@ export async function FeaturedPosts({ posts }: { posts: Post[] }) {
           <li key={post.slug}>
             <Link
               href={`/blog/${post.slug}`}
-              className="group hover:bg-accent focus-visible:bg-accent -mx-4 flex flex-col gap-1 rounded-sm px-4 py-3 transition-colors sm:flex-row sm:items-baseline sm:gap-5"
+              className="group hover:bg-accent focus-visible:bg-accent duration-base ease-out-expo -mx-4 flex flex-col gap-1 rounded-sm px-4 py-3 transition-colors sm:flex-row sm:items-baseline sm:gap-5"
             >
               <time
                 dateTime={post.date}
-                className="text-muted-foreground shrink-0 font-mono text-sm tabular-nums"
+                className="text-muted-foreground group-hover:text-foreground group-focus-visible:text-foreground duration-base ease-out-expo shrink-0 font-mono text-sm tabular-nums transition-colors"
               >
                 {format.dateTime(new Date(post.date), {
                   day: '2-digit',
@@ -39,8 +39,14 @@ export async function FeaturedPosts({ posts }: { posts: Post[] }) {
                   timeZone: 'UTC',
                 })}
               </time>
-              <span className="text-foreground group-hover:text-primary text-lg tracking-tight text-pretty transition-colors">
+              <span className="text-foreground group-hover:text-primary group-focus-visible:text-primary duration-base ease-out-expo text-lg tracking-tight text-pretty transition-colors">
                 {post.title}
+                <span
+                  aria-hidden
+                  className="text-muted-foreground/60 group-hover:text-primary group-focus-visible:text-primary duration-base ease-out-expo ml-2 inline-block font-mono text-sm transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
+                >
+                  →
+                </span>
               </span>
             </Link>
           </li>
@@ -49,10 +55,15 @@ export async function FeaturedPosts({ posts }: { posts: Post[] }) {
 
       <Link
         href="/blog"
-        className="text-muted-foreground hover:text-primary self-start font-mono text-sm underline-offset-4 transition-colors hover:underline"
+        className="group text-muted-foreground hover:text-primary focus-visible:text-primary duration-base ease-out-expo self-start font-mono text-sm underline-offset-4 transition-colors hover:underline"
       >
-        {t('viewAll')}
-        <span aria-hidden> →</span>
+        {t('viewAll')}{' '}
+        <span
+          aria-hidden
+          className="duration-base ease-out-expo inline-block transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
+        >
+          →
+        </span>
       </Link>
     </section>
   );

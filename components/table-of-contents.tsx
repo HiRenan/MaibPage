@@ -21,7 +21,7 @@ function TocList({ headings, activeId }: { headings: Heading[]; activeId: string
               href={`#${heading.id}`}
               aria-current={isActive ? 'location' : undefined}
               className={cn(
-                'block text-sm leading-snug transition-colors',
+                'duration-base ease-out-expo block text-sm leading-snug transition-colors',
                 isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
               )}
             >
@@ -71,7 +71,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
     <>
       {/* Abaixo de xl: colapsável inline no topo do corpo, sem scroll-spy. */}
       <details className="border-border my-6 rounded-sm border border-dashed px-4 py-3 xl:hidden">
-        <summary className="text-muted-foreground hover:text-foreground cursor-pointer font-mono text-xs tracking-wide uppercase transition-colors">
+        <summary className="text-muted-foreground hover:text-foreground duration-base ease-out-expo cursor-pointer font-mono text-xs tracking-wide uppercase transition-colors">
           {t('tocTitle')}
         </summary>
         <nav aria-label={t('tocAriaLabel')} className="mt-4">
