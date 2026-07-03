@@ -40,7 +40,7 @@ export async function SocialLinks({ variant, className }: SocialLinksProps) {
             <a
               href={href}
               {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
-              className="hover:text-primary underline-offset-4 transition-colors hover:underline"
+              className="hover:text-primary duration-base ease-out-expo underline-offset-4 transition-colors hover:underline"
             >
               {t(key)}
               {external && <span className="sr-only"> ({opensInNewTab})</span>}

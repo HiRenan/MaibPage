@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 
 const linkClass = cn(
   'text-primary decoration-primary/40 font-medium underline underline-offset-2',
-  'transition-colors hover:decoration-primary',
+  'duration-base ease-out-expo transition-colors hover:decoration-primary',
 );
 
 function MdxAnchor({ href = '', children, className, ...props }: ComponentPropsWithoutRef<'a'>) {

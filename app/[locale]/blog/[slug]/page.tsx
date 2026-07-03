@@ -120,7 +120,7 @@ export default async function PostPage({ params }: Props) {
                 href={`/blog/${slug}`}
                 locale={otherLocale}
                 aria-label={`${locale} → ${otherLocale}, ${t('common.switchLanguage', { target: otherLocale.toUpperCase() })}`}
-                className="hover:text-primary duration-base ease-out-expo ml-auto uppercase transition-colors"
+                className="hover:text-primary focus-visible:text-primary duration-base ease-out-expo ml-auto uppercase transition-colors"
               >
                 {locale} → {otherLocale}
               </Link>

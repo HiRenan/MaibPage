@@ -21,7 +21,7 @@ export function LocaleSwitcher() {
       type="button"
       onClick={() => router.replace(pathname, { locale: other })}
       aria-label={`${locale} → ${other}, ${t('switchLanguage', { target: other.toUpperCase() })}`}
-      className="text-muted-foreground hover:text-primary font-mono text-sm uppercase transition-colors"
+      className="text-muted-foreground hover:text-primary duration-base ease-out-expo font-mono text-sm uppercase transition-colors"
     >
       {locale} → {other}
     </button>
