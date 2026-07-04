@@ -6,6 +6,7 @@ import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Awards, type AwardEntry } from '@/components/experience/awards';
+import { ORG_LOGOS } from '@/components/experience/org-logos';
 import { SkillGroup } from '@/components/experience/skill-group';
 import { Timeline, type TimelineEntry } from '@/components/experience/timeline';
 import { Container } from '@/components/ui/container';
@@ -60,13 +61,16 @@ export default async function ExperiencePage({ params }: Props) {
 
   // DADOS (data/experience.ts) -> TimelineEntry, escolhendo o idioma do locale.
   // Datas/empresa/instituição/stack são locale-neutral; role/degree/description variam.
+  // org/projects viram componentes de logo aqui (ORG_LOGOS) — a Timeline só apresenta.
   const experienceEntries: TimelineEntry[] = experience.map((item) => ({
     start: item.start,
     end: item.end,
     title: item.role[locale],
     subtitle: item.company,
+    logo: item.org ? ORG_LOGOS[item.org] : undefined,
     description: item.description[locale],
     tags: item.stack,
+    projectsWith: item.projects,
   }));
 
   const educationEntries: TimelineEntry[] = education.map((item) => ({
@@ -101,7 +105,11 @@ export default async function ExperiencePage({ params }: Props) {
       key: 'work',
       node: (
         <Section id="experience-work" heading={t('experience.sections.experience')}>
-          <Timeline entries={experienceEntries} presentLabel={presentLabel} />
+          <Timeline
+            entries={experienceEntries}
+            presentLabel={presentLabel}
+            projectsWithLabel={t('experience.projectsWith')}
+          />
         </Section>
       ),
     });

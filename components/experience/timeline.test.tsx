@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
+import { FreedomAiLogo } from '@/components/experience/org-logos';
 import { Timeline, type TimelineEntry } from '@/components/experience/timeline';
 
 const entries: TimelineEntry[] = [
@@ -63,5 +64,83 @@ describe('Timeline', () => {
     expect(screen.getByRole('heading', { name: 'Residência em IA' })).toBeInTheDocument();
     expect(screen.getByText('SENAI/SC')).toBeInTheDocument();
     expect(screen.queryAllByRole('separator')).toHaveLength(0);
+  });
+
+  it('logo da organização é decorativa (aria-hidden) e o nome permanece texto visível', () => {
+    const { container } = render(
+      <Timeline
+        entries={[
+          {
+            start: '2024',
+            end: 'present',
+            title: 'Engenheiro de IA',
+            subtitle: 'Freedom.AI',
+            logo: FreedomAiLogo,
+          },
+        ]}
+        presentLabel="presente"
+      />,
+    );
+    const svg = container.querySelector('svg');
+    expect(svg).not.toBeNull();
+    expect(svg).toHaveAttribute('aria-hidden');
+    expect(screen.getByText('Freedom.AI')).toBeInTheDocument();
+  });
+
+  it('renderiza a linha "projetos com" com label e nomes como texto', () => {
+    render(
+      <Timeline
+        entries={[
+          {
+            start: '2025',
+            end: 'present',
+            title: 'Residência em IA',
+            subtitle: 'SENAI/SC',
+            projectsWith: ['Altona', 'Olsen'],
+          },
+        ]}
+        presentLabel="presente"
+        projectsWithLabel="projetos com"
+      />,
+    );
+    expect(screen.getByText('projetos com')).toBeInTheDocument();
+    expect(screen.getByText('Altona')).toBeInTheDocument();
+    expect(screen.getByText('Olsen')).toBeInTheDocument();
+  });
+
+  it('não renderiza a linha de projetos sem projectsWithLabel', () => {
+    render(
+      <Timeline
+        entries={[
+          {
+            start: '2025',
+            end: '2026',
+            title: 'Residência em IA',
+            subtitle: 'SENAI/SC',
+            projectsWith: ['Altona'],
+          },
+        ]}
+        presentLabel="presente"
+      />,
+    );
+    expect(screen.queryByText('Altona')).toBeNull();
+  });
+
+  it('stack vazia (tags: []) não renderiza lista vazia', () => {
+    render(
+      <Timeline
+        entries={[
+          {
+            start: '2018',
+            end: '2021',
+            title: 'Analista Financeiro',
+            subtitle: 'Softplan',
+            tags: [],
+          },
+        ]}
+        presentLabel="presente"
+      />,
+    );
+    expect(screen.queryByRole('list')).toBeNull();
   });
 });

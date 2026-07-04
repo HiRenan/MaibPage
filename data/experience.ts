@@ -12,13 +12,23 @@ export const PRESENT = 'present';
 
 export type LocalizedText = { pt: string; en: string };
 
+// Organizações com WORDMARK na timeline — components/experience/org-logos.tsx resolve
+// a logo de cada key (o `satisfies` de lá quebra o typecheck se faltar logo). Só entram
+// as que têm wordmark; projetos da residência (Altona/Olsen) são só nome em texto.
+export type OrgKey = 'freedom-ai' | 'senai' | 'paradigma' | 'softplan';
+
 export type ExperienceItem = {
   start: string;
   end: string; // data ('YYYY'|'YYYY-MM') OU o sentinela PRESENT
   role: LocalizedText;
   company: string;
+  org?: OrgKey; // marca da organização, exibida junto ao nome
   description: LocalizedText;
   stack: string[];
+  // Projetos feitos VIA a organização (não vínculo empregatício) — a Timeline
+  // renderiza como linha "projetos com". Nomes em texto (sem logo). Ex.: clientes
+  // atendidos na residência.
+  projects?: string[];
 };
 
 export type EducationItem = {
@@ -64,9 +74,10 @@ export function sortSkillGroups(groups: SkillGroup[]): SkillGroup[] {
 }
 
 // --- DADOS REAIS (MAI-506) ---
-// Curados do CV/LinkedIn pro foco IA/eng. Fora da timeline por decisão do Renan:
-// Softplan (2018-2021, pré-tech) e MAIB (marca atual, vive em header/about/contato —
-// sem data, pra não ser lida como "empresa nova").
+// Curados do CV/LinkedIn pro foco IA/eng. A Softplan (2018-2021, financeiro, pré-tech)
+// entrou na timeline em 2026-07, junto com as marcas das orgs. Fora da timeline:
+// MAIB (marca atual, vive em header/about/contato — sem data, pra não ser lida
+// como "empresa nova").
 
 export const experience: ExperienceItem[] = [
   {
@@ -74,6 +85,7 @@ export const experience: ExperienceItem[] = [
     end: PRESENT,
     role: { pt: 'Engenheiro de IA', en: 'AI Engineer' },
     company: 'Freedom.AI',
+    org: 'freedom-ai',
     description: {
       pt: 'Agentes de IA e soluções LLM-based: agentes conversacionais e autônomos com orquestração, memória e tool use, sistemas RAG, fine-tuning e MLOps, com observabilidade e proteção contra alucinação e prompt injection.',
       en: 'AI agents and LLM-based solutions: conversational and autonomous agents with orchestration, memory and tool use, RAG systems, fine-tuning and MLOps, with observability and protection against hallucination and prompt injection.',
@@ -85,22 +97,38 @@ export const experience: ExperienceItem[] = [
     end: PRESENT,
     role: { pt: 'Residência em IA', en: 'AI Residency' },
     company: 'SENAI/SC',
+    org: 'senai',
     description: {
       pt: 'Programa intensivo de residência em IA: machine learning, deep learning e aprendizado por reforço, visão computacional, IA generativa, big data, otimização e meta-heurísticas, IA embarcada e projetos aplicados.',
       en: 'Intensive AI residency program: machine learning, deep learning and reinforcement learning, computer vision, generative AI, big data, optimization and meta-heuristics, embedded AI, and applied projects.',
     },
     stack: ['Python', 'Machine Learning', 'Deep Learning', 'Computer Vision', 'Generative AI'],
+    projects: ['Altona', 'Olsen'],
   },
   {
     start: '2022-03',
     end: '2025-06',
     role: { pt: 'Analista de Suporte N2', en: 'N2 Support Analyst' },
     company: 'Paradigma Business Solutions',
+    org: 'paradigma',
     description: {
       pt: 'Diagnóstico e correção de problemas em produto direto no banco (T-SQL, triggers, procedures), integrações XML e SOAP e pull requests de correção. Progressão de estagiário a N2, com melhoria de processos e documentação no time de suporte.',
       en: 'Diagnosing and fixing product issues directly in the database (T-SQL, triggers, procedures), XML and SOAP integrations, and fix pull requests. Progressed from intern to N2, improving support-team processes and documentation.',
     },
     stack: ['T-SQL', 'SQL', 'XML', 'SOAP'],
+  },
+  {
+    // Cargo e descrição em RASCUNHO — validar com o Renan antes de publicar.
+    start: '2018',
+    end: '2021',
+    role: { pt: 'Analista Financeiro', en: 'Financial Analyst' },
+    company: 'Softplan',
+    org: 'softplan',
+    description: {
+      pt: 'Análises e rotinas da área financeira em uma das maiores software houses do Brasil. O primeiro contato de dentro com a indústria de software, antes da transição pra tecnologia.',
+      en: "Finance analysis and operations at one of Brazil's largest software companies. A first inside look at the software industry, before the move into tech.",
+    },
+    stack: [],
   },
 ];
 
