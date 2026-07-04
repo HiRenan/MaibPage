@@ -60,3 +60,6 @@ next-env.d.ts
 
 # playwright mcp (artefatos de validação local)
 .playwright-mcp/
+
+# impeccable (artefatos de tooling de design — critiques, sidecar; não é fonte)
+.impeccable/
