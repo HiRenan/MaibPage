@@ -56,22 +56,28 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <Container size="sm" className="flex flex-col py-20 sm:py-28">
-      <header className="flex flex-col gap-4">
+      {/* Header em duas colunas no sm+; col-reverse mantém o h1 cedo no DOM (LCP)
+          com a foto acima no mobile. Foto no enquadramento original (640x640,
+          sem crop), cores naturais; não entra na coreografia enter-rise (Regra
+          da Entrada Única) — o blur-up já é a materialização dela. */}
+      <header className="flex flex-col-reverse gap-6 sm:flex-row sm:items-start sm:gap-10">
+        <div className="flex flex-1 flex-col gap-4">
+          <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+            {t('title')}
+          </h1>
+          <p className="enter-rise enter-rise-2 text-muted-foreground text-lg text-pretty">
+            {t('lead')}
+          </p>
+        </div>
         <Image
           src="/avatar.jpg"
           alt={tName('hero.name')}
-          width={128}
-          height={128}
+          width={176}
+          height={176}
           placeholder="blur"
           blurDataURL={AVATAR_BLUR}
-          className="border-border rounded-xl border"
+          className="h-auto w-40 shrink-0 self-start rounded-sm border sm:w-44"
         />
-        <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-          {t('title')}
-        </h1>
-        <p className="enter-rise enter-rise-2 text-muted-foreground text-lg text-pretty">
-          {t('lead')}
-        </p>
       </header>
 
       <DashedDivider className="my-12" />
