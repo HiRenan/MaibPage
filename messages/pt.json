@@ -36,7 +36,9 @@
     "shareOnX": "Compartilhar no X",
     "shareOnLinkedin": "Compartilhar no LinkedIn",
     "copyLink": "Copiar link",
-    "linkCopied": "Link copiado"
+    "linkCopied": "Link copiado",
+    "zoomFigure": "ampliar figura",
+    "closeFigure": "fechar"
   },
   "blog": {
     "description": "Notas técnicas sobre IA, Claude Code e o que descubro construindo a MAIB.",

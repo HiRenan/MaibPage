@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
+import { PostFigure } from '@/components/blog/post-figure';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
@@ -187,6 +188,9 @@ const components: MDXComponents = {
     />
   ),
   img: MdxImage,
+  // Componente custom disponível nos .mdx sem import (MDX resolve JSX
+  // capitalizado pelo mapa): figura de post com lightbox (clique pra ampliar).
+  PostFigure,
 };
 
 export function useMDXComponents(): MDXComponents {

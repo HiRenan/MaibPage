@@ -36,7 +36,9 @@
     "shareOnX": "Share on X",
     "shareOnLinkedin": "Share on LinkedIn",
     "copyLink": "Copy link",
-    "linkCopied": "Link copied"
+    "linkCopied": "Link copied",
+    "zoomFigure": "enlarge figure",
+    "closeFigure": "close"
   },
   "blog": {
     "description": "Technical notes on AI, Claude Code, and what I learn building MAIB.",

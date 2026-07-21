@@ -1,0 +1,423 @@
+---
+title: 'Uma IA como P.O. da minha frota de agentes'
+description: 'Como eu uso o Orca pra orquestrar uma frota de agentes de código: harness, worktrees, skills, MCPs e merge sempre humano.'
+date: '2026-07-21'
+tags: ['orca', 'claude-code', 'workflow', 'ai']
+---
+
+Eu continuo construindo software todo dia. O que mudou foi onde o meu tempo
+rende mais: em vez de digitar cada linha, eu projeto e supervisiono um sistema
+em que agentes fazem a digitação. Claude Code e Codex CLI trabalham em cópias
+isoladas do repositório, dentro do Orca, uma IDE feita exatamente pra isso. E
+uma IA atua como P.O. da equipe, tocando o operacional, enquanto as decisões de
+produto, o review e o merge continuam comigo.
+
+Em um parágrafo, o setup inteiro:
+
+> Uso o Orca com uma IA atuando como P.O. e orquestradora: ela prioriza tarefas
+> no Linear, cria briefings, acompanha agentes especializados trabalhando em
+> child worktrees isoladas, responde bloqueios e valida testes, segurança e
+> isolamento. Quando tudo está aprovado, ela faz o merge, atualiza o Linear e
+> limpa as execuções, enquanto eu continuo responsável pelas decisões de
+> produto.
+
+Este post abre esse parágrafo peça por peça: o problema que o setup resolve,
+os conceitos por trás, o Orca a fundo, o papel do P.O. e os limites de tudo
+isso. Montar essa esteira deu trabalho de engenharia de verdade, e nada aqui é
+teoria: é o que roda na minha workstation agora, com os defeitos incluídos.
+
+## O problema: você é o gargalo
+
+Quase todo mundo usa IA pra programar do mesmo jeito: pergunta no chat, copia a
+resposta, cola no editor, dá erro, copia o erro, cola de volta. Repete até
+funcionar, ou até desistir.
+
+<PostFigure
+  src="/posts/ai-as-po/slide-04.png"
+  alt="Diagrama do ciclo do chat: pergunta, copia a resposta, cola no editor, dá erro, copia o erro de volta. No centro, um boneco: você é o Ctrl+C e o Ctrl+V."
+  caption="o loop do chat: você é o Ctrl+C"
+/>
+
+Funciona. Eu comecei assim. Mas repara no desenho: quem carrega contexto pra lá
+e pra cá é você. Você virou o barramento de dados entre o modelo e o seu
+projeto.
+
+E o problema não é a inteligência do modelo. É acesso e verificação. No chat, o
+modelo só vê o texto que você cola. Não enxerga o resto do repositório, não
+roda nada, nunca fica sabendo se o código compilou, e a memória zera a cada
+rodada. O seu projeto precisa exatamente do contrário: o repositório inteiro
+como contexto, testes rodando de verdade, memória que sobrevive entre sessões
+e mais de uma frente andando ao mesmo tempo. No meio dessa lacuna está você,
+colando coisas, um chat por vez.
+
+## A tese: o valor está no harness
+
+<PostFigure
+  src="/posts/ai-as-po/slide-06.png"
+  alt="Diagrama da tese: antes, um dev alimentando um chat por Ctrl+C e Ctrl+V. Depois, um dev supervisionando um orquestrador com quatro agentes que abrem PRs."
+  caption="antes e depois: de digitador a supervisor"
+/>
+
+A tese que sustenta todo o resto: o valor não está só no modelo. Está no
+harness, no ambiente que você monta em volta dele. Engenharia de contexto vale
+mais que engenharia de prompt.
+
+Quem estrutura o ambiente do agente multiplica a própria produtividade. Na
+prática, você deixa de ser digitador e vira gerente de engenharia de uma equipe
+que não dorme. Antes: um dev alimentando um chat. Depois: um dev supervisionando
+N agentes, com PR, review e merge. O resto do post é o como.
+
+## As peças
+
+São seis peças, e cada uma resolve uma limitação específica do chat. Nenhuma é
+mágica. A mágica é a soma.
+
+### Harness e agente
+
+<PostFigure
+  src="/posts/ai-as-po/slide-08.png"
+  alt="Diagrama do harness: o LLM como motor e o harness como carro, com uma sessão de terminal corrigindo um teste de auth sozinha, do erro ao verde."
+  caption="harness: o carro em volta do motor"
+/>
+
+Ninguém dirige um motor. Dirige um carro. O LLM é o motor; o harness é o carro
+que dá mãos e olhos pra ele: ler arquivos, rodar comandos, editar código,
+iterar em loop. Claude Code e Codex CLI são os que eu uso.
+
+E é o harness que transforma o modelo em agente. Minha definição operacional,
+porque a palavra tá gasta: agente é quando o modelo fecha o próprio loop de
+feedback. Escreve, roda o teste, lê o erro, corrige, roda de novo. Sem humano no
+meio. A diferença prática é brutal: o chat te entrega uma resposta plausível; o
+agente te entrega uma coisa testada.
+
+### MCP
+
+<PostFigure
+  src="/posts/ai-as-po/slide-10.png"
+  alt="Diagrama do MCP: tracker, docs e browser plugados no agente como portas, com o aviso de que cada MCP consome memória e contexto."
+  caption="MCP: plugue só o que usa"
+/>
+
+MCP é o Model Context Protocol, o padrão que pluga ferramentas e dados no
+agente. Chamam de USB-C da IA, e a comparação é justa: antes, cada integração
+era um hack; agora é um plugue.
+
+Exemplo real daqui: meu orquestrador lê a issue do Linear direto. Eu não copio
+nada. Mas fica o aviso honesto: integração tem custo. Cada MCP consome memória
+e contexto, e um MCP de browser headless sobe um Chrome de uns 470 MB. Eu
+removi os de browser do meu padrão. Plugue só o que você usa.
+
+### Skill
+
+<PostFigure
+  src="/posts/ai-as-po/slide-11.png"
+  alt="Diagrama de skills: uma estante de boas práticas empacotadas que o agente encaixa sob demanda, de review de UI a entrevista de requisitos."
+  caption="skills: a estante de boas práticas"
+/>
+
+Skill é uma boa prática empacotada e executável. O checklist que eu faria na
+mão vira um procedimento que qualquer agente meu executa igual. Ela não polui o
+contexto: o agente carrega só quando precisa.
+
+Exemplos reais do meu dia: review de UI, entrevista de requisitos, scaffold de
+spec de integração. É assim que experiência vira ativo. Escreveu uma vez, todo
+agente da equipe herda.
+
+### Git worktree
+
+<PostFigure
+  src="/posts/ai-as-po/slide-12.png"
+  alt="Diagrama de git worktree: quatro cópias de trabalho do mesmo repo, cada uma com branch, arquivos e agente próprios. Universos paralelos, zero conflito."
+  caption="worktrees: universos paralelos do mesmo repo"
+/>
+
+A peça que quase ninguém conhece, e ela é nativa do git. Worktree cria N cópias
+de trabalho do mesmo repositório. Uma worktree por tarefa, cada agente com
+branch, arquivos e terminal próprios. Mesmo repo, universos paralelos.
+
+É o que destrava o paralelismo de verdade: quatro tarefas andando ao mesmo
+tempo sem um agente pisar no arquivo do outro. Sem worktree, frota de agentes
+vira briga de merge.
+
+### Plan mode e permissões
+
+Regra da casa: nenhum agente meu implementa nada sem plano aprovado. O agente
+planeja, eu (ou o orquestrador) aprovo, ele executa. Custa dois minutos e evita
+retrabalho de horas, porque erro de plano é o erro caro.
+
+Autonomia total é marketing. Autonomia calibrada é engenharia.
+
+### A constituição do repo
+
+<PostFigure
+  src="/posts/ai-as-po/slide-14.png"
+  alt="Diagrama da constituição do repo: um arquivo com regras de arquitetura, o que nunca fazer, arquivos sensíveis e memória de lições, lido por todos os agentes."
+  caption="a constituição: regras que todo agente lê"
+/>
+
+E existe uma sétima peça, invisível, segurando as outras seis: contexto
+estruturado. No meu repo tem um arquivo constituição (`CLAUDE.md`, `AGENTS.md`,
+o nome importa menos que o hábito) com as regras de arquitetura, o que NUNCA
+fazer, os arquivos sensíveis que pedem review extra e as lições aprendidas.
+Todo agente, de qualquer fornecedor, lê antes de agir.
+
+O que a gente aprende errando vira memória persistente: a máquina lembra pra
+sempre que o postgres local usa a porta 5433, não a 5432. O agente é tão bom
+quanto o contexto que você estrutura. O contexto é o produto. O prompt é só a
+interface.
+
+## O Orca: a IDE da frota
+
+Tudo isso roda dentro do [Orca](https://github.com/stablyai/orca), e ele merece
+uma seção própria, porque foi a peça que fez o setup deixar de ser um monte de
+terminal aberto e virar um sistema.
+
+O Orca é um ADE, Agent Development Environment: uma IDE desenhada do zero pra
+trabalhar com agentes em paralelo, não um editor tradicional com IA enxertada.
+É open source (MIT), da stablyai, e roda em macOS, Windows e Linux, com modo
+headless em VPS via SSH pra quem quiser a frota fora da máquina local.
+
+O conceito central é o mesmo da peça 5: cada tarefa vira uma worktree isolada.
+A diferença é o que o Orca pendura em cada uma. Toda worktree nasce com
+terminal próprio (renderização WebGL, splits, scrollback que sobrevive a
+restart), um browser Chromium embutido e uma visão de diff com comentário linha
+a linha. Cada worktree vira um card com status; a frota inteira fica visível
+numa tela só, e commit e merge acontecem sem sair do app.
+
+Alguns recursos que mudam o jogo no uso real:
+
+- **Qualquer agente CLI.** Claude Code, Codex, Cursor, OpenCode e mais de 30
+  outros, cada um rodando com a sua assinatura. Um agente novo entra com um
+  arquivo de config. Trocar de fornecedor continua sendo trocar uma linha.
+- **Fan-out.** Um prompt só pode ir pra até 5 agentes ao mesmo tempo, cada um
+  na sua worktree, e no final você monta o merge escolhendo o melhor de cada
+  diff, hunk por hunk. Eu uso pouco; meu padrão é uma tarefa por agente. Mas
+  pra decisão difícil de implementação, comparar três abordagens reais vale
+  cada token.
+- **Design Mode.** No browser embutido, você clica num elemento da página e o
+  Orca manda o HTML, o CSS computado e um screenshot recortado direto pro
+  prompt do agente. Pra trabalho de frontend, isso elimina uma classe inteira
+  de descrição manual.
+- **Integração com tracker.** Linear e GitHub nativos: dá pra criar uma
+  worktree a partir de uma issue. No meu fluxo quem faz isso é o orquestrador,
+  via MCP, mas o caminho manual existe.
+- **CLI scriptável.** `orca worktree create`, snapshot, click e fill no
+  browser: o próprio Orca vira automatizável. Meus vigias conversam com isso.
+
+### No celular, de qualquer lugar
+
+O Orca tem um companion mobile (iOS e Android) que acompanha a frota: status de
+cada agente, push quando um termina ou trava numa pergunta, e resposta direto
+do celular.
+
+O app conversa com o desktop, então a workstation precisa estar ligada. Pra
+isso funcionar longe de casa, eu uso [Tailscale](https://tailscale.com): a
+workstation e o celular entram na mesma rede privada (WireGuard por baixo), sem
+abrir porta nenhuma pro mundo. O celular enxerga o Orca da minha máquina de
+qualquer lugar, como se estivesse na mesma sala.
+
+Na prática: um agente pede aprovação de plano, o push chega no celular, eu leio
+o plano na fila do mercado e aprovo. A frota não para porque eu saí da mesa.
+
+E os custos honestos, porque tudo tem: o Orca ocioso consome uns 400 a 800 MB
+de RAM, rodar agentes em paralelo multiplica o consumo de tokens (3 agentes,
+3x), e o mobile depende do desktop ligado. O Tailscale resolve o acesso, não a
+conta de luz.
+
+## A IA como P.O.
+
+A peça central do meu setup não é um agente que programa. É um agente que
+gerencia os que programam: uma sessão de Claude Code dentro do Orca cujo
+trabalho é ser P.O.
+
+### A arquitetura
+
+<PostFigure
+  src="/posts/ai-as-po/slide-16.png"
+  alt="Diagrama da arquitetura completa: eu na supervisão, o orquestrador P.O. no meio, quatro worktrees com agentes, gates de review com subagentes e merge humano."
+  caption="a arquitetura completa do setup"
+/>
+
+Esse é o sistema inteiro num desenho. No topo estou eu, supervisionando. Logo
+abaixo, o orquestrador: o P.O. Ele conversa com o Linear via MCP e despacha o
+trabalho pra worktrees, cada uma com o seu agente (Claude Code ou Codex CLI).
+Cada worktree termina num PR, e todo PR passa por gates de review: subagentes
+que olham segurança, isolamento de dados, qualidade geral e banco. O merge é
+decisão humana, sempre.
+
+Por baixo, sustentando tudo: a constituição do repo, a memória com as lições
+que sobrevivem entre sessões, e os watchers, vigias que me acordam se um agente
+parar.
+
+Eu não abro quatro chats. Eu falo com UM agente, o P.O., e ele toca a equipe. O
+fluxo completo: a issue nasce no Linear; o orquestrador escreve um briefing
+autossuficiente; cria a worktree e despacha o agente certo; o agente pergunta,
+o orquestrador responde; o plano passa por aprovação; a implementação vira PR;
+o PR passa pelos gates; o merge é meu; o Linear é atualizado. Quando um agente
+filho tem dúvida, quem responde primeiro é o orquestrador. Só decisão de
+produto sobe pra mim. É um organograma, só que os nós são processos.
+
+### O briefing autossuficiente
+
+<PostFigure
+  src="/posts/ai-as-po/slide-18.png"
+  alt="Exemplo de briefing autossuficiente: contexto completo da issue, ponteiros de código, invariantes, validação exigida e a linha final, pare após abrir o PR."
+  caption="o briefing autossuficiente"
+/>
+
+O briefing é o artefato mais subestimado do setup. O agente filho não vê o
+Linear, então o briefing leva a tarefa inteira: a issue colada por completo, os
+ponteiros de código dizendo onde mexer, os invariantes com o que nunca fazer
+(mais as manias da máquina, tipo a porta do postgres), a validação exigida pra
+provar que funciona, e o protocolo: na dúvida, pergunte ao orquestrador, não
+assuma.
+
+A última linha é sagrada: PARE após abrir o PR. Merge é decisão humana. Cada
+despacho vira um documento que um engenheiro sênior conseguiria executar sem
+perguntar nada. Porque o agente também consegue. Escrever briefing bom é 80% do
+resultado.
+
+### Despacho por especialidade
+
+<PostFigure
+  src="/posts/ai-as-po/slide-19.png"
+  alt="Tabela de despacho por especialidade: frontend com Claude Code e skill de UI, backend e infra com Codex CLI e plan mode manual."
+  caption="despacho por especialidade"
+/>
+
+Um detalhe que sempre surpreende: eu não uso um modelo só. Frontend vai pro
+Claude Code com uma skill de UI, que nos meus testes dá o melhor resultado
+visual. Backend e infra vão pro Codex CLI, que no meu caso se mostrou mais
+sólido em lógica de servidor. Critério empírico: cada um no que faz melhor,
+decidido testando, não por fé.
+
+Como a constituição e os briefings são padronizados, trocar de fornecedor é
+trocar uma linha na tabela de despacho. Isso é liberdade estratégica.
+
+### Supervisão e vigias
+
+Agente bom pergunta ANTES de assumir. Uma skill que eu uso força isso: uma
+decisão por vez, tipo entrevista. Um diálogo real, só anonimizado:
+
+> Agente: decisão 3 de 8. A fila deve excluir o próprio solicitante da lista de
+> aprovadores? (a) sim, sempre (b) não (c) configurável
+>
+> Orquestrador: (a). Solicitante nunca se autoaprova. Registrando a decisão no
+> briefing.
+
+Teve manhã de responder mais de oito decisões de design desse jeito, a maioria
+resolvida pelo próprio orquestrador, sem me acordar.
+
+E como são vários agentes em paralelo, eu tenho vigias: scripts que percebem
+quando um filho travou esperando resposta e me avisam. Até a supervisão se
+automatiza.
+
+### Qualidade em camadas
+
+<PostFigure
+  src="/posts/ai-as-po/slide-21.png"
+  alt="Diagrama de qualidade em camadas: plano aprovado por humano, código, gates automáticos com subagentes especialistas, PR, validação local e merge humano."
+  caption="qualidade em camadas"
+/>
+
+A pergunta que sempre vem: e a qualidade? Resposta: camadas. Antes do código,
+plano aprovado. Depois do código, outros agentes revisam: um só caça problema
+de segurança, outro só vazamento de dados, outro qualidade geral, outro banco.
+Aí vem o PR, a validação local e o merge, que continua sendo meu.
+
+A IA não removeu o review. Multiplicou os revisores.
+
+## Um dia real
+
+<PostFigure
+  src="/posts/ai-as-po/slide-22.png"
+  alt="Painel de um dia real: quatro worktrees com status ao vivo, um Claude e três Codex, três PRs mergeados e uma falha de escopo achada por um agente."
+  caption="uma segunda-feira real"
+/>
+
+Isso não é benchmark. É a minha segunda-feira. Quatro agentes em paralelo, um
+Claude e três Codex, em quatro frentes: UI de aprovações com PR aberto e gates
+verdes, calibração de NLU em execução, integração com CRM aguardando uma
+resposta, infra de testes com plano em aprovação. Entre ontem e hoje, três PRs
+de sprint revisados, validados e mergeados.
+
+E o detalhe que eu mais gosto: um dos agentes, ainda na fase de planejamento,
+descobriu que o problema era maior do que a issue dizia. Virou issue nova no
+Linear. Agente bom não só executa. Encontra trabalho.
+
+## Limites: onde quebra e quando não usar
+
+Parte mais importante do post: tudo isso quebrou comigo, e recentemente.
+
+O vigia deu falso positivo: o agente parecia travado, só estava pensando.
+Mandei um caminho com variável não interpolada pra quatro agentes de uma vez.
+Recebi um alerta urgente que era só um hook quebrado. E um limiar de confiança
+conservador demais deixou uma feature impossível de disparar, e a gente só
+descobriu testando de verdade.
+
+Orquestração também é código, e código tem bug. Quem te prometer frota de
+agentes sem supervisão tá vendendo alguma coisa. A diferença está no que
+acontece depois: cada quebra dessas virou memória persistente e proteção nova.
+O sistema aprende.
+
+Tão importante quanto saber usar é saber quando NÃO usar:
+
+- Mudança trivial: o overhead do agente custa mais que fazer na mão. Um typo eu
+  corrijo eu mesmo.
+- Código que você não sabe revisar: você é o gate. Se não entende, não mergeia.
+- Segredos e credenciais sem guard-rails: nem pensar.
+- Repo sem testes: agente sem bússola itera no escuro.
+- Decisão de arquitetura: delegue a execução, nunca a decisão.
+
+O agente multiplica o seu julgamento. Se o julgamento não existe, ele
+multiplica zero.
+
+## Regras de ouro
+
+Se você esquecer todo o resto, leva essas cinco:
+
+```bash
+alias regra1='plan-first, sempre plano antes de código'
+alias regra2='o merge é SEU, revisão humana não é opcional'
+alias regra3='contexto versionado, constituição + memória no repo'
+alias regra4='comece com 1 agente, frota vem depois'
+alias regra5='meça antes de escalar'
+```
+
+A ordem importa. Ninguém monta frota no dia um. Primeiro você aprende a
+trabalhar com UM agente bem contextualizado. Depois paraleliza o que já
+funciona. E mede antes de escalar.
+
+## Comece com um agente
+
+O caminho que eu recomendo é o mesmo que eu subi, degrau por degrau:
+
+1. Instale um harness e use no lugar do chat (Claude Code, Codex CLI).
+2. Escreva a constituição do seu repo: um arquivo com regras e proibições.
+3. Ligue o plan mode e nunca mais desligue: plano, aprovação, execução.
+4. Adicione seu primeiro MCP (o tracker) e sua primeira skill.
+5. Paralelismo de verdade: worktrees, e aí sim uma IDE de frota como o Orca.
+
+Os degraus 1 a 3 já mudam sua vida sozinhos. Worktree, Orca e frota são o bônus
+de quem consolidou a base. Dá pra começar amanhã pelo degrau 1.
+
+Boa parte deste material nasceu de uma palestra que dei na LIA, a liga
+acadêmica de IA da UFSC, em julho de 2026; os diagramas vêm do deck. Ficou algo
+em aberto, me chama no
+[LinkedIn](https://www.linkedin.com/in/renan-mocelin-br) ou no
+[GitHub](https://github.com/HiRenan).
+
+Pra ir mais fundo:
+
+- [Orca](https://github.com/stablyai/orca), o repo oficial
+- [Review independente do Orca](https://andrew.ooo/posts/orca-stablyai-parallel-coding-agents-ide-review/), com os detalhes de uso real
+- [Tailscale](https://tailscale.com)
+- [Claude Code](https://code.claude.com/docs)
+- [Model Context Protocol](https://modelcontextprotocol.io)
+- [git worktree](https://git-scm.com/docs/git-worktree)
+- [Codex CLI](https://github.com/openai/codex)
+- [awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents)
+- [skills.sh](https://skills.sh/trending)
+
+> A frota não me substitui. Ela multiplica o meu julgamento. E o merge continua
+> sendo meu.
