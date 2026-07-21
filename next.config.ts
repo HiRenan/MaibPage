@@ -45,14 +45,22 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 // (AA WCAG ≥ 4.5:1), mantendo o mesmo cinza-esverdeado mudo, só mais legível.
 const CODE_COMMENT_AA = '#7d8d7d';
 
+// AA da pontuação (audit a11y do post ai-as-po): o vitesse-dark pinta punctuation/
+// operator com #666666 → só 3.12:1 sobre --card (limiar 4.5:1 no text-sm do <pre>).
+// Subimos pra #8a8a8a → ≈5.2:1, mesmo cinza neutro, só mais legível.
+const CODE_PUNCT_AA = '#8a8a8a';
+
 // Config async só pra resolver o tema bundlado do shiki no load. Turbopack serializa a
 // config (JS -> Rust): plugins remark/rehype vão como strings / tuplas-string com options
 // JSON, nunca funções importadas — e o theme do rehype-pretty-code é um objeto JSON puro
-// (vitesse-dark + colorReplacements), que serializa igual. O colorReplacements troca só a
-// cor do comentário (escopo `comment`); os demais tokens do tema ficam intactos.
+// (vitesse-dark + colorReplacements), que serializa igual. O colorReplacements troca só as
+// cores abaixo de AA (comment e punctuation); os demais tokens do tema ficam intactos.
 export default async function buildConfig() {
   const vitesseDark = (await bundledThemes['vitesse-dark']()).default;
-  const codeTheme = { ...vitesseDark, colorReplacements: { '#758575dd': CODE_COMMENT_AA } };
+  const codeTheme = {
+    ...vitesseDark,
+    colorReplacements: { '#758575dd': CODE_COMMENT_AA, '#666666': CODE_PUNCT_AA },
+  };
 
   const withMDX = createMDX({
     options: {
