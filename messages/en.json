@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MAIB · Renan Mocelin",
-    "description": "Renan Mocelin's personal brand and the MAIB presence: AI, automation, Claude Code and development."
+    "description": "Renan Mocelin writes about AI engineering, automation, Claude Code, and the projects he builds at MAIB."
   },
   "nav": {
     "home": "Home",
@@ -75,19 +75,19 @@
       "role": "AI engineer · MAIB"
     },
     "about": {
-      "lead": "AI engineer. I take language models and get them running in production, outside the demo: deterministic LLM programming, RAG, automation that has to work when it counts.",
-      "p2": "I run MAIB, AI consulting and automation. I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC.",
-      "p3": "I won the Airbus Prize at ActInSpace 2026 with the IGNITE team, at the world final in Bordeaux, representing Brazil. And 2nd at AKCIT 2025. Here I write what I'm learning as I build.",
+      "lead": "I'm an AI engineer working with language models in production. My focus is deterministic LLM programming, RAG, and automation that needs to hold up outside a demo.",
+      "p2": "I run MAIB, my AI consulting and automation practice. I also work as an AI engineer at Freedom.AI and completed an AI residency at SENAI/SC.",
+      "p3": "In 2026, I won the Airbus Prize with the IGNITE team at the ActInSpace world final in Bordeaux, representing Brazil. I also placed second at AKCIT in 2025. This is where I write about what I learn at work and on MAIB projects.",
       "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"],
-      "readMore": "Read more"
+      "readMore": "More about me"
     },
     "featured": {
-      "heading": "Recent writing",
-      "viewAll": "View all"
+      "heading": "Recent posts",
+      "viewAll": "View all posts"
     },
     "contact": {
       "heading": "Contact",
-      "body": "AI consulting and automation through MAIB. To talk about a project, write to me.",
+      "body": "If you'd like to talk about an AI or automation project with MAIB, send me an email.",
       "email": "renanryuakame@gmail.com"
     }
   },

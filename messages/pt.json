@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MAIB · Renan Mocelin",
-    "description": "Marca pessoal do Renan Mocelin e presença da MAIB: IA, automação, Claude Code e desenvolvimento."
+    "description": "Renan Mocelin escreve sobre engenharia de IA, automação, Claude Code e os projetos que desenvolve na MAIB."
   },
   "nav": {
     "home": "Início",
@@ -75,19 +75,19 @@
       "role": "engenheiro de IA · MAIB"
     },
     "about": {
-      "lead": "Engenheiro de IA. Eu pego modelo de linguagem e boto pra rodar em produção, fora do demo: programação determinística de LLM, RAG, automação que precisa funcionar quando é pra valer.",
-      "p2": "Toco a MAIB, consultoria e automação de IA. Hoje sou engenheiro de IA na Freedom.AI e fiz residência em IA no SENAI/SC.",
-      "p3": "Ganhei o Airbus Prize no ActInSpace 2026 com a equipe IGNITE, na final mundial em Bordeaux, representando o Brasil. E 2º no AKCIT 2025. Aqui eu escrevo o que vou aprendendo enquanto construo.",
+      "lead": "Sou engenheiro de IA e trabalho com modelos de linguagem em produção. Faço programação determinística de LLM, RAG e automações que precisam funcionar fora do demo.",
+      "p2": "Toco a MAIB, minha consultoria de IA e automação. Também trabalho como engenheiro de IA na Freedom.AI e fiz residência no SENAI/SC.",
+      "p3": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. No ano anterior, fiquei em 2º lugar no AKCIT. Aqui escrevo sobre o que aprendo no trabalho e nos projetos da MAIB.",
       "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"],
-      "readMore": "Leia mais"
+      "readMore": "Mais sobre mim"
     },
     "featured": {
-      "heading": "Escrita recente",
-      "viewAll": "Ver todos"
+      "heading": "Posts recentes",
+      "viewAll": "Ver todos os posts"
     },
     "contact": {
       "heading": "Contato",
-      "body": "Consultoria e automação de IA pela MAIB. Pra falar sobre um projeto, escreve pra mim.",
+      "body": "Pra conversar sobre um projeto de IA ou automação com a MAIB, me manda um email.",
       "email": "renanryuakame@gmail.com"
     }
   },

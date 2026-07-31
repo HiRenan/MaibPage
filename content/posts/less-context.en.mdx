@@ -1,67 +1,73 @@
 ---
 title: 'Less context'
-description: 'The reflex is to give the agent more context. Almost always, the right move is to cut.'
+description: 'How to give an agent what it needs without burying the important instruction in noise.'
 date: '2026-06-25'
 tags: ['ai', 'context-engineering']
 ---
 
-When the agent gets it wrong, the reflex is to give it more context: one more
-document, one more example, one more instruction. It feels like help.
+When an agent gets something wrong, it's tempting to add more context. Another
+document, one more example, an extra instruction. Sometimes that helps. Often it
+just makes the task harder to read.
 
-It's almost always the wrong move. Context engineering isn't maximizing what the
-agent sees. It's choosing what gets in.
+Context engineering starts with selection. The agent needs the material that helps
+with the current task, not everything that might be related to it.
 
-## Why more hurts
+## When extra context gets in the way
 
-The model doesn't weigh context the way you do. It treats almost everything in the
-window with similar weight, so the noise comes in with the signal. Dump the whole
-repo and the instruction that matters drowns in the middle.
+Models don't judge context the way people do. If you send the entire repository,
+old rules, examples, and documentation all end up in the same window. The important
+instruction now has to compete with everything else.
 
-Three effects stacking:
+Some problems show up often:
 
-- **Dilution:** the more you pile on, the less weight each piece carries.
-- **Contradiction:** an old doc fighting the new one, an example pointing the opposite way from the rule. The model doesn't know which wins.
-- **Lost in the middle:** what lands in the middle of a long context is exactly what the model ignores most.
+- **Dilution:** each new item takes up space and makes the important material less
+  prominent.
+- **Conflicts:** an old document may say one thing while the current rule says
+  another. The model has to guess which one applies.
+- **Lost in the middle:** in long contexts, material near the middle tends to be
+  retrieved less consistently.
 
-More context isn't more information. Often it's less signal.
+Before adding something, check whether it helps the agent make a decision or only
+gives it more material to sort through.
 
-## Pruning is the skill
+## Cut what the task doesn't need
 
-The skill isn't writing the perfect prompt. It's deciding what stays **out**.
+In practice, a narrow scope usually works better. Send the relevant file instead
+of the whole repository, the function involved instead of the entire module, and
+the rule that applies now instead of a complete manual.
 
-Give the right file, not the repo. The function, not the module. The rule that
-applies to this task, not the whole manual. A tight scope keeps the instruction
-that matters at the top of the stack, where it carries weight.
+That doesn't mean hiding important information. It means leaving out material
+that doesn't help with the next decision. If another piece becomes necessary,
+you can add it later.
 
-Pruning feels like you're hiding something from the agent. You are. That's exactly the point.
+## Use subagents for broad searches
 
-## Outsource the search: sub-agents
+Some tasks need a broad sweep, such as finding a pattern across dozens of files or
+understanding a convention spread through the project. Putting all of that
+material into the main context is expensive and rarely useful, because most of it
+will be discarded once the search is done.
 
-Sometimes the task means sweeping a lot: finding where a pattern shows up across
-thirty files, mapping a scattered convention. The sweep is expensive in context,
-and almost everything it reads is disposable.
+In those cases, I delegate the sweep to a subagent and ask for a short answer: the
+relevant files, line numbers, and a conclusion. The main agent gets the result
+without carrying the full path used to reach it.
 
-So dispatch a sub-agent. It burns its own context on the search and returns just
-the conclusion: the file, the line, the answer. The main context never sees the
-junk along the way, only the result.
+The search runs in a separate window, leaving the main context available for the
+decision and the implementation.
 
-It's outsourced pruning: the dirty work happens in a window you throw away.
+## What is worth keeping
 
-## Durable and ephemeral
+Rules that remain valid belong in the project context file or memory. They enter
+once and stay available for future tasks.
 
-Separate what lasts from what passes. A permanent rule goes in the context file or
-in memory: entered once, always available, out of the hot window. What belongs to
-the task dies with the task, don't let it settle into the conversation.
+Details that only matter to one task can leave when the task is done. If every
+detail becomes permanent memory, the noise returns in future conversations and
+the context file stops being useful.
 
-Polluting the durable layer is the most expensive prune to miss: the noise comes
-back every time.
+## Context has limits
 
-## Context is a budget
+Every item takes up part of the window and competes for attention. This is why long
+conversations also benefit from a summary. Keep the decisions, the current state,
+and the next steps. The reasoning that has already served its purpose can go.
 
-Treat the window as a budget, not a warehouse. Everything that goes in competes
-for attention with everything else.
-
-It holds across time too. A long conversation doesn't need to carry the whole path:
-summarize, drop the route, keep the conclusion. History is a draft; state is what matters.
-
-> In the end, what you take out of the context weighs more than what you put in.
+Before sending more material, I try to summarize the task and remove what is no
+longer useful. Most of the time, that cleanup helps more than another document.

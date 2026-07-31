@@ -1,67 +1,72 @@
 ---
 title: 'Menos contexto'
-description: 'O reflexo é dar mais contexto ao agente. Quase sempre, o certo é tirar.'
+description: 'Como dar ao agente o que ele precisa sem esconder a instrução importante no meio do ruído.'
 date: '2026-06-25'
 tags: ['ai', 'context-engineering']
 ---
 
-Quando o agente erra, o reflexo é dar mais contexto: mais um documento, mais um
-exemplo, mais uma instrução. Parece ajuda.
+Quando um agente erra, é fácil tentar resolver com mais contexto. Você adiciona
+outro documento, mais um exemplo, outra instrução. Às vezes ajuda. Muitas vezes só
+deixa a tarefa mais confusa.
 
-Quase sempre é o movimento errado. Engenharia de contexto não é maximizar o que o
-agente vê. É escolher o que entra.
+Engenharia de contexto começa pela seleção. O agente precisa receber o material
+que ajuda naquela tarefa, não tudo que pode ter alguma relação com ela.
 
-## Por que mais piora
+## Quando o excesso atrapalha
 
-O modelo não pondera o contexto como você. Ele trata quase tudo na janela com peso
-parecido, então o ruído entra junto com o sinal. Despeje o repo inteiro e a
-instrução que importa afoga no meio.
+Um modelo não avalia o contexto com o mesmo julgamento que uma pessoa. Se você
+manda o repositório inteiro, regras antigas, exemplos e documentação entram na
+mesma janela. A instrução importante passa a disputar atenção com todo o resto.
 
-São três efeitos somando:
+Alguns problemas aparecem com frequência:
 
-- **Diluição:** quanto mais você empilha, menos peso cada parte carrega.
-- **Contradição:** doc velho que briga com o novo, exemplo que aponta pro lado oposto da regra. O modelo não sabe qual vence.
-- **Lost in the middle:** o que cai no meio de um contexto longo é justo o que o modelo mais ignora.
+- **Diluição:** cada novo item ocupa espaço e reduz o destaque do que realmente
+  importa.
+- **Contradição:** uma documentação antiga pode dizer uma coisa enquanto a regra
+  atual diz outra. O modelo precisa adivinhar qual delas vale.
+- **Lost in the middle:** em contextos longos, o conteúdo que fica no meio tende a
+  ser recuperado com menos consistência.
 
-Mais contexto não é mais informação. Muitas vezes é menos sinal.
+Antes de adicionar algo, vale conferir se aquilo ajuda o agente a decidir ou se só
+dá mais material para ele separar.
 
-## Podar é a habilidade
+## Corte o que a tarefa não precisa
 
-A habilidade não é escrever o prompt perfeito. É decidir o que **não** entra.
+Na prática, um escopo curto costuma funcionar melhor. Mande o arquivo relevante em
+vez do repositório inteiro, a função envolvida em vez de todo o módulo e a regra que
+vale agora em vez de um manual completo.
 
-Dê o arquivo certo, não o repositório. A função, não o módulo. A regra que vale pra
-esta tarefa, não o manual inteiro. Escopo apertado é o que mantém a instrução que
-importa no topo da pilha, onde ela pesa.
+Isso não significa esconder informação importante. Significa deixar de fora o que
+não ajuda na próxima decisão. Se outra peça for necessária, ela pode entrar depois.
 
-Podar parece que você está escondendo coisa do agente. E está mesmo. Esse é exatamente o ponto.
+## Use subagentes para buscas grandes
 
-## Terceirizar a busca: sub-agentes
+Algumas tarefas exigem uma varredura ampla, como localizar um padrão em dezenas de
+arquivos ou entender uma convenção espalhada pelo projeto. Colocar todo esse
+material no contexto principal custa caro e ajuda pouco, porque quase tudo será
+descartado depois da busca.
 
-Às vezes a tarefa exige varrer muita coisa: achar onde um padrão aparece em trinta
-arquivos, mapear uma convenção espalhada. A varredura é cara em contexto, e quase
-tudo que ela lê é descartável.
+Nesses casos, eu delego a varredura a um subagente e peço uma resposta curta:
+arquivos relevantes, linhas e uma conclusão. O agente principal recebe o resultado
+sem carregar todo o caminho usado para chegar nele.
 
-Então mande um sub-agente. Ele queima o próprio contexto na busca e devolve só a
-conclusão: o arquivo, a linha, a resposta. O contexto principal nunca vê o lixo do
-caminho, só o resultado.
+Assim, a busca usa uma janela separada e o contexto principal fica reservado para
+a decisão e a implementação.
 
-É poda terceirizada: o trabalho sujo acontece numa janela que você joga fora.
+## O que vale guardar
 
-## Durável e efêmero
+Regras que continuam válidas pertencem ao arquivo de contexto ou à memória do
+projeto. Elas entram uma vez e ficam disponíveis para as próximas tarefas.
 
-Separe o que dura do que passa. Regra permanente vai pro arquivo de contexto ou pra
-memória: entra uma vez, fica sempre disponível, fora da janela quente. O que é da
-tarefa morre com a tarefa, não deixa virar sedimento na conversa.
+Detalhes de uma tarefa específica podem sair quando ela termina. Se todo detalhe
+vira memória permanente, o ruído volta nas conversas seguintes e o arquivo de
+contexto deixa de ser útil.
 
-Poluir o durável é a poda mais cara de perder: o ruído passa a voltar toda vez.
+## Contexto tem limite
 
-## Contexto é orçamento
+Cada item ocupa parte da janela e compete por atenção. Por isso também vale resumir
+conversas longas. Guarde as decisões, o estado atual e os próximos passos. O
+raciocínio que já cumpriu seu papel pode sair.
 
-Trata a janela como orçamento, não como depósito. Cada coisa que entra compete por
-atenção com as outras.
-
-Vale no tempo também. Conversa longa não precisa carregar o caminho inteiro:
-resuma, descarte o percurso, guarde a conclusão. O histórico é rascunho; o estado é
-o que importa.
-
-> No fim, o que você tira do contexto pesa mais do que o que você coloca.
+Antes de mandar mais material, eu tento resumir a tarefa e retirar o que já não
+serve. Na maioria das vezes, essa limpeza ajuda mais do que outro documento.
