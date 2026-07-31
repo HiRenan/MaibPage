@@ -3,6 +3,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
@@ -68,6 +69,8 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
+  const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+
   // Enable static rendering for this locale.
   setRequestLocale(locale);
 
@@ -87,6 +90,17 @@ export default async function LocaleLayout({ children, params }: Props) {
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />
+        {umamiWebsiteId ? (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={umamiWebsiteId}
+            data-domains="www.maib.com.br"
+            data-do-not-track="true"
+            data-exclude-search="true"
+            data-exclude-hash="true"
+            strategy="afterInteractive"
+          />
+        ) : null}
       </body>
     </html>
   );
