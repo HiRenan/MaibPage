@@ -1,29 +1,25 @@
 ---
 title: 'First commit'
-description: 'Why this site exists and how it gets built, in public, piece by piece.'
+description: 'What I want to document here and how each post is published from the repository.'
 date: '2026-06-21'
 tags: ['meta', 'build-in-public']
 ---
 
-This is the blog's first post. It exists for a simple reason: the site is the proof.
-A place that talks about AI engineering has to be, itself, well engineered.
+This is the first post on the blog. I built the site to bring my work together and
+document what I learn while building MAIB. Since I write about AI engineering, I
+wanted the implementation itself to be open and easy to inspect.
 
-## What lives here
+## What I will publish
 
-Technical notes on Claude Code, deterministic LLM programming, and what I learn as
-I build MAIB. No fluff, just what I actually use and what breaks along the way.
+I will write about Claude Code, deterministic LLM programming, architecture, and
+the problems that show up during development. The goal is to publish what I have
+actually used, including failed attempts and decisions that changed along the way.
 
-- my take on AI and the dev workflow
-- architecture decisions, with the reasoning behind them
-- experiments, including the ones that go wrong
+## How posts are published
 
-> What's ahead comes from executing, not decorating. Every risk I take here is on purpose.
-
-### How the content is written
-
-Every post is an MDX file in the repo, validated at build time. The frontmatter
-runs through a schema; if something is off, the build breaks on purpose. The
-indexer lives in `lib/posts.ts` and is the single source of truth:
+Every post is an MDX file in the repository. The frontmatter goes through a schema
+during the build; if a field is invalid, the build fails. `lib/posts.ts` reads,
+validates, and sorts the posts:
 
 ```ts
 import { getAllPosts } from '@/lib/posts';
@@ -31,10 +27,7 @@ import { getAllPosts } from '@/lib/posts';
 const posts = getAllPosts('en'); // sorted by date, already validated
 ```
 
-The pipeline also highlights code with a dark theme and respects the reading
-measure. This site's code is open in the [repository](https://github.com/HiRenan/MaibPage),
-and you can always head back [home](/).
-
----
-
-Next up: the blog routes and the command palette pulling these posts in.
+The pipeline also applies syntax highlighting and keeps the text at a comfortable
+reading width. All of the site's code is open in the
+[repository](https://github.com/HiRenan/MaibPage). When a decision from this
+project turns into a useful lesson, it becomes a post.

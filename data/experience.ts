@@ -87,8 +87,8 @@ export const experience: ExperienceItem[] = [
     company: 'Freedom.AI',
     org: 'freedom-ai',
     description: {
-      pt: 'Agentes de IA e soluções LLM-based: agentes conversacionais e autônomos com orquestração, memória e tool use, sistemas RAG, fine-tuning e MLOps, com observabilidade e proteção contra alucinação e prompt injection.',
-      en: 'AI agents and LLM-based solutions: conversational and autonomous agents with orchestration, memory and tool use, RAG systems, fine-tuning and MLOps, with observability and protection against hallucination and prompt injection.',
+      pt: 'Desenvolvo agentes conversacionais e autônomos, sistemas RAG e integrações com ferramentas e memória. Também trabalho com fine-tuning, MLOps, observabilidade e proteções contra alucinação e prompt injection.',
+      en: 'I build conversational and autonomous agents, RAG systems, and integrations with tools and memory. I also work with fine-tuning, MLOps, observability, and safeguards against hallucination and prompt injection.',
     },
     stack: ['Python', 'FastAPI', 'Claude', 'RAG', 'PostgreSQL', 'Docker', 'AWS', 'MCP'],
   },
@@ -99,8 +99,8 @@ export const experience: ExperienceItem[] = [
     company: 'SENAI/SC',
     org: 'senai',
     description: {
-      pt: 'Programa intensivo de residência em IA: machine learning, deep learning e aprendizado por reforço, visão computacional, IA generativa, big data, otimização e meta-heurísticas, IA embarcada e projetos aplicados.',
-      en: 'Intensive AI residency program: machine learning, deep learning and reinforcement learning, computer vision, generative AI, big data, optimization and meta-heuristics, embedded AI, and applied projects.',
+      pt: 'Residência prática em IA, com estudos e projetos em machine learning, deep learning, aprendizado por reforço, visão computacional, IA generativa, big data, otimização, meta-heurísticas e IA embarcada.',
+      en: 'A hands-on AI residency with studies and projects in machine learning, deep learning, reinforcement learning, computer vision, generative AI, big data, optimization, metaheuristics, and embedded AI.',
     },
     stack: ['Python', 'Machine Learning', 'Deep Learning', 'Computer Vision', 'Generative AI'],
     projects: ['Altona', 'Olsen'],
@@ -108,12 +108,12 @@ export const experience: ExperienceItem[] = [
   {
     start: '2022-03',
     end: '2025-06',
-    role: { pt: 'Analista de Suporte N2', en: 'N2 Support Analyst' },
+    role: { pt: 'Analista de Suporte N2', en: 'Level 2 Support Analyst' },
     company: 'Paradigma Business Solutions',
     org: 'paradigma',
     description: {
-      pt: 'Diagnóstico e correção de problemas em produto direto no banco (T-SQL, triggers, procedures), integrações XML e SOAP e pull requests de correção. Progressão de estagiário a N2, com melhoria de processos e documentação no time de suporte.',
-      en: 'Diagnosing and fixing product issues directly in the database (T-SQL, triggers, procedures), XML and SOAP integrations, and fix pull requests. Progressed from intern to N2, improving support-team processes and documentation.',
+      pt: 'Comecei como estagiário e cheguei a analista N2. Investigava problemas direto no banco com T-SQL, triggers e procedures, cuidava de integrações XML e SOAP e enviava correções por pull request. Também ajudei a melhorar os processos e a documentação do suporte.',
+      en: 'I started as an intern and moved up to an N2 support role. I investigated product issues directly in the database with T-SQL, triggers, and procedures, maintained XML and SOAP integrations, and submitted fixes through pull requests. I also helped improve support processes and documentation.',
     },
     stack: ['T-SQL', 'SQL', 'XML', 'SOAP'],
   },
@@ -125,8 +125,8 @@ export const experience: ExperienceItem[] = [
     company: 'Softplan',
     org: 'softplan',
     description: {
-      pt: 'Análises e rotinas da área financeira em uma das maiores software houses do Brasil. O primeiro contato de dentro com a indústria de software, antes da transição pra tecnologia.',
-      en: "Finance analysis and operations at one of Brazil's largest software companies. A first inside look at the software industry, before the move into tech.",
+      pt: 'Trabalhei com análises e rotinas financeiras. Foi meu primeiro contato por dentro com uma empresa de software, antes de migrar para tecnologia.',
+      en: 'I worked with financial analysis and day-to-day operations. It was my first inside look at a software company, before I moved into tech.',
     },
     stack: [],
   },
@@ -136,7 +136,7 @@ export const education: EducationItem[] = [
   {
     start: '2025-06',
     end: '2026-06',
-    degree: { pt: 'Pós-graduação em IA Aplicada', en: 'Postgraduate in Applied AI' },
+    degree: { pt: 'Pós-graduação em IA Aplicada', en: 'Postgraduate Degree in Applied AI' },
     institution: 'SENAI/SC',
   },
   {
@@ -144,7 +144,7 @@ export const education: EducationItem[] = [
     end: '2024-06',
     degree: {
       pt: 'Bacharelado em Sistemas de Informação',
-      en: "Bachelor's in Information Systems",
+      en: "Bachelor's Degree in Information Systems",
     },
     institution: 'Universidade Estácio',
   },
@@ -155,7 +155,7 @@ export const awards: AwardItem[] = [
     year: '2026',
     event: 'ActInSpace',
     result: {
-      pt: 'Airbus Prize, o prêmio especial da Airbus na final mundial, em Bordeaux, representando o Brasil.',
+      pt: 'Airbus Prize, prêmio especial da Airbus na final mundial, em Bordeaux, representando o Brasil.',
       en: "Airbus Prize, Airbus's special award at the world final in Bordeaux, representing Brazil.",
     },
   },
@@ -163,8 +163,8 @@ export const awards: AwardItem[] = [
     year: '2025',
     event: 'AKCIT',
     result: {
-      pt: '2º lugar, com projeto de IA generativa.',
-      en: '2nd place, with a generative AI project.',
+      pt: '2º lugar com um projeto de IA generativa.',
+      en: 'Second place with a generative AI project.',
     },
   },
 ];

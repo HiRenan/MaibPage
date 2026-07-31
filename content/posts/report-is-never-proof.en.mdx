@@ -1,83 +1,75 @@
 ---
-title: 'The report is never proof'
-description: 'The agent ships with green tests and says it is done. The report is never proof: verification starts from the diff.'
+title: "How I check an agent's work"
+description: 'The workflow I use to review a diff with three separate checks: code, i18n, and accessibility.'
 date: '2026-06-30'
 tags: ['ai', 'claude-code']
 ---
 
-Coding agents are fast and plausibly wrong. Speed hides the defect: it arrives with
-green tests, a clean diff, and a report saying "done".
+When an agent finishes a task, it provides a summary of what it changed and which
+tests it ran. I use that report to get oriented, but not as confirmation.
+Confirmation comes from the diff and from running the checks again.
 
-The answer isn't to trust the agent less. It's to verify from the outside, starting
-from the diff, not the report.
+This matters because an agent's mistake rarely arrives labeled as a mistake. The
+code can look right, pass the obvious cases, and still leave an important detail
+behind.
 
-## The plausibly wrong agent
+## The error that looks correct
 
-The failure mode isn't the agent crashing. It's the agent shipping something
-plausible and subtly wrong, too fast for you to doubt it.
+Some problems are small enough to survive a quick review: a test covers the main
+path but misses an edge case, a literal color appears where a token belongs, or a
+UI string exists only in Portuguese.
 
-A test that covers the obvious case and skips the edge. A literal color where a token
-belongs. A UI string that only exists in PT. Each defect passes whatever the agent
-ran, and the report sums them into a confident "done".
+The agent may have run the right suite without writing the test that exposes the
+problem. I need to look at both the reported result and what the implementation
+never exercised.
 
-Speed is the disguise. An answer in seconds invites you to accept it unread. The
-defect travels along, hidden in the hurry.
+## Check without inheriting the reasoning
 
-## The report is never proof
+I start from the diff, read every line, and run the gates in a clean session:
+`pnpm typecheck`, `pnpm lint`, `pnpm test`, and `pnpm build`. When a report mentions
+a score or an audit, I try to reproduce it.
 
-"Done" is the agent's claim about its own work. And a claim isn't proof.
+This was already the job of the [second terminal](/blog/two-terminals). I later
+turned the same idea into three verifiers, each responsible for one class of
+mistake. They all start from the diff, and none of them edits the code under review.
 
-Proof is something else. It's the diff, read line by line, and the gates run from
-scratch on a machine that never watched the agent work: `pnpm typecheck`, `pnpm
-lint`, `pnpm test`, `pnpm build`. Proof isn't the number the report cites, it's the
-number you reproduce.
+## What each verifier does
 
-This was already the [second terminal](/blog/two-terminals)'s job: one Claude Code builds, another
-distrusts. What changed is the shape. The distrust left my head and became three
-verifiers, each with a fixed lens, all starting from the diff.
+The three verifiers live in `.claude/agents/` and are read-only:
 
-## Three verifiers
+- **code-reviewer** runs typecheck, lint, tests, and the Turbopack build. It also
+  reads the full diff, checks scope, and looks for violations of the Next 16 and
+  design-system conventions.
+- **i18n-consistency-checker** compares the keys in `messages/pt.json` and
+  `messages/en.json`, checks that posts exist in both languages, and looks for
+  internal links that ignore the locale.
+- **a11y-checker** reviews `alt`, label-in-name, and WCAG 2.1 AA contrast. Instead
+  of looking only at the Lighthouse score, it opens each relevant audit.
 
-Three sub-agents, in `.claude/agents/`. Each one is read-only: it reads, runs,
-reports, never edits. Each lens is narrow on purpose.
+## Why separate them
 
-- **code-reviewer** runs the gates from scratch (typecheck, lint, test, build on
-  Turbopack), reads every line of the diff, and checks scope: does each line trace to
-  what the ticket asked for? It covers Next 16 conventions and design-system tokens.
-  The mantra: trust the diff, not the report.
-- **i18n-consistency-checker** owns PT/EN symmetry. It diffs key parity between
-  `messages/pt.json` and `messages/en.json`, which the build doesn't enforce: that's
-  the real gap. It checks post symmetry and the locale-aware `<Link>` in place of a
-  raw `<a>`.
-- **a11y-checker** targets WCAG 2.1 AA: `alt`, label-in-name, and contrast computed
-  by hand from OKLCH. It doesn't trust Lighthouse's aggregate score: it reads the
-  individual audit.
+A general review has to split its attention across correctness, scope, i18n,
+accessibility, and style. Giving each verifier a smaller responsibility makes the
+criteria clearer and the report easier to check.
 
-## Why three, not one
+The code-reviewer doesn't need to calculate contrast. The a11y-checker doesn't
+need to decide whether a file belongs to the ticket. They may still find the same
+problem, but they reach it through different checks.
 
-A generic reviewer dilutes. Asking it to "review everything" spreads thin attention
-across correctness, i18n, a11y, scope, and style at once, and each gets a shallow
-look.
+Because the instructions live in files, I don't have to remember every item each
+time I open a review.
 
-Three narrow lenses do the opposite. Each agent carries one criterion and applies it
-deep. The code-reviewer isn't distracted by OKLCH contrast; the a11y-checker has no
-opinion on scope. Different error classes need different readers.
+## The cost of the workflow
 
-The distrust becomes a system, not heroics. It doesn't depend on me remembering to
-check label-in-name at two in the morning. It's in a file, it fires every time, the
-same way.
+Three agents reading the same diff use more tokens and take more time than a direct
+commit. I accept that cost on changes where a small mistake can survive the common
+checks.
 
-## What it costs
+In a recent review, two defects passed both the build and Lighthouse. A comment in
+a code block had a 3.74:1 contrast ratio, below the 4.5:1 required by AA. Another
+issue broke label-in-name because the visible text was not part of the accessible
+name.
 
-The cost is honest: three agents reading the same diff burn more tokens and more time
-than a direct commit. Every change gets more expensive.
-
-What pays is what the score hides. Recently, two defects passed both the build and
-Lighthouse: a comment in a code block at 3.74:1, below the 4.5:1 that AA requires, and
-a broken label-in-name, with visible text outside the accessible name.
-
-The aggregate number said ok. The individual audit didn't. Green build, green
-Lighthouse, and two real accessibility bugs alive in the middle. That's the class of
-thing the a11y-checker catches: the kind that survives the green.
-
-> In the end, a report is just a claim. Proof is the diff three skeptics can't take down.
+The aggregate score stayed green. The problems appeared when the a11y-checker
+opened the individual results. That is the kind of detail these three reviews are
+meant to catch before I call a change done.

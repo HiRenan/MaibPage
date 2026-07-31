@@ -1,37 +1,40 @@
 ---
 title: 'The second terminal'
-description: 'Why I run two Claude Code sessions at once: one builds, the other distrusts.'
+description: 'How I separate implementation and review into two Claude Code sessions to reduce mistakes and bias.'
 date: '2026-06-25'
 tags: ['claude-code', 'workflow']
 ---
 
-Coding agents are fast and plausibly wrong. That's the hard part: the error
-doesn't show up looking like an error. It shows up with green tests, a clean diff,
-and a report that says "done, everything passes."
+I usually work with two Claude Code sessions open at the same time. The first one
+implements the task. The second receives the finished diff and looks for what the
+first one missed.
 
-The report is the least trustworthy part of the flow.
+I separate them because an agent can produce code that looks right, with green
+tests and a convincing summary, and still be wrong. The session that wrote the
+solution also has less distance from its own decisions.
 
-## One builds, the other distrusts
+## Separate roles
 
-So I run two Claude Code sessions at once, in separate terminals. One is the
-**builder**: takes the task, writes the code, runs its own tests. The other is the
-**verifier**: it writes no production code, its job is to distrust.
+The first terminal is the **builder**. It takes the task, writes the code, and runs
+its own tests. The second is the **verifier**. It doesn't change production code;
+it starts from the diff and reviews the result independently.
 
-The separation is the point. The verifier never watched the builder work, carries
-none of the bias of whoever wrote it. It starts from the diff and its own criteria:
+That distance changes the review. The verifier didn't follow every choice the
+builder made and doesn't need to defend the chosen approach. It follows a short
+checklist:
 
-- typecheck, lint, test and build, from scratch, on its own machine;
-- reads every changed line, not the summary;
-- re-runs the audits (Lighthouse, contrast, links) instead of trusting the reported numbers;
-- checks the scope: only the files the ticket asked for, nothing more.
+- run typecheck, lint, tests, and build again;
+- read every changed line instead of treating the summary as proof;
+- repeat Lighthouse, contrast, and link audits when they are part of the task;
+- check that every changed file belongs to the request.
 
-Only then does the work become a commit. The builder's report is never proof. It's
-a claim to be checked.
+After that review, I decide whether the work can become a commit or needs to go
+back to the builder.
 
-## The discipline lives in a file
+## Shared rules
 
-Both terminals read the same `CLAUDE.md`, and it has two layers. The base is four
-principles that override the model's default behavior:
+Both terminals receive the same project rules. `AGENTS.md` is the canonical file,
+mirrored in `CLAUDE.md` for tools that use it. The base has four principles:
 
 ```md
 ## Base layer
@@ -42,24 +45,26 @@ principles that override the model's default behavior:
 4. Goal-driven: define the success criterion, loop until verified
 ```
 
-On top of it, the project layer: locked decisions, anti-patterns ("don't do"),
-invariants (always true: symmetric i18n, server-first, design-system tokens) and
-the **hot files**, high-blast-radius files that require confirmation before any edit.
+Then come the rules specific to this site: settled decisions, anti-patterns,
+symmetric i18n, a preference for Server Components, design-system tokens, and the
+**hot files** that require confirmation before an edit.
 
-A rule that isn't in the file doesn't exist. Agent memory is volatile; the file isn't.
+Keeping these rules in the repository avoids relying on session memory. Every
+agent starts with the same constraints and the same definition of done.
 
-## Lock the decision before the line
+## Decide before implementing
 
-Before writing code, the builder goes through a grill: one question at a time, each
-with a recommendation, until the decision is locked. Ambiguity becomes a question,
-not an assumption buried in the commit.
+When a choice would materially change the result, I settle it before opening the
+diff. The builder asks one question at a time, explains its recommendation, and
+waits for a decision. Anything it can discover in the repository gets investigated
+first.
 
-It's the first principle in action: the confusion surfaces **before** the
-implementation, not after the diff reveals the mistake.
+This reduces the chance of implementing one interpretation in full and learning at
+the end that the request meant something else.
 
-## Guardrails that don't rely on memory
+## What becomes an automatic safeguard
 
-Not everything fits in "remember to." What's mechanical becomes a hook or a permission:
+Mechanical rules live in hooks and permissions, not reminders:
 
 ```jsonc
 // .claude/settings.json
@@ -70,23 +75,20 @@ Not everything fits in "remember to." What's mechanical becomes a hook or a perm
 ]
 ```
 
-Hooks confirm hot files before an edit and run lint/format after every write. The
-human doesn't have to remember to ask. The environment enforces it.
+The hooks confirm hot files before an edit and run lint and formatting after every
+write. The safeguard still works even when nobody remembers to mention it in the
+prompt.
 
-## Why it pays
+## One case that justified the workflow
 
-The gain isn't speed. It's trust.
+During a Lighthouse audit, every page cleared the 95-point threshold in every
+category. The verifier still opened the individual results and found two
+accessibility problems that the aggregate score did not make obvious. A code
+comment had a 3.74:1 contrast ratio, below the 4.5:1 required by WCAG AA. Three
+controls had visible text that differed from their accessible name.
 
-This week the verifier ran a Lighthouse audit. The pages cleared the ≥ 95 gate
-across the board. Done, the report would say. But it didn't stop at the number: it
-read the individual audits and found two real accessibility bugs the score was
-masking. A code comment at 3.74:1 (WCAG AA requires 4.5). Three controls whose
-visible text differed from their accessible name.
+One issue had zero weight in the score. The other only brought one page down to 96. Both passed the builder and the score, but showed up when the second session
+read the checks more carefully.
 
-Two WCAG defects that survived the builder _and_ the score itself: one because it
-carried zero weight in the calculation, the other because it only nicked one page
-down to 96. The second terminal caught both.
-
-> In the end, what makes the difference isn't the agent. It's the mesh I built around it.
-
-Trust the diff, not the report.
+That is why I kept the second terminal. I read the agent's summary to understand
+what it tried to do, but I make the decision from the diff and the repeated checks.

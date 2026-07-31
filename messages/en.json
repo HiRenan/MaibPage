@@ -18,7 +18,7 @@
     "open": "Open command palette",
     "title": "Command palette",
     "placeholder": "Search commands…",
-    "empty": "No results.",
+    "empty": "Nothing found.",
     "noPosts": "No posts yet",
     "group": {
       "navigation": "Navigation",
@@ -41,7 +41,7 @@
     "closeFigure": "close"
   },
   "blog": {
-    "description": "Technical notes on AI, Claude Code, and what I learn building MAIB.",
+    "description": "Notes on AI, Claude Code, and what I learn from building MAIB projects.",
     "metaTitle": "Blog · MAIB",
     "filterLabel": "Filter by tag",
     "allTag": "All",
@@ -94,41 +94,41 @@
   "about": {
     "metaTitle": "About · MAIB",
     "title": "About",
-    "lead": "AI engineer. I put language models into production and keep them working outside the demo.",
+    "lead": "I'm an AI engineer. I work with language models, RAG, and automation, from prototype to production.",
     "bio": {
-      "p1": "I run MAIB, AI consulting and automation. My work is taking LLMs from prototype to real production: deterministic model programming, RAG, automation that holds up in the real world.",
-      "p2": "I'm currently an AI engineer at Freedom.AI and did an AI residency at SENAI/SC. MAIB is where this becomes a service for people who need the result, not the demo.",
-      "p3": "Here I write what I learn building: Claude Code, LLM programming, what breaks in production and how I fix it."
+      "p1": "My work is turning LLM prototypes into systems people can use day to day. That includes deterministic LLM programming, RAG, integrations, and automation.",
+      "p2": "I currently work as an AI engineer at Freedom.AI. I also run MAIB, where I work on AI consulting and automation projects, and completed an AI residency at SENAI/SC.",
+      "p3": "I write here about Claude Code, LLM programming, and the problems that show up when a project leaves the demo."
     },
     "values": {
       "heading": "Values",
       "items": [
         {
           "term": "Precise",
-          "description": "To me, every detail is evidence. Only what holds on its own ships. If it just looks ready, I don't count it as ready."
+          "description": "I prefer to test and measure before calling something done. If the result can't be reproduced, there is still work to do."
         },
         {
           "term": "Technical",
-          "description": "I speak the language of people who build, without watering it down. Engineering doesn't need marketing on top."
+          "description": "I show what I built, why I chose that approach, and what went wrong. I don't hide the technical part behind marketing."
         },
         {
           "term": "Experimental",
-          "description": "I like testing what's ahead of the curve, always measuring the result. It's calculated risk, with method."
+          "description": "I test new tools and ideas, but I don't use something just because it's popular. First I check whether it solves the problem."
         }
       ]
     },
     "journey": {
       "heading": "Journey",
-      "body": "Most recent: I won the Airbus Prize at ActInSpace 2026 with the IGNITE team, at the world final in Bordeaux, and came 2nd at AKCIT 2025. Along the way, an AI residency at SENAI/SC, and today I'm an AI engineer at Freedom.AI, while running MAIB."
+      "body": "In 2026, I won the Airbus Prize with the IGNITE team at the ActInSpace world final in Bordeaux, representing Brazil. In 2025, I placed second at AKCIT. I also completed an AI residency at SENAI/SC and now work at Freedom.AI while running MAIB."
     },
     "contact": {
       "heading": "Contact",
-      "body": "To talk about an AI project through MAIB, write to me. Email and LinkedIn are the fastest way."
+      "body": "To talk about a MAIB project, reach me by email or LinkedIn."
     }
   },
   "experience": {
     "metaTitle": "Experience · MAIB",
-    "lead": "Where I've worked, what I studied, and the tools I use to put AI into production.",
+    "lead": "A short history of my work, studies, and the tools I use most.",
     "present": "present",
     "projectsWith": "projects with",
     "sections": {
@@ -148,7 +148,7 @@
   "projects": {
     "title": "Projects",
     "metaTitle": "Projects · MAIB",
-    "lead": "A selection of what I've built: products, hackathon projects, and technical experiments.",
+    "lead": "A selection of products, hackathon projects, and technical experiments I've built over the past few years.",
     "links": {
       "repo": "Code",
       "demo": "Live"
@@ -157,12 +157,12 @@
   "notFound": {
     "code": "404",
     "title": "Page not found",
-    "description": "This route doesn't exist or was moved. It may still be under construction.",
+    "description": "This page doesn't exist or has moved.",
     "back": "Back home"
   },
   "error": {
-    "title": "Something broke",
-    "description": "An unexpected error interrupted this page. You can try again.",
+    "title": "Something went wrong",
+    "description": "This page couldn't load. Try again.",
     "retry": "Try again",
     "back": "Back home"
   }
