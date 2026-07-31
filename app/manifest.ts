@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'MAIB · Renan Mocelin',
     short_name: 'MAIB',
     description:
-      'Marca pessoal do Renan Mocelin e presença da MAIB: IA, automação, Claude Code e desenvolvimento.',
+      'Renan Mocelin escreve sobre engenharia de IA, automação, Claude Code e os projetos que desenvolve na MAIB.',
     start_url: '/',
     display: 'standalone',
     background_color: '#110f0d',

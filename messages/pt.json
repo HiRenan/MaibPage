@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MAIB · Renan Mocelin",
-    "description": "Marca pessoal do Renan Mocelin e presença da MAIB: IA, automação, Claude Code e desenvolvimento."
+    "description": "Renan Mocelin escreve sobre engenharia de IA, automação, Claude Code e os projetos que desenvolve na MAIB."
   },
   "nav": {
     "home": "Início",
@@ -18,7 +18,7 @@
     "open": "Abrir paleta de comandos",
     "title": "Paleta de comandos",
     "placeholder": "Buscar comandos…",
-    "empty": "Nenhum resultado.",
+    "empty": "Nada encontrado.",
     "noPosts": "Nenhum post ainda",
     "group": {
       "navigation": "Navegação",
@@ -41,7 +41,7 @@
     "closeFigure": "fechar"
   },
   "blog": {
-    "description": "Notas técnicas sobre IA, Claude Code e o que descubro construindo a MAIB.",
+    "description": "Textos sobre IA, Claude Code e o que aprendo nos projetos da MAIB.",
     "metaTitle": "Blog · MAIB",
     "filterLabel": "Filtrar por tag",
     "allTag": "Todas",
@@ -75,67 +75,67 @@
       "role": "engenheiro de IA · MAIB"
     },
     "about": {
-      "lead": "Engenheiro de IA. Eu pego modelo de linguagem e boto pra rodar em produção, fora do demo: programação determinística de LLM, RAG, automação que precisa funcionar quando é pra valer.",
-      "p2": "Toco a MAIB, consultoria e automação de IA. Hoje sou engenheiro de IA na Freedom.AI e fiz residência em IA no SENAI/SC.",
-      "p3": "Ganhei o Airbus Prize no ActInSpace 2026 com a equipe IGNITE, na final mundial em Bordeaux, representando o Brasil. E 2º no AKCIT 2025. Aqui eu escrevo o que vou aprendendo enquanto construo.",
+      "lead": "Sou engenheiro de IA e trabalho com modelos de linguagem em produção. Faço programação determinística de LLM, RAG e automações que precisam funcionar fora do demo.",
+      "p2": "Toco a MAIB, minha consultoria de IA e automação. Também trabalho como engenheiro de IA na Freedom.AI e fiz residência no SENAI/SC.",
+      "p3": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. No ano anterior, fiquei em 2º lugar no AKCIT. Aqui escrevo sobre o que aprendo no trabalho e nos projetos da MAIB.",
       "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"],
-      "readMore": "Leia mais"
+      "readMore": "Mais sobre mim"
     },
     "featured": {
-      "heading": "Escrita recente",
-      "viewAll": "Ver todos"
+      "heading": "Posts recentes",
+      "viewAll": "Ver todos os posts"
     },
     "contact": {
       "heading": "Contato",
-      "body": "Consultoria e automação de IA pela MAIB. Pra falar sobre um projeto, escreve pra mim.",
+      "body": "Pra conversar sobre um projeto de IA ou automação com a MAIB, me manda um email.",
       "email": "renanryuakame@gmail.com"
     }
   },
   "about": {
     "metaTitle": "Sobre · MAIB",
     "title": "Sobre",
-    "lead": "Engenheiro de IA. Eu boto modelo de linguagem em produção e faço continuar funcionando fora do demo.",
+    "lead": "Sou engenheiro de IA. Trabalho com modelos de linguagem, RAG e automação, do protótipo à produção.",
     "bio": {
-      "p1": "Toco a MAIB, consultoria e automação de IA. Meu trabalho é tirar LLM de protótipo e botar em produção de verdade: programação determinística de modelo, RAG, automação que aguenta caso real.",
-      "p2": "Hoje sou engenheiro de IA na Freedom.AI e fiz residência em IA no SENAI/SC. A MAIB é onde isso vira serviço pra quem precisa do resultado, não do demo.",
-      "p3": "Aqui eu escrevo o que aprendo construindo: Claude Code, programação de LLM, o que quebra em produção e como conserto."
+      "p1": "Meu trabalho é transformar protótipos com LLM em sistemas que funcionam no dia a dia. Isso inclui programação determinística de modelos, RAG, integrações e automações.",
+      "p2": "Hoje trabalho como engenheiro de IA na Freedom.AI. Também toco a MAIB, onde desenvolvo projetos de consultoria e automação, e fiz residência em IA no SENAI/SC.",
+      "p3": "Aqui escrevo sobre Claude Code, programação de LLM e os problemas que aparecem quando um projeto sai do demo."
     },
     "values": {
       "heading": "Valores",
       "items": [
         {
           "term": "Preciso",
-          "description": "Pra mim, cada detalhe é evidência. Só sobe pra produção o que se sustenta sozinho. O que só parece pronto, eu não conto como pronto."
+          "description": "Prefiro testar e medir antes de dizer que algo está pronto. Se o resultado não pode ser reproduzido, ainda falta trabalho."
         },
         {
           "term": "Técnico",
-          "description": "Falo a língua de quem constrói, sem diluir. Engenharia não precisa de marketing por cima."
+          "description": "Mostro o que fiz, por que escolhi aquele caminho e o que deu errado. Não escondo a parte técnica atrás de marketing."
         },
         {
           "term": "Experimental",
-          "description": "Gosto de testar o que está na frente da curva, sempre medindo o resultado. É risco calculado, com método."
+          "description": "Testo ferramentas e ideias novas, mas não uso novidade só porque está em alta. Primeiro vejo se resolve o problema."
         }
       ]
     },
     "journey": {
       "heading": "Jornada",
-      "body": "O mais recente: ganhei o Airbus Prize no ActInSpace 2026 com a equipe IGNITE, na final mundial em Bordeaux, e fiquei em 2º no AKCIT 2025. No caminho, fiz residência em IA no SENAI/SC e hoje sou engenheiro de IA na Freedom.AI, enquanto toco a MAIB."
+      "body": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. Em 2025, fiquei em 2º lugar no AKCIT. Também fiz residência em IA no SENAI/SC e hoje trabalho na Freedom.AI enquanto toco a MAIB."
     },
     "contact": {
       "heading": "Contato",
-      "body": "Pra falar sobre um projeto de IA pela MAIB, escreve pra mim. Email e LinkedIn são o caminho mais rápido."
+      "body": "Pra conversar sobre um projeto da MAIB, me chama por email ou LinkedIn."
     }
   },
   "experience": {
     "metaTitle": "Experiência · MAIB",
-    "lead": "Onde trabalhei, o que estudei e as ferramentas que uso pra colocar IA em produção.",
+    "lead": "Um resumo do meu caminho até aqui, com os trabalhos, estudos e ferramentas que mais uso.",
     "present": "presente",
     "projectsWith": "projetos com",
     "sections": {
       "experience": "Experiência",
       "awards": "Prêmios",
       "education": "Educação",
-      "skills": "Skills"
+      "skills": "Tecnologias"
     },
     "categories": {
       "frameworks": "Frameworks",
@@ -148,7 +148,7 @@
   "projects": {
     "title": "Projetos",
     "metaTitle": "Projetos · MAIB",
-    "lead": "Uma seleção do que construí: produtos, projetos de hackathon e experimentos técnicos.",
+    "lead": "Uma seleção de produtos, hackathons e experimentos técnicos que construí nos últimos anos.",
     "links": {
       "repo": "Código",
       "demo": "Demo"
@@ -157,12 +157,12 @@
   "notFound": {
     "code": "404",
     "title": "Página não encontrada",
-    "description": "Esta rota não existe ou foi movida. Pode ser que ainda esteja sendo construída.",
+    "description": "Essa página não existe ou mudou de endereço.",
     "back": "Voltar ao início"
   },
   "error": {
-    "title": "Algo quebrou",
-    "description": "Um erro inesperado interrompeu esta página. Você pode tentar de novo.",
+    "title": "Algo deu errado",
+    "description": "Não foi possível carregar esta página. Tente de novo.",
     "retry": "Tentar de novo",
     "back": "Voltar ao início"
   }

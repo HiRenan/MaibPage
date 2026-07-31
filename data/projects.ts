@@ -30,8 +30,8 @@ export function sortProjects(items: Project[]): Project[] {
 
 // --- DADOS (MAI-565) ---
 // Ordem de origem = ordem de exibição dentro de cada grupo featured/não-featured.
-// Métricas/prêmios NÃO inventados: onde há colocação, o texto é reusado VERBATIM do
-// award correspondente em data/experience.ts (evita o site afirmar o mesmo de 2 jeitos).
+// Métricas/prêmios NÃO inventados: onde há colocação, os fatos seguem o award
+// correspondente em data/experience.ts.
 
 export const projects: Project[] = [
   {
@@ -39,9 +39,9 @@ export const projects: Project[] = [
     year: '2026',
     role: { pt: 'Desenvolvedor', en: 'Developer' },
     description: {
-      // Conquista reusada do award ActInSpace (data/experience.ts): o mesmo Airbus Prize.
-      pt: "Imageria de satélite, no tema 'seeing the unseen, from space'. Ganhou o Airbus Prize, o prêmio especial da Airbus na final mundial do ActInSpace 2026, em Bordeaux, representando o Brasil.",
-      en: "Satellite imagery, on the theme 'seeing the unseen, from space'. It won the Airbus Prize, Airbus's special award at the ActInSpace 2026 world final in Bordeaux, representing Brazil.",
+      // Mesma conquista registrada no award ActInSpace em data/experience.ts.
+      pt: "Projeto de imagens de satélite criado para o desafio 'seeing the unseen, from space'. Com ele, a equipe ganhou o Airbus Prize na final mundial do ActInSpace 2026, em Bordeaux, representando o Brasil.",
+      en: "A satellite imagery project built for the 'seeing the unseen, from space' challenge. It won the Airbus Prize at the ActInSpace 2026 world final in Bordeaux, representing Brazil.",
     },
     stack: ['React', 'Vite', 'JavaScript'],
     links: [
@@ -55,8 +55,8 @@ export const projects: Project[] = [
     year: '2026',
     role: { pt: 'Autor e desenvolvedor', en: 'Author and developer' },
     description: {
-      pt: 'O site que você está lendo. Marca pessoal e presença da MAIB em PT e EN, com design system dark anti-neon em OKLCH (contraste WCAG validado por script), blog em MDX e paleta ⌘K. Construído num fluxo de dois terminais: um constrói, o outro verifica.',
-      en: 'The site you are reading. Personal brand and MAIB presence in PT and EN, with a dark anti-neon design system in OKLCH (WCAG contrast validated by script), an MDX blog, and a ⌘K palette. Built in a two-terminal flow: one builds, the other verifies.',
+      pt: 'É o site que você está lendo. Fiz em PT e EN, com blog em MDX, paleta ⌘K e um design system dark anti-neon em OKLCH. Um script confere o contraste WCAG. No desenvolvimento, uso dois terminais: um implementa e o outro revisa.',
+      en: 'This is the site you are reading. I built it in PT and EN with an MDX blog, a ⌘K palette, and a dark anti-neon design system in OKLCH. A script checks WCAG contrast. During development, I use two terminals: one implements and the other reviews.',
     },
     stack: ['Next.js 16', 'TypeScript', 'MDX', 'Tailwind', 'next-intl'],
     links: [
@@ -71,10 +71,10 @@ export const projects: Project[] = [
     role: { pt: 'Desenvolvedor', en: 'Developer' },
     description: {
       // Colocação confirmada pelo Renan: CortAI é o projeto do AKCIT 2025 (2º lugar).
-      pt: 'Geração de múltiplos cortes de mídia em tempo real com inteligência multimodal. Levou o 2º lugar no AKCIT 2025.',
-      en: 'Real-time generation of multiple media clips with multimodal intelligence. It took 2nd place at AKCIT 2025.',
+      pt: 'Ferramenta que usa IA multimodal para gerar vários cortes de mídia em tempo real. Ficou em 2º lugar no AKCIT 2025.',
+      en: 'A tool that uses multimodal AI to generate multiple media clips in real time. It placed second at AKCIT 2025.',
     },
-    stack: ['Python', 'IA generativa', 'Multimodal'],
+    stack: ['Python', 'Generative AI', 'Multimodal'],
     links: [{ kind: 'repo', href: 'https://github.com/HiRenan/CortAI' }],
   },
   {
@@ -82,8 +82,8 @@ export const projects: Project[] = [
     year: '2026',
     role: { pt: 'Desenvolvedor', en: 'Developer' },
     description: {
-      pt: 'Projeto da residência em IA no SENAI: reconhecimento de atividade humana (dataset UCI HAR) rodando direto num microcontrolador ESP32-S3 com TinyML, lendo um sensor MPU6050. IA na borda, sem nuvem.',
-      en: 'A project from my AI residency at SENAI: human activity recognition (UCI HAR dataset) running directly on an ESP32-S3 microcontroller with TinyML, reading an MPU6050 sensor. AI at the edge, no cloud.',
+      pt: 'Projeto da residência em IA no SENAI. Um modelo de reconhecimento de atividade humana, treinado com o dataset UCI HAR, roda no ESP32-S3 e lê dados de um sensor MPU6050. Tudo acontece na borda, sem nuvem.',
+      en: 'A project from my AI residency at SENAI. A human activity recognition model trained on the UCI HAR dataset runs on an ESP32-S3 and reads data from an MPU6050 sensor. Everything happens at the edge, without the cloud.',
     },
     stack: ['C', 'ESP32-S3', 'TensorFlow Lite Micro', 'TinyML'],
     links: [{ kind: 'repo', href: 'https://github.com/HiRenan/uci_har_tinyml' }],

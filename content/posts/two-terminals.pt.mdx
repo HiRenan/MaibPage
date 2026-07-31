@@ -1,37 +1,41 @@
 ---
 title: 'O segundo terminal'
-description: 'Por que eu rodo dois Claude Code ao mesmo tempo: um constrói, o outro desconfia.'
+description: 'Como separo implementação e revisão em duas sessões do Claude Code para reduzir erro e viés.'
 date: '2026-06-25'
 tags: ['claude-code', 'workflow']
 ---
 
-Agentes de código são rápidos e plausivelmente errados. Essa é a parte difícil:
-o erro não chega com cara de erro. Chega com testes verdes, um diff limpo e um
-relatório que diz "pronto, tudo passa".
+Eu costumo trabalhar com duas sessões do Claude Code abertas ao mesmo tempo. A
+primeira implementa. A segunda recebe o diff pronto e tenta encontrar o que a
+primeira deixou passar.
 
-O relatório é a parte menos confiável do fluxo.
+Faço essa separação porque um agente pode entregar código que parece certo, com
+testes verdes e um resumo convincente, e ainda assim errar. Quem acabou de escrever
+também tende a enxergar a própria solução com menos distância.
 
-## Um constrói, o outro desconfia
+## Papéis separados
 
-Então eu rodo dois Claude Code ao mesmo tempo, em terminais separados. Um é o
-**builder**: recebe a tarefa, escreve o código, roda os próprios testes. O outro é
-o **verificador**: ele não escreve nada de produção, o trabalho dele é desconfiar.
+O primeiro terminal é o **builder**. Ele recebe a tarefa, escreve o código e roda
+os próprios testes. O segundo é o **verificador**. Ele não altera o código de
+produção; começa pelo diff e revisa o resultado por conta própria.
 
-A separação é o ponto. O verificador não viu o builder trabalhar, não carrega o
-viés de quem escreveu. Ele parte do diff e dos próprios critérios:
+Essa distância muda a revisão. O verificador não acompanhou cada escolha do builder
+e não precisa defender o caminho usado. Ele segue uma lista simples:
 
-- typecheck, lint, teste e build, do zero, na máquina dele;
-- lê cada linha mudada, não o resumo;
-- re-roda os audits (Lighthouse, contraste, links) em vez de acreditar nos números relatados;
-- confere o escopo: só os arquivos que o ticket pedia, nada a mais.
+- roda typecheck, lint, testes e build de novo;
+- lê cada linha alterada em vez de usar o resumo como prova;
+- repete auditorias de Lighthouse, contraste e links quando elas fazem parte da
+  tarefa;
+- confere se cada arquivo alterado tem relação com o pedido.
 
-Só depois disso o trabalho vira commit. O relatório do builder nunca é prova. É
-uma alegação que precisa ser checada.
+Depois dessa revisão, eu decido se o trabalho pode virar commit ou se precisa voltar
+para o builder.
 
-## A disciplina mora num arquivo
+## Regras compartilhadas
 
-Os dois terminais leem o mesmo `CLAUDE.md`, e ele tem duas camadas. A base são
-quatro princípios que sobrepõem o comportamento default do modelo:
+Os dois terminais recebem as mesmas regras do projeto. A fonte canônica é o
+`AGENTS.md`, espelhado em `CLAUDE.md` para as ferramentas que usam esse arquivo. A
+base tem quatro princípios:
 
 ```md
 ## Camada base
@@ -42,25 +46,25 @@ quatro princípios que sobrepõem o comportamento default do modelo:
 4. Goal-driven: defina o critério de sucesso, faça loop até verificar
 ```
 
-Em cima dela, a camada do projeto: decisões travadas, antipadrões ("não fazer"),
-invariantes (sempre verdadeiros: i18n simétrico, server-first, tokens do design
-system) e os **hot files**, arquivos de alto raio de impacto que exigem
-confirmação antes de qualquer edição.
+Depois vêm as regras específicas do site: decisões já tomadas, antipadrões, i18n
+simétrico, preferência por Server Components, tokens do design system e os **hot
+files**, que exigem confirmação antes de qualquer edição.
 
-Regra que não está no arquivo não existe. Memória de agente é volátil; o arquivo, não.
+Manter isso no repositório evita depender da memória de uma sessão. Cada agente
+começa com as mesmas restrições e os mesmos critérios de pronto.
 
-## Travar a decisão antes da linha
+## Decidir antes de implementar
 
-Antes de escrever código, o builder passa por um grill: uma pergunta de cada vez,
-cada uma com uma recomendação, até a decisão estar travada. Ambiguidade vira
-pergunta, não vira suposição enterrada no commit.
+Quando uma escolha muda o resultado, eu resolvo antes de abrir o diff.
+O builder faz uma pergunta por vez, explica a recomendação e espera a decisão. O
+que pode ser descoberto no repositório não vira pergunta; ele investiga primeiro.
 
-É o primeiro princípio em ação: a confusão aparece **antes** da implementação, não
-depois que o diff revela o engano.
+Isso reduz o risco de implementar uma interpretação inteira e descobrir no final
+que o pedido era outro.
 
-## Guardrails que não dependem de memória
+## O que vira proteção automática
 
-Nem tudo cabe em "lembre-se de". O que é mecânico vira hook ou permissão:
+Regras mecânicas ficam em hooks e permissões, não em lembretes:
 
 ```jsonc
 // .claude/settings.json
@@ -71,23 +75,21 @@ Nem tudo cabe em "lembre-se de". O que é mecânico vira hook ou permissão:
 ]
 ```
 
-Hooks confirmam hot files antes da edição e rodam lint/format depois de cada
-escrita. O humano não precisa lembrar de pedir. O ambiente cobra por ele.
+Os hooks confirmam hot files antes da edição e rodam lint e formatação depois de
+cada escrita. Assim, a proteção continua funcionando mesmo quando ninguém lembra
+de mencioná-la no prompt.
 
-## Por que isso paga
+## Um caso que justificou o fluxo
 
-O ganho não é velocidade. É confiança.
+Em uma auditoria do Lighthouse, as páginas passaram o limite de 95 em todas as
+categorias. O verificador abriu os resultados individuais mesmo assim e encontrou
+dois problemas de acessibilidade que a nota agregada não deixou claros. Um
+comentário de código estava em 3.74:1, abaixo dos 4.5:1 exigidos pelo WCAG AA. Três
+controles tinham texto visível diferente do nome acessível.
 
-Esta semana o verificador rodou um audit Lighthouse. As páginas passaram o gate de
-≥ 95 em tudo. Pronto, diria o relatório. Mas ele não parou no número: leu os audits
-individuais e achou dois bugs reais de acessibilidade que o score mascarava. Um
-comentário de código em 3.74:1 (WCAG AA exige 4.5). Três controles com texto
-visível diferente do nome acessível.
+Um problema tinha peso zero no cálculo da nota. O outro reduziu uma página apenas
+para 96. Os dois passaram pelo builder e pelo score, mas apareceram quando a segunda
+sessão leu as verificações com mais cuidado.
 
-Dois defeitos WCAG que sobreviveram ao builder _e_ ao próprio score: um porque
-tinha peso zero no cálculo, o outro porque só arranhou uma página pra 96. O segundo
-terminal pegou os dois.
-
-> No fim, o que faz a diferença não é o agente. É a malha que eu montei em volta dele.
-
-Confie no diff, não no relato.
+Foi por isso que mantive o segundo terminal. Eu leio o resumo do agente para entender
+o que ele tentou fazer, mas decido pelo diff e pelos checks repetidos.

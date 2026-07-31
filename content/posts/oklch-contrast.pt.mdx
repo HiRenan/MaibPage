@@ -1,42 +1,37 @@
 ---
-title: 'Contraste é cálculo, não opinião'
-description: 'A paleta é dark anti-neon em OKLCH, mas o WCAG mede luminância sRGB. Contraste não se opina: calcula-se, e o repo tem o script que faz isso.'
+title: 'Como eu confiro contraste em OKLCH'
+description: 'O script que converte os tokens do site para luminância sRGB e confere os limites de contraste do WCAG.'
 date: '2026-06-30'
 tags: ['design-system', 'a11y']
 ---
 
-A paleta do site é dark anti-neon, escolhida token a token em OKLCH. OKLCH é
-perceptualmente uniforme: mexer no L move o brilho de um jeito previsível pro olho.
+A paleta do site foi montada em OKLCH. Esse espaço facilita o ajuste de luminosidade
+entre os tokens, mas não é o espaço usado pelo WCAG para calcular contraste.
 
-O WCAG não mede em OKLCH. Mede luminância em sRGB. E o olho não sabe dizer se um par
-texto/fundo passa de 4.5:1. Então eu não fico opinando sobre contraste. Eu calculo. O repo
-tem um script que faz isso.
+Quando mudo uma cor, rodo um script que converte os valores para luminância sRGB e
+calcula a razão entre cada par importante. Assim eu consigo escolher a aparência em
+OKLCH e conferir a acessibilidade com a fórmula do WCAG.
 
-## OKLCH não é sRGB
+## Do OKLCH ao contraste do WCAG
 
-Por que OKLCH: pra um dark mono consistente, você quer que dois tokens com o mesmo L
-pareçam igualmente claros, e que baixar o L escureça de forma previsível. OKLCH
-entrega isso. É perceptualmente uniforme, então a paleta inteira se ajusta no eixo L
-sem surpresa.
+No OKLCH, o componente L representa luminosidade perceptual. Isso ajuda a manter uma
+paleta escura consistente, porque mover o L produz uma mudança visual mais previsível.
 
-O problema aparece na hora de provar acessibilidade. O critério do WCAG (1.4.3, texto
-AA) é uma razão de contraste de 4.5:1, e essa razão é definida sobre luminância
-relativa em sRGB linear, não sobre o L do OKLCH. Os dois falam de "claro", mas em
-espaços diferentes. Um L bonito no OKLCH não garante uma razão que passa. E o olho,
-ainda menos: olhar pra dois cinzas quentes e chutar "isso passa 4.5?" é adivinhação.
-A ponte entre os dois espaços é aritmética, não opinião.
+O critério 1.4.3 do WCAG usa outra medida: a luminância relativa em sRGB linear. Para
+texto AA, a razão precisa chegar a 4.5:1. O valor de L ajuda no design, mas não pode
+ser usado diretamente para provar que um par passa nesse limite.
 
-## O pipeline
+O script faz quatro passos:
 
-O script converte cada token e cruza os dois. Um passo por linha:
-
-- OKLCH para OKLab: desfaz o croma e o ângulo de volta pros eixos a/b.
-- OKLab para sRGB linear: as constantes do Ottosson. Combina L, a, b nos três
-  componentes LMS, eleva cada um ao cubo, recombina em r, g, b.
+- OKLCH para OKLab: transforma croma e ângulo nos eixos a e b.
+- OKLab para sRGB linear: aplica as constantes de Ottosson, passa pelos componentes
+  LMS e chega a r, g, b.
 - sRGB linear para luminância: a soma ponderada do WCAG, `0.2126 r + 0.7152 g + 0.0722 b`.
 - Luminância para razão: `(hi + 0.05) / (lo + 0.05)`, com o maior dos dois em cima.
 
-A conversão OKLCH para sRGB linear é o coração, e é literal:
+## Conversão para sRGB linear
+
+A parte central do script é esta função:
 
 ```js
 function oklchToLinear(L, C, H) {
@@ -59,21 +54,22 @@ function oklchToLinear(L, C, H) {
 }
 ```
 
-Coeficientes do Björn Ottosson, autor do OKLab. Não são meus, não são chutados: são a
-definição do espaço.
+Os coeficientes foram publicados por Björn Ottosson, autor do OKLab, e fazem parte
+da definição do espaço.
 
-## A pegadinha que quase todo mundo erra
+## O detalhe da curva de gama
 
-O `r, g, b` que sai dessa função já é linear-light. Esse é o passo que engana.
+Os valores `r, g, b` devolvidos pela função já estão em sRGB linear. Esse detalhe
+muda a forma de calcular a luminância.
 
-A fórmula de luminância do WCAG que você acha no Stack Overflow vem com um pré-passo:
-decodificar a gama de cada canal sRGB, `((c + 0.055) / 1.055) ^ 2.4`. Esse passo
-existe pra converter sRGB gama-codificado (o `#rrggbb` que você digita) em linear. Mas
-a saída do Ottosson já é linear. Reaplicar o decode aqui aplica a correção duas vezes
-e o contraste sai errado.
+Muitas implementações começam decodificando a gama de cada canal com
+`((c + 0.055) / 1.055) ^ 2.4`. Isso é necessário quando a entrada está em sRGB
+codificado, como um `#rrggbb`. Aqui a conversão de Ottosson já entregou valores
+lineares. Repetir o decode aplicaria a correção duas vezes e produziria uma razão
+errada.
 
-Então o script pula o decode. Usa `r, g, b` direto na luminância, só com um clamp em
-`[0, 1]` pra cortar valores fora do gamut:
+Por isso, o script usa `r, g, b` direto na fórmula e aplica apenas um clamp em
+`[0, 1]` para limitar valores fora do gamut:
 
 ```js
 function luminance([L, C, H]) {
@@ -82,44 +78,38 @@ function luminance([L, C, H]) {
 }
 ```
 
-É um detalhe de uma linha que separa quem entende o pipeline de quem colou a função de
-luminância de um post genérico. O comentário no topo do script documenta exatamente
-isso, pra ninguém "consertar" de volta.
+O comentário no topo do arquivo explica esse ponto para evitar que alguém adicione
+o decode em uma manutenção futura.
 
-## Um exemplo de verdade
+## Conferindo os tokens do site
 
-Os tokens são arrays `[L, C, H]`, espelho do `:root` do `globals.css`. O texto padrão,
-`foreground`, é `[0.92, 0.012, 85]`. O fundo, `background`, é `[0.17, 0.006, 70]`.
-Passa os dois pelo pipeline e a razão sai em `15.10:1`. Folga enorme sobre o 4.5 do
-texto.
+Os tokens ficam em arrays `[L, C, H]` que espelham o `:root` de `globals.css`. O
+`foreground` usa `[0.92, 0.012, 85]` e o `background`, `[0.17, 0.006, 70]`. Depois da
+conversão, esse par chega a `15.10:1`, acima do limite de 4.5:1 para texto.
 
-O número não vale por si: vale porque é reproduzível. O script abre com um self-check,
-uma lista de âncoras (test vectors) que reproduzem medições feitas à mão antes do
-port. `foreground / background` ancorado em ~15.1, `border / background` em ~1.51, e
-por aí. Se um refactor driftar a matemática, alguma âncora deixa de bater e o script
-aborta antes de reportar qualquer par. A ferramenta valida a si mesma antes de validar
-a paleta.
+Antes de testar a paleta, o script roda um self-check com valores de referência.
+Entre eles estão `foreground / background` em aproximadamente 15.1 e
+`border / background` em aproximadamente 1.51. Se uma mudança quebrar a conversão,
+o script para antes de avaliar os tokens.
 
-Os limiares vêm do WCAG: 4.5:1 pra texto, 3.0:1 pra elemento não-textual de UI (anel
-de foco, borda de input ativo). O `border` é o único isento, marcado decorativo: a
-1.51:1 ele jamais passaria, mas a SC 1.4.11 não exige contraste de elemento puramente
-decorativo. A isenção é explícita no código, não um esquecimento. Hoje a saída fecha
-em 13 de 13 pares obrigatórios em PASS, 1 isento.
+Os limites configurados são 4.5:1 para texto e 3.0:1 para elementos não textuais,
+como o anel de foco e a borda de um input ativo. O token `border` é marcado como
+decorativo e fica isento pela SC 1.4.11. Hoje o resultado mostra 13 pares obrigatórios
+aprovados e 1 par isento.
 
-## O que o número me obrigou a fazer
+## O vermelho que falhou
 
-O caso concreto foi o `destructive`, o vermelho de erro. Eu tinha posto o L
-em 0.585, um vermelho que parecia certo no olho. O script discordou: contra o
-`destructive-foreground`, a razão era `4.06:1`. Abaixo do 4.5. Reprova no AA de texto,
-por pouco, exatamente o "por pouco" que o olho não pega.
+O script encontrou um problema no token `destructive`, usado para erros. Com L em
+0.585, o contraste contra `destructive-foreground` era `4.06:1`. A cor parecia boa
+na tela, mas ficava abaixo do mínimo para texto AA.
 
-Baixei o L pra 0.52, um vermelho mais escuro, e rodei de novo. `5.35:1`. Passa. Não
-discuti se o vermelho original "estava bom": o número disse que não estava, e o número
-ganhou da opinião. A matemática mudou a paleta.
+Baixei o L para 0.52 e rodei a checagem de novo. A razão subiu para `5.35:1`. Esse
+foi um ajuste pequeno que eu provavelmente não faria apenas olhando para os dois
+vermelhos.
 
-E é por isso que o script é manual, rodado à mão, não um gate de CI. Token de cor muda
-raramente, num PR de design, não a cada commit. Rodar `node scripts/check-contrast.mjs`
-quando mexo na paleta cobre o risco real sem pendurar a checagem em todo build. A
-disciplina é rodar quando importa, não automatizar o que quase nunca muda.
+## Quando eu rodo a checagem
 
-> No fim, cor bonita todo mundo acha que sabe. Contraste não: dá pra medir. Foi o que eu fiz aqui.
+O script não roda em todo CI porque os tokens mudam pouco e normalmente entram em
+um PR de design. Quando mexo na paleta, executo
+`node scripts/check-contrast.mjs` e confiro o resultado junto com o diff. É uma
+checagem pequena, mas evita decidir acessibilidade apenas no olho.

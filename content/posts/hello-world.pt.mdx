@@ -1,30 +1,25 @@
 ---
 title: 'Primeiro commit'
-description: 'Por que este site existe e como ele é construído, em público, peça por peça.'
+description: 'O que quero registrar neste blog e como os posts são publicados direto do repositório.'
 date: '2026-06-21'
 tags: ['meta', 'build-in-public']
 ---
 
-Este é o primeiro post do blog. Ele existe por um motivo simples: o site é a prova.
-Um lugar que fala de engenharia de IA tem que ser, ele mesmo, bem engenheirado.
+Este é o primeiro post do blog. Criei o site para reunir meu trabalho e registrar o
+que aprendo enquanto construo a MAIB. Como o assunto aqui é engenharia de IA, quis
+deixar a própria implementação aberta e fácil de conferir.
 
-## O que vive aqui
+## O que vou publicar
 
-Notas técnicas sobre Claude Code, programação determinística de LLM e o que eu vou
-descobrindo enquanto construo a MAIB. Sem enrolação, só o que eu de fato uso e o
-que dá errado no caminho.
+Vou escrever sobre Claude Code, programação determinística de LLM, arquitetura e
+os problemas que aparecem no desenvolvimento. A ideia é publicar o que realmente
+usei, incluindo tentativas que não deram certo e decisões que mudaram no caminho.
 
-- meu ponto de vista sobre IA e o fluxo de dev
-- decisões de arquitetura, com o porquê por trás
-- experimentos, inclusive os que dão errado
+## Como os posts são publicados
 
-> O que está na frente vem de executar, não de decorar. Cada risco que eu corro aqui é de propósito.
-
-### Como o conteúdo é escrito
-
-Cada post é um arquivo MDX no repositório, validado no build. O frontmatter passa
-por um schema; se algo estiver errado, o build quebra de propósito. O indexador
-vive em `lib/posts.ts` e é a fonte única da verdade:
+Cada post é um arquivo MDX dentro do repositório. O frontmatter passa por um schema
+durante o build; se algum campo estiver errado, o build falha. O arquivo
+`lib/posts.ts` lê, valida e ordena os posts:
 
 ```ts
 import { getAllPosts } from '@/lib/posts';
@@ -32,10 +27,7 @@ import { getAllPosts } from '@/lib/posts';
 const posts = getAllPosts('pt'); // ordenados por data, já validados
 ```
 
-O pipeline também destaca o código com tema escuro e respeita a largura de leitura.
-O código deste site é aberto no [repositório](https://github.com/HiRenan/MaibPage),
-e você sempre pode voltar pra [home](/).
-
----
-
-Próximo: as rotas do blog e a paleta de comandos puxando estes posts.
+O pipeline também aplica o destaque de código e mantém uma largura confortável
+para leitura. Todo o código do site está aberto no
+[repositório](https://github.com/HiRenan/MaibPage). Quando alguma decisão daqui
+render uma lição útil, ela vira post.
