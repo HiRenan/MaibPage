@@ -64,7 +64,6 @@ export default async function HomePage({ params }: Props) {
       <section className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <p className="text-foreground text-lg text-pretty sm:text-xl">{t('about.lead')}</p>
-          <p className="text-muted-foreground text-pretty">{t('about.p2')}</p>
           <p className="text-muted-foreground text-pretty">{t('about.p3')}</p>
         </div>
         <ul className="flex flex-wrap gap-2">
@@ -108,7 +107,6 @@ export default async function HomePage({ params }: Props) {
           <span aria-hidden>▸ </span>
           {t('contact.heading')}
         </h2>
-        <p className="text-muted-foreground max-w-prose text-pretty">{t('contact.body')}</p>
         <a
           href={`mailto:${t('contact.email')}`}
           className="group text-foreground hover:text-primary focus-visible:text-primary duration-base ease-out-expo self-start font-mono text-base underline-offset-4 transition-colors hover:underline sm:text-lg"

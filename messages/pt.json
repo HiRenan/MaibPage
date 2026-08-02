@@ -41,7 +41,7 @@
     "closeFigure": "fechar"
   },
   "blog": {
-    "description": "Textos sobre IA, Claude Code e o que aprendo nos projetos da MAIB.",
+    "description": "Textos sobre IA, Claude Code, Codex, OpenAI e o que aprendo nos projetos da MAIB.",
     "metaTitle": "Blog · MAIB",
     "filterLabel": "Filtrar por tag",
     "allTag": "Todas",
@@ -76,8 +76,7 @@
     },
     "about": {
       "lead": "Sou engenheiro de IA e trabalho com modelos de linguagem em produção. Faço programação determinística de LLM, RAG e automações que precisam funcionar fora do demo.",
-      "p2": "Toco a MAIB, minha consultoria de IA e automação. Também trabalho como engenheiro de IA na Freedom.AI e fiz residência no SENAI/SC.",
-      "p3": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. No ano anterior, fiquei em 2º lugar no AKCIT. Aqui escrevo sobre o que aprendo no trabalho e nos projetos da MAIB.",
+      "p3": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. No ano anterior, fiquei em 2º lugar no AKCIT. Aqui escrevo sobre o que aprendo no trabalho e no meu dia a dia com programação e IA.",
       "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"],
       "readMore": "Mais sobre mim"
     },
@@ -87,7 +86,6 @@
     },
     "contact": {
       "heading": "Contato",
-      "body": "Pra conversar sobre um projeto de IA ou automação com a MAIB, me manda um email.",
       "email": "renanryuakame@gmail.com"
     }
   },
