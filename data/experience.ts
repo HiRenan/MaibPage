@@ -94,7 +94,7 @@ export const experience: ExperienceItem[] = [
   },
   {
     start: '2025-06',
-    end: PRESENT,
+    end: '2026-06',
     role: { pt: 'Residência em IA', en: 'AI Residency' },
     company: 'SENAI/SC',
     org: 'senai',
@@ -172,7 +172,7 @@ export const awards: AwardItem[] = [
 export const skills: SkillGroup[] = [
   { category: 'frameworks', skills: ['FastAPI', 'React', 'Node.js'] },
   { category: 'languages', skills: ['Python', 'JavaScript', 'SQL'] },
-  { category: 'tools', skills: ['Claude Code', 'MCP', 'Docker', 'Git'] },
+  { category: 'tools', skills: ['Claude Code', 'Codex', 'OpenAI', 'MCP', 'Docker', 'Git'] },
   {
     category: 'ai-ml',
     skills: [
