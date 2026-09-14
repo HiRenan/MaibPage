@@ -37,7 +37,7 @@ describe('sitemap', () => {
     expect(entry?.alternates?.languages).toEqual({
       'pt-BR': `${SITE_URL}/pt/blog/hello-world`,
       en: `${SITE_URL}/en/blog/hello-world`,
-      'x-default': `${SITE_URL}/pt/blog/hello-world`,
+      'x-default': `${SITE_URL}/en/blog/hello-world`,
     });
   });
 
@@ -52,7 +52,7 @@ describe('sitemap', () => {
     expect(entry?.alternates?.languages).toEqual({
       'pt-BR': `${SITE_URL}/pt/about`,
       en: `${SITE_URL}/en/about`,
-      'x-default': `${SITE_URL}/pt/about`,
+      'x-default': `${SITE_URL}/en/about`,
     });
   });
 });
