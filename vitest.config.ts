@@ -12,6 +12,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
+    server: {
+      deps: { inline: ['next-intl'] },
+    },
   },
   resolve: {
     // Espelha o alias @/* -> ./* do tsconfig pros imports nos testes.

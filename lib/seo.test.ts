@@ -33,18 +33,18 @@ describe('hreflangAlternates', () => {
     expect(hreflangAlternates((l) => `/${l}/about`)).toEqual({
       'pt-BR': '/pt/about',
       en: '/en/about',
-      'x-default': '/pt/about',
+      'x-default': '/en/about',
     });
   });
 
-  it('post só em pt: sem en; x-default no pt', () => {
+  it('post só em pt (default ausente): x-default cai no primeiro existente (pt)', () => {
     expect(hreflangAlternates((l) => `/${l}/blog/x`, ['pt'])).toEqual({
       'pt-BR': '/pt/blog/x',
       'x-default': '/pt/blog/x',
     });
   });
 
-  it('post só em en (default ausente): x-default cai no primeiro existente (en)', () => {
+  it('post só em en: sem pt; x-default no en', () => {
     expect(hreflangAlternates((l) => `/${l}/blog/x`, ['en'])).toEqual({
       en: '/en/blog/x',
       'x-default': '/en/blog/x',
