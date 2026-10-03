@@ -40,7 +40,7 @@ describe('MaibBlock', () => {
     expect(linkedin).toHaveAttribute('href', LINKEDIN_URL);
     expect(linkedin).toHaveAttribute('target', '_blank');
     expect(linkedin.getAttribute('rel')).toContain('noopener');
-    expect(within(linkedin).getByText(/abre em nova aba/)).toHaveClass('sr-only');
+    expect(within(linkedin).getByText(`(${messages.a11y.opensInNewTab})`)).toHaveClass('sr-only');
 
     expect(screen.getAllByRole('link')).toHaveLength(2);
     expect(screen.queryByRole('link', { name: /github/i })).toBeNull();

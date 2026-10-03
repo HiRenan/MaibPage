@@ -22,7 +22,7 @@ type Props = {
 // Title/description/canonical/hreflang vêm do root layout. Aqui só o que falta na
 // home: openGraph (type website) + card OG + twitter. og:title/og:description caem
 // por fallback no title/description herdados — sem redefinir. A imagem é o card
-// dinâmico (/api/og); título = posicionamento do hero, kicker fixo = maib.com.br.
+// dinâmico (/api/og); título = role do hero, kicker fixo = maib.com.br.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
@@ -95,8 +95,8 @@ export default async function HomePage({ params }: Props) {
 
       <DashedDivider className="my-12" />
 
-      {/* CTA quieto: a pessoa puxa (hero/bio/blog), a oferta MAIB fecha aqui embaixo,
-          sem hard-sell. Contato por email (mailto); sem inventar /contact. */}
+      {/* CTA quieto: a pessoa puxa (hero/bio/blog), a oferta MAIB fecha aqui embaixo
+          (MaibBlock: oferta + email + LinkedIn), sem hard-sell e sem inventar /contact. */}
       <MaibBlock />
     </Container>
   );
