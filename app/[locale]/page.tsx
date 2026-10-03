@@ -59,13 +59,10 @@ export default async function HomePage({ params }: Props) {
 
       <DashedDivider className="my-12" />
 
-      {/* Sobre curto: bio real (PRODUCT.md), lead em destaque + áreas em mono, com
-          "leia mais" pra página /about (F8 — antes era rota morta). */}
+      {/* Sobre curto: o que o blog cobre + áreas em mono, com "leia mais" pra página
+          /about (F8 — antes era rota morta). Posição e prova moram no hero. */}
       <section className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4">
-          <p className="text-foreground text-lg text-pretty sm:text-xl">{t('about.lead')}</p>
-          <p className="text-muted-foreground text-pretty">{t('about.p3')}</p>
-        </div>
+        <p className="text-muted-foreground text-pretty">{t('about.p3')}</p>
         <ul className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <li key={tag}>

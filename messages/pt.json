@@ -72,11 +72,17 @@
   "home": {
     "hero": {
       "name": "Renan Mocelin",
-      "role": "engenheiro de IA · MAIB"
+      "role": "engenheiro de IA · MAIB",
+      "pov": "Faço sistemas com LLM que funcionam fora do demo.",
+      "proof": [
+        { "year": "2026", "label": "Airbus Prize na final mundial do ActInSpace (Bordeaux)" },
+        { "year": "2026", "label": "residência em IA no SENAI/SC" },
+        { "year": "2025", "label": "2º lugar no AKCIT" }
+      ],
+      "commandHint": "pra achar páginas e posts"
     },
     "about": {
-      "lead": "Sou engenheiro de IA e trabalho com modelos de linguagem em produção. Faço programação determinística de LLM, RAG e automações que precisam funcionar fora do demo.",
-      "p3": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. No ano anterior, fiquei em 2º lugar no AKCIT. Aqui escrevo sobre o que aprendo no trabalho e no meu dia a dia com programação e IA.",
+      "p3": "Aqui escrevo sobre o que aprendo no trabalho e no meu dia a dia com programação e IA.",
       "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"],
       "readMore": "Mais sobre mim"
     },

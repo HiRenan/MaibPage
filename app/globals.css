@@ -173,10 +173,11 @@
 }
 
 /*
-  Entrada-assinatura (Regra da Entrada Única) — uma coreografia por jornada:
-  hero da home em 3 passos, header das demais rotas em 2 (título + lead), e
-  nada mais. CSS-only, server-first. O bloco reduced-motion acima zera duração
-  E delay -> entrega o estático sem flash. h1 nunca leva delay (candidato a LCP).
+  Entrada-assinatura (Regra da Entrada Única) — uma coreografia por jornada: na
+  home, as Marcas de Registro (abaixo) desenham a moldura do hero; no header das
+  demais rotas, enter-rise em 2 passos (título + lead), e nada mais. CSS-only,
+  server-first. O bloco reduced-motion acima zera duração E delay -> entrega o
+  estático sem flash. h1 nunca leva delay (candidato a LCP).
 */
 @keyframes enter-rise {
   from {
@@ -193,9 +194,87 @@
   .enter-rise-2 {
     animation-delay: var(--enter-stagger);
   }
+}
 
-  .enter-rise-3 {
-    animation-delay: calc(var(--enter-stagger) * 2);
+/*
+  Marcas de Registro: as do card OG, agora como entrada da home. Cada canto
+  desenha um L de 1px (::before = braço horizontal, ::after = vertical) que cresce
+  a partir do vértice. Só transform (scale), então é compositado. O par de baixo
+  entra um stagger depois; com reduced-motion as marcas já nascem desenhadas.
+*/
+@keyframes reg-mark-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes reg-mark-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@layer components {
+  .reg-mark {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .reg-mark::before,
+  .reg-mark::after {
+    content: '';
+    position: absolute;
+    background-color: var(--border);
+  }
+
+  .reg-mark::before {
+    inset-inline: 0;
+    height: 1px;
+    animation: reg-mark-x var(--duration-enter) var(--ease-out-expo) both;
+  }
+
+  .reg-mark::after {
+    inset-block: 0;
+    width: 1px;
+    animation: reg-mark-y var(--duration-enter) var(--ease-out-expo) both;
+  }
+
+  .reg-mark[data-corner^='t']::before {
+    top: 0;
+  }
+
+  .reg-mark[data-corner^='b']::before {
+    bottom: 0;
+  }
+
+  .reg-mark[data-corner$='l']::after {
+    left: 0;
+  }
+
+  .reg-mark[data-corner$='r']::after {
+    right: 0;
+  }
+
+  /* Origem no vértice: o L cresce do canto pra fora. */
+  .reg-mark[data-corner$='l']::before {
+    transform-origin: left;
+  }
+
+  .reg-mark[data-corner$='r']::before {
+    transform-origin: right;
+  }
+
+  .reg-mark[data-corner^='t']::after {
+    transform-origin: top;
+  }
+
+  .reg-mark[data-corner^='b']::after {
+    transform-origin: bottom;
+  }
+
+  .reg-mark[data-corner^='b']::before,
+  .reg-mark[data-corner^='b']::after {
+    animation-delay: var(--enter-stagger);
   }
 }
 

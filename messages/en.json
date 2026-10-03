@@ -72,11 +72,17 @@
   "home": {
     "hero": {
       "name": "Renan Mocelin",
-      "role": "AI engineer · MAIB"
+      "role": "AI engineer · MAIB",
+      "pov": "I build LLM systems that hold up outside the demo.",
+      "proof": [
+        { "year": "2026", "label": "Airbus Prize at the ActInSpace world final (Bordeaux)" },
+        { "year": "2026", "label": "AI residency at SENAI/SC" },
+        { "year": "2025", "label": "2nd place at AKCIT" }
+      ],
+      "commandHint": "to find pages and posts"
     },
     "about": {
-      "lead": "I'm an AI engineer working with language models in production. My focus is deterministic LLM programming, RAG, and automation that needs to hold up outside a demo.",
-      "p3": "In 2026, I won the Airbus Prize with the IGNITE team at the ActInSpace world final in Bordeaux, representing Brazil. I also placed second at AKCIT in 2025. Here I write about what I learn at work and in my day-to-day life with programming and AI.",
+      "p3": "Here I write about what I learn at work and in my day-to-day life with programming and AI.",
       "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"],
       "readMore": "More about me"
     },
