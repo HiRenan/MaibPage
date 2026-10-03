@@ -6,7 +6,7 @@ import { ImageResponse } from 'next/og';
 // Open Graph social card 1200x630 gerado em runtime. UM template; ?title= e
 // ?kicker= viram o card de cada página. "A Oficina Noturna" em miniatura: carvão
 // quente, sinal ember <=10% (monograma + 1 ponto), mono pra sinalizar, grotesca
-// (Geist) pra ler. Sem glow, sem neon. Mesmos hexes dos tokens OKLCH do design
+// (Chivo) pra ler. Sem glow, sem neon. Mesmos hexes dos tokens OKLCH do design
 // system (globals.css) — reuso, jamais cor literal nova.
 //
 // runtime node: o ImageResponse carrega os .woff via fs; não forçar edge.
@@ -31,9 +31,9 @@ function loadFont(file: string): Buffer | null {
     return null;
   }
 }
-const geistBold = loadFont('Geist-700.woff');
-const geistMedium = loadFont('Geist-500.woff');
-const geistMono = loadFont('GeistMono-500.woff');
+const chivoBold = loadFont('Chivo-700.woff');
+const chivoMedium = loadFont('Chivo-500.woff');
+const martianMono = loadFont('MartianMono-500.woff');
 
 // Display nasce de contraste brutal de peso/tamanho, não de outra família: títulos
 // curtos enchem o quadro, longos recuam mas continuam dominantes (Sinal > ruído).
@@ -51,9 +51,10 @@ export function GET(req: Request): ImageResponse {
   const kicker = (searchParams.get('kicker')?.trim() || 'maib.com.br').slice(0, 42);
 
   const fonts: { name: string; data: Buffer; weight: 500 | 700; style: 'normal' }[] = [];
-  if (geistBold) fonts.push({ name: 'Geist', data: geistBold, weight: 700, style: 'normal' });
-  if (geistMedium) fonts.push({ name: 'Geist', data: geistMedium, weight: 500, style: 'normal' });
-  if (geistMono) fonts.push({ name: 'Geist Mono', data: geistMono, weight: 500, style: 'normal' });
+  if (chivoBold) fonts.push({ name: 'Chivo', data: chivoBold, weight: 700, style: 'normal' });
+  if (chivoMedium) fonts.push({ name: 'Chivo', data: chivoMedium, weight: 500, style: 'normal' });
+  if (martianMono)
+    fonts.push({ name: 'Martian Mono', data: martianMono, weight: 500, style: 'normal' });
 
   // Marcas de registro nos cantos — "tudo foi medido e montado". Border-gray, não
   // ember: emolduram com precisão sem gastar o sinal. L de 2px em cada canto.
@@ -86,7 +87,7 @@ export function GET(req: Request): ImageResponse {
         // Profundidade tonal (não projetada): a bancada acesa embaixo-esquerda.
         backgroundImage: `radial-gradient(115% 120% at 16% 92%, ${LIFT} 0%, ${CARVAO} 58%)`,
         color: PAPEL,
-        fontFamily: 'Geist',
+        fontFamily: 'Chivo',
       }}
     >
       <div style={tick('tl')} />
@@ -109,7 +110,7 @@ export function GET(req: Request): ImageResponse {
         <div
           style={{
             marginLeft: 20,
-            fontFamily: 'Geist Mono',
+            fontFamily: 'Martian Mono',
             fontWeight: 500,
             fontSize: 27,
             letterSpacing: '0.3em',
@@ -127,7 +128,7 @@ export function GET(req: Request): ImageResponse {
           <div
             style={{
               marginLeft: 16,
-              fontFamily: 'Geist Mono',
+              fontFamily: 'Martian Mono',
               fontWeight: 500,
               fontSize: 25,
               letterSpacing: '0.2em',
@@ -145,7 +146,7 @@ export function GET(req: Request): ImageResponse {
             WebkitLineClamp: 3,
             overflow: 'hidden',
             maxWidth: 1010,
-            fontFamily: 'Geist',
+            fontFamily: 'Chivo',
             fontWeight: 700,
             fontSize: titleSize(title.length),
             lineHeight: 1.04,
@@ -170,7 +171,7 @@ export function GET(req: Request): ImageResponse {
         />
         <div
           style={{
-            fontFamily: 'Geist Mono',
+            fontFamily: 'Martian Mono',
             fontWeight: 500,
             fontSize: 22,
             letterSpacing: '0.22em',

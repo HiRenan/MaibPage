@@ -72,15 +72,21 @@ parece que está aceso por dentro, está errado.
 
 ## 3. Typography
 
-**Display / Headings:** neo-grotesque de precisão `[a escolher na implementação — candidatos: ABC Diatype, Söhne, PP Neue Montreal]`
-**Body:** a mesma grotesca, peso regular, para leitura longa
-**Label / Mono / Código / ⌘+K:** mono de instrumento `[a escolher — candidatos: Berkeley Mono, Söhne Mono, MD IO]`
+**Display / Headings:** Chivo (OFL, variável 100–900), peso 600–700, tracking apertado
+**Body:** Chivo, peso regular, para leitura longa
+**Label / Mono / Código / ⌘+K:** Martian Mono (OFL, variável 100–800)
 
-**Character:** uma grotesca exata e sem maneirismo faz o trabalho de ler; um mono
-de instrumento entra como sinal técnico, não como fantasia de terminal. Não há
-terceira fonte: o display nasce de contraste brutal de peso e tamanho dentro da
-grotesca, não de uma família decorativa. Geist (default do scaffold) é substituído
-por escolha deliberada.
+**Character:** uma grotesca firme e sem maneirismo faz o trabalho de ler; um mono
+largo, de instrumento, entra como sinal técnico, não como fantasia de terminal. Não
+há terceira fonte: o display nasce de contraste brutal de peso e tamanho dentro da
+grotesca, não de uma família decorativa. O par saiu de amostras lado a lado no
+lugar da Geist (default do scaffold); a Chivo segura o tracking apertado dos
+títulos sem colar as palavras.
+
+**Métrica a lembrar:** a Martian Mono é 17% mais larga que uma mono comum (avanço
+0.70em) e tem x-height alta (0.60). Texto mono longo quebra antes; se pesar, o eixo
+`wdth` (75–112.5) estreita sem trocar de fonte. Os glifos ▸ → ⌘ ↗ ↵ não estão no
+subset `latin` servido e vêm da fonte do sistema.
 
 ### Hierarchy
 
