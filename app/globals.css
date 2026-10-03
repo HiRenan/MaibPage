@@ -198,9 +198,10 @@
 
 /*
   Marcas de Registro: as do card OG, agora como entrada da home. Cada canto
-  desenha um L de 1px (::before = braço horizontal, ::after = vertical) que cresce
-  a partir do vértice. Só transform (scale), então é compositado. O par de baixo
-  entra um stagger depois; com reduced-motion as marcas já nascem desenhadas.
+  desenha um L de 2px em --border, o mesmo do card (::before = braço horizontal,
+  ::after = vertical), que cresce a partir do vértice. Com 1px o desenho some no
+  carvão. Só transform (scale), então é compositado. O par de baixo entra um
+  stagger depois; com reduced-motion as marcas já nascem desenhadas.
 */
 @keyframes reg-mark-x {
   from {
@@ -229,13 +230,13 @@
 
   .reg-mark::before {
     inset-inline: 0;
-    height: 1px;
+    height: 2px;
     animation: reg-mark-x var(--duration-enter) var(--ease-out-expo) both;
   }
 
   .reg-mark::after {
     inset-block: 0;
-    width: 1px;
+    width: 2px;
     animation: reg-mark-y var(--duration-enter) var(--ease-out-expo) both;
   }
 

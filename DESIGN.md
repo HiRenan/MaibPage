@@ -38,10 +38,21 @@ estética de ferramenta.
 - **Uma entrada-assinatura por jornada**; o resto é resposta. `prefers-reduced-motion` respeitado.
 - **Sinal sobre ruído**: densidade generosa, nada decorativo sobrevive.
 
-**A Regra da Entrada Única.** Uma coreografia de entrada por jornada, deliberada
-(ex. o hero da home). Todo o resto é resposta: hover, foco, estado, abrir/fechar
-⌘+K. `prefers-reduced-motion` mata a entrada e entrega o estático. Sem bounce, sem
-elástico; ease-out exponencial.
+**A Regra da Entrada Única.** Uma coreografia de entrada por jornada, deliberada:
+na home, as Marcas de Registro desenham a moldura do hero; nas demais rotas, título
+e lead sobem em dois passos (`enter-rise`). O h1 nunca leva delay (é o candidato a
+LCP); no hero da home ele nem anima. Todo o resto é resposta: hover, foco, estado,
+abrir/fechar ⌘+K. `prefers-reduced-motion` mata a entrada e entrega o estático. Sem
+bounce, sem elástico; ease-out exponencial.
+
+**As Marcas de Registro.** Os quatro Ls de canto do card OG (`/api/og`) são a
+assinatura que o card e o site dividem: L de 2px em `--border`, cinza e nunca
+ember, porque emolduram com precisão sem gastar o sinal. No site elas só existem no
+hero da home, como a entrada: cada braço cresce a partir do vértice (`scale`,
+compositado, `--duration-enter` + `--ease-out-expo`) e o par de baixo entra um
+`--enter-stagger` depois. Ficam fora do texto (12px no mobile, 20px do `sm` pra
+cima) e são `aria-hidden`. Não viram moldura de card nem enfeite de outra seção: uma
+moldura só, onde a jornada começa.
 
 ## 2. Colors
 
@@ -84,9 +95,11 @@ lugar da Geist (default do scaffold); a Chivo segura o tracking apertado dos
 títulos sem colar as palavras.
 
 **Métrica a lembrar:** a Martian Mono é 17% mais larga que uma mono comum (avanço
-0.70em) e tem x-height alta (0.60). Texto mono longo quebra antes; se pesar, o eixo
-`wdth` (75–112.5) estreita sem trocar de fonte. Os glifos ▸ → ⌘ ↗ ↵ não estão no
-subset `latin` servido e vêm da fonte do sistema.
+0.70em) e tem x-height alta (0.60). Texto mono longo quebra antes. Bloco de código
+usa `text-xs`: com essa x-height, 12px parece uma mono comum em 14px e cabe ~70
+colunas na coluna do post. O eixo `wdth` (75–112.5) estreitaria sem trocar de fonte,
+mas fica fora: deixaria o arquivo pré-carregado 63% maior (23,5 → 38,5 KB). Os
+glifos ▸ → ⌘ ↗ ↵ não estão no subset `latin` servido e vêm da fonte do sistema.
 
 ### Hierarchy
 
@@ -129,6 +142,13 @@ seção e gera o sidecar._
 página, item ativo marcado pelo Sinal Ember, mono nos comandos. É o momento de
 vanguarda do sistema e o único vidro. Tratar como peça de identidade, não como
 busca genérica.
+
+**Bloco "Trabalhar com a MAIB"** (`components/maib-block.tsx`). Fecho da home e do
+About: a pessoa puxa, a oferta fecha quieta embaixo. Rótulo mono `▸` como as outras
+seções e o mesmo `<dl>` dos valores do About (termo à esquerda, hairline tracejada
+entre as linhas). "O que faz" é prosa, na grotesca; "Contato" é dado, no mono: email
+por extenso no `mailto` e LinkedIn em nova aba. Sem card, sem botão de CTA, sem
+formulário.
 
 ## 6. Do's and Don'ts
 

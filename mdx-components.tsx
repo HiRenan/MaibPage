@@ -158,10 +158,12 @@ const components: MDXComponents = {
   pre: ({ className, ...props }: ComponentPropsWithoutRef<'pre'>) => (
     // Superfície do bloco vem do token (keepBackground:false no rehype-pretty-code);
     // o tema shiki só colore os tokens. Reseta o "chip" do code inline aqui dentro.
+    // Bloco em text-xs: a Martian Mono é larga (0.70em) e de x-height alta, então
+    // 12px tem o tamanho aparente de uma mono comum em 14px e cabe ~70 colunas.
     <pre
       className={cn(
-        'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-sm leading-relaxed',
-        '[&_code]:bg-transparent [&_code]:p-0',
+        'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-xs leading-relaxed',
+        '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs [&_code]:leading-relaxed',
         className,
       )}
       {...props}
