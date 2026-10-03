@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { FeaturedPosts } from '@/components/home/featured-posts';
 import { Hero } from '@/components/home/hero';
 import { JsonLd } from '@/components/json-ld';
+import { MaibBlock } from '@/components/maib-block';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
@@ -96,27 +97,7 @@ export default async function HomePage({ params }: Props) {
 
       {/* CTA quieto: a pessoa puxa (hero/bio/blog), a oferta MAIB fecha aqui embaixo,
           sem hard-sell. Contato por email (mailto); sem inventar /contact. */}
-      <section aria-labelledby="home-contact" className="flex flex-col gap-4">
-        <h2
-          id="home-contact"
-          className="text-muted-foreground font-mono text-sm font-medium tracking-[0.12em]"
-        >
-          <span aria-hidden>▸ </span>
-          {t('contact.heading')}
-        </h2>
-        <a
-          href={`mailto:${t('contact.email')}`}
-          className="group text-foreground hover:text-primary focus-visible:text-primary duration-base ease-out-expo self-start font-mono text-base underline-offset-4 transition-colors hover:underline sm:text-lg"
-        >
-          {t('contact.email')}{' '}
-          <span
-            aria-hidden
-            className="duration-base ease-out-expo inline-block transition group-hover:translate-x-1 group-focus-visible:translate-x-1"
-          >
-            →
-          </span>
-        </a>
-      </section>
+      <MaibBlock />
     </Container>
   );
 }

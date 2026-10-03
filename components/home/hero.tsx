@@ -56,7 +56,7 @@ export async function Hero() {
       </ul>
 
       <div className="flex flex-col gap-3">
-        <SocialLinks variant="inline" />
+        <SocialLinks />
         <p
           aria-hidden
           className="text-muted-foreground hidden items-center gap-2 font-mono text-xs pointer-fine:flex"

@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-import { SocialLinks } from '@/components/social-links';
+import { MaibBlock } from '@/components/maib-block';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { routing } from '@/i18n/routing';
@@ -135,18 +135,8 @@ export default async function AboutPage({ params }: Props) {
 
       <DashedDivider className="my-12" />
 
-      {/* Contato: corpo no tom da home + SocialLinks stacked (github · linkedin · email). */}
-      <section aria-labelledby="about-contact" className="flex flex-col gap-4">
-        <h2
-          id="about-contact"
-          className="text-muted-foreground font-mono text-sm font-medium tracking-[0.12em]"
-        >
-          <span aria-hidden>▸ </span>
-          {t('contact.heading')}
-        </h2>
-        <p className="text-muted-foreground max-w-prose text-pretty">{t('contact.body')}</p>
-        <SocialLinks variant="stacked" className="mt-1" />
-      </section>
+      {/* Fecho igual ao da home: o bloco da MAIB (oferta + contato). */}
+      <MaibBlock />
     </Container>
   );
 }

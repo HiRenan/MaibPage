@@ -11,8 +11,12 @@ export type SocialLink = {
   external: boolean;
 };
 
+// Email e LinkedIn também aparecem por extenso no bloco da MAIB (MaibBlock).
+export const CONTACT_EMAIL = 'renanryuakame@gmail.com';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/renan-mocelin-br';
+
 export const socialLinks: SocialLink[] = [
   { key: 'github', href: 'https://github.com/HiRenan', external: true },
-  { key: 'linkedin', href: 'https://www.linkedin.com/in/renan-mocelin-br', external: true },
-  { key: 'email', href: 'mailto:renanryuakame@gmail.com', external: false },
+  { key: 'linkedin', href: LINKEDIN_URL, external: true },
+  { key: 'email', href: `mailto:${CONTACT_EMAIL}`, external: false },
 ];

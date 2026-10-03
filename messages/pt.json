@@ -89,11 +89,13 @@
     "featured": {
       "heading": "Posts recentes",
       "viewAll": "Ver todos os posts"
-    },
-    "contact": {
-      "heading": "Contato",
-      "email": "renanryuakame@gmail.com"
     }
+  },
+  "maib": {
+    "heading": "Trabalhar com a MAIB",
+    "offerTerm": "O que faz",
+    "offer": "Consultoria e automação com IA: RAG, agentes e LLMs em produção.",
+    "contactTerm": "Contato"
   },
   "about": {
     "metaTitle": "Sobre · MAIB",
@@ -124,10 +126,6 @@
     "journey": {
       "heading": "Jornada",
       "body": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. Em 2025, fiquei em 2º lugar no AKCIT. Também fiz residência em IA no SENAI/SC e hoje trabalho na Freedom.AI enquanto toco a MAIB."
-    },
-    "contact": {
-      "heading": "Contato",
-      "body": "Pra conversar sobre um projeto da MAIB, me chama por email ou LinkedIn."
     }
   },
   "experience": {

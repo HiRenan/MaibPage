@@ -19,38 +19,33 @@ vi.mock('next-intl/server', () => {
 });
 
 describe('SocialLinks', () => {
-  it.each(['inline', 'stacked'] as const)(
-    'renderiza github · linkedin · email (sem X), hrefs canônicos e a11y de aba — variante %s',
-    async (variant) => {
-      const { unmount } = render(await SocialLinks({ variant }));
+  it('renderiza github · linkedin · email (sem X), hrefs canônicos e a11y de aba', async () => {
+    render(await SocialLinks());
 
-      const github = screen.getByRole('link', { name: /github/i });
-      const linkedin = screen.getByRole('link', { name: /linkedin/i });
-      const email = screen.getByRole('link', { name: /email/i });
+    const github = screen.getByRole('link', { name: /github/i });
+    const linkedin = screen.getByRole('link', { name: /linkedin/i });
+    const email = screen.getByRole('link', { name: /email/i });
 
-      // Fonte única lib/social.ts: as 3 URLs canônicas.
-      expect(github).toHaveAttribute('href', 'https://github.com/HiRenan');
-      expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/renan-mocelin-br');
-      expect(email).toHaveAttribute('href', 'mailto:renanryuakame@gmail.com');
+    // Fonte única lib/social.ts: as 3 URLs canônicas.
+    expect(github).toHaveAttribute('href', 'https://github.com/HiRenan');
+    expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/renan-mocelin-br');
+    expect(email).toHaveAttribute('href', 'mailto:renanryuakame@gmail.com');
 
-      // Exatamente 3 links — SEM X / twitter.
-      expect(screen.getAllByRole('link')).toHaveLength(3);
-      expect(screen.queryByRole('link', { name: /twitter/i })).toBeNull();
-      expect(screen.queryByText('x')).toBeNull();
+    // Exatamente 3 links — SEM X / twitter.
+    expect(screen.getAllByRole('link')).toHaveLength(3);
+    expect(screen.queryByRole('link', { name: /twitter/i })).toBeNull();
+    expect(screen.queryByText('x')).toBeNull();
 
-      // Externos (github, linkedin): nova aba + rel seguro + dica sr-only.
-      for (const external of [github, linkedin]) {
-        expect(external).toHaveAttribute('target', '_blank');
-        expect(external.getAttribute('rel')).toContain('noopener');
-      }
-      const hints = screen.getAllByText(/abre em nova aba/);
-      expect(hints).toHaveLength(2);
-      hints.forEach((hint) => expect(hint).toHaveClass('sr-only'));
+    // Externos (github, linkedin): nova aba + rel seguro + dica sr-only.
+    for (const external of [github, linkedin]) {
+      expect(external).toHaveAttribute('target', '_blank');
+      expect(external.getAttribute('rel')).toContain('noopener');
+    }
+    const hints = screen.getAllByText(/abre em nova aba/);
+    expect(hints).toHaveLength(2);
+    hints.forEach((hint) => expect(hint).toHaveClass('sr-only'));
 
-      // mailto NÃO é externo: sem target, sem dica de nova aba.
-      expect(email).not.toHaveAttribute('target');
-
-      unmount();
-    },
-  );
+    // mailto NÃO é externo: sem target, sem dica de nova aba.
+    expect(email).not.toHaveAttribute('target');
+  });
 });
