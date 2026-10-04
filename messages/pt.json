@@ -11,7 +11,6 @@
     "blog": "Blog"
   },
   "common": {
-    "localeName": "Português",
     "switchLanguage": "Mudar idioma para {target}"
   },
   "command": {
@@ -55,7 +54,6 @@
   },
   "footer": {
     "rights": "Todos os direitos reservados.",
-    "builtWith": "Feito com Next.js",
     "social": {
       "github": "Perfil do Renan no GitHub",
       "linkedin": "Perfil do Renan no LinkedIn",
