@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
 
   // O route /api/og lê as fontes .woff via fs em runtime (app/api/og/fonts). Sem
   // isto, o output tracing da Vercel pode não incluí-las no bundle da function e o
-  // card OG cai na fonte default do Satori em vez da Geist (F16 / MAI-541).
+  // card OG cai na fonte default do Satori em vez da Chivo e da Martian Mono (F16 / MAI-541).
   outputFileTracingIncludes: {
     '/api/og': ['./app/api/og/fonts/**'],
   },
@@ -46,20 +46,34 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 const CODE_COMMENT_AA = '#7d8d7d';
 
 // AA da pontuação (audit a11y do post ai-as-po): o vitesse-dark pinta punctuation/
-// operator com #666666 → só 3.12:1 sobre --card (limiar 4.5:1 no text-sm do <pre>).
+// operator com #666666 → só 3.12:1 sobre --card (limiar 4.5:1 no text-xs do <pre>).
 // Subimos pra #8a8a8a → ≈5.2:1, mesmo cinza neutro, só mais legível.
 const CODE_PUNCT_AA = '#8a8a8a';
+
+// AA das aspas e de dois tokens latentes: o vitesse-dark pinta as aspas de string com
+// #c98a7d77 → 2.36:1 sobre --card (52 vezes nos posts), as aspas de chave JSON com
+// #b8a96577 → 2.63:1 e tipo / classe de regex com #6872ab → 3.90:1. Trocamos por versões
+// opacas do mesmo tom, todas ≈5.2:1; as aspas seguem um passo abaixo do texto da string.
+const CODE_STRING_QUOTE_AA = '#b47c70';
+const CODE_PROPERTY_QUOTE_AA = '#978a54';
+const CODE_TYPE_AA = '#7f87b8';
 
 // Config async só pra resolver o tema bundlado do shiki no load. Turbopack serializa a
 // config (JS -> Rust): plugins remark/rehype vão como strings / tuplas-string com options
 // JSON, nunca funções importadas — e o theme do rehype-pretty-code é um objeto JSON puro
 // (vitesse-dark + colorReplacements), que serializa igual. O colorReplacements troca só as
-// cores abaixo de AA (comment e punctuation); os demais tokens do tema ficam intactos.
+// cores abaixo de AA (comment, punctuation, aspas e tipo); os demais tokens ficam intactos.
 export default async function buildConfig() {
   const vitesseDark = (await bundledThemes['vitesse-dark']()).default;
   const codeTheme = {
     ...vitesseDark,
-    colorReplacements: { '#758575dd': CODE_COMMENT_AA, '#666666': CODE_PUNCT_AA },
+    colorReplacements: {
+      '#758575dd': CODE_COMMENT_AA,
+      '#666666': CODE_PUNCT_AA,
+      '#c98a7d77': CODE_STRING_QUOTE_AA,
+      '#b8a96577': CODE_PROPERTY_QUOTE_AA,
+      '#6872ab': CODE_TYPE_AA,
+    },
   };
 
   const withMDX = createMDX({

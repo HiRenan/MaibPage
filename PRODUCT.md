@@ -86,9 +86,9 @@ com o caminho pra "trabalhar com a MAIB" presente mas sem pressão.
   reduced-motion entrega versão estática.
 - **Significado nunca só por cor** (daltônico-safe): sempre cor + peso/ícone/texto.
   O mono já ajuda.
-- **AAA na leitura do blog:** contraste de corpo extra-confortável, largura
-  65–75ch, line-height generoso no dark quente. É também por isso que o glass
-  nunca toca o corpo do texto.
+- **AAA na leitura do blog:** contraste de corpo extra-confortável, largura de
+  65–75 caracteres por linha, line-height generoso no dark quente. É também por
+  isso que o glass nunca toca o corpo do texto.
 - **Bilíngue PT-BR / EN** como invariante do projeto (i18n simétrico).
 
 ---

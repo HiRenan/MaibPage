@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Chivo, Martian_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
@@ -14,13 +14,13 @@ import { routing } from '@/i18n/routing';
 
 import '../globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const chivo = Chivo({
+  variable: '--font-chivo',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const martianMono = Martian_Mono({
+  variable: '--font-martian-mono',
   subsets: ['latin'],
 });
 
@@ -51,10 +51,11 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
     description: t('description'),
     alternates: {
       canonical: `/${locale}`,
+      // x-default no idioma padrão do routing, como o lib/seo faz nas outras páginas.
       languages: {
         'pt-BR': '/pt',
         en: '/en',
-        'x-default': '/pt',
+        'x-default': `/${routing.defaultLocale}`,
       },
       types: {
         'application/rss+xml': `/api/rss/${locale}.xml`,
@@ -75,10 +76,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <html
-      lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang={locale} className={`${chivo.variable} ${martianMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>
           <SkipToContent />

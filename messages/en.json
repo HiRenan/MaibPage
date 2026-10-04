@@ -11,7 +11,6 @@
     "blog": "Blog"
   },
   "common": {
-    "localeName": "English",
     "switchLanguage": "Switch language to {target}"
   },
   "command": {
@@ -51,11 +50,11 @@
     "skipToContent": "Skip to content",
     "mainNav": "Main navigation",
     "opensInNewTab": "opens in a new tab",
-    "headingAnchor": "Direct link to this section"
+    "headingAnchor": "Direct link to this section",
+    "codeBlock": "Code block"
   },
   "footer": {
     "rights": "All rights reserved.",
-    "builtWith": "Built with Next.js",
     "social": {
       "github": "Renan's GitHub profile",
       "linkedin": "Renan's LinkedIn profile",
@@ -72,22 +71,30 @@
   "home": {
     "hero": {
       "name": "Renan Mocelin",
-      "role": "AI engineer · MAIB"
+      "role": "AI engineer · MAIB",
+      "pov": "I build LLM systems that hold up outside the demo.",
+      "proof": [
+        { "year": "2026", "label": "Airbus Prize at the ActInSpace world final (Bordeaux)" },
+        { "year": "2026", "label": "AI residency at SENAI/SC" },
+        { "year": "2025", "label": "2nd place at AKCIT" }
+      ],
+      "commandHint": "to find pages and posts"
     },
     "about": {
-      "lead": "I'm an AI engineer working with language models in production. My focus is deterministic LLM programming, RAG, and automation that needs to hold up outside a demo.",
-      "p3": "In 2026, I won the Airbus Prize with the IGNITE team at the ActInSpace world final in Bordeaux, representing Brazil. I also placed second at AKCIT in 2025. Here I write about what I learn at work and in my day-to-day life with programming and AI.",
+      "p3": "Here I write about what I learn at work and in my day-to-day with programming and AI.",
       "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"],
       "readMore": "More about me"
     },
     "featured": {
       "heading": "Recent posts",
       "viewAll": "View all posts"
-    },
-    "contact": {
-      "heading": "Contact",
-      "email": "renanryuakame@gmail.com"
     }
+  },
+  "maib": {
+    "heading": "Work with MAIB",
+    "offerTerm": "What it does",
+    "offer": "AI consulting and automation: RAG, agents, and LLMs in production.",
+    "contactTerm": "Contact"
   },
   "about": {
     "metaTitle": "About · MAIB",
@@ -118,10 +125,6 @@
     "journey": {
       "heading": "Journey",
       "body": "In 2026, I won the Airbus Prize with the IGNITE team at the ActInSpace world final in Bordeaux, representing Brazil. In 2025, I placed second at AKCIT. I also completed an AI residency at SENAI/SC and now work at Freedom.AI while running MAIB."
-    },
-    "contact": {
-      "heading": "Contact",
-      "body": "To talk about a MAIB project, reach me by email or LinkedIn."
     }
   },
   "experience": {

@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils';
 // grotesca pra ler, mono só pra sinalizar, divisor tracejado, links em ember
 // SEMPRE sublinhados (significado nunca só por cor — daltônico-safe).
 // Server-first: sem 'use client' (o Link do next-intl e o next/image rodam no RSC).
+// Texto corre na medida (max-w-measure, 65–75 caracteres por linha); o que é caixa
+// (código, figura, citação) ocupa a coluna inteira.
 
 const linkClass = cn(
   'text-primary decoration-primary/40 font-medium underline underline-offset-2',
@@ -102,6 +104,28 @@ function MdxImage({ src, alt = '', width, height, className }: ComponentPropsWit
   );
 }
 
+// Superfície do bloco vem do token (keepBackground:false no rehype-pretty-code);
+// o tema shiki só colore os tokens. Reseta o "chip" do code inline aqui dentro.
+// Bloco em text-xs: a Martian Mono é larga (0.70em) e de x-height alta, então
+// 12px tem o tamanho aparente de uma mono comum em 14px e cabe ~68 colunas.
+// O rehype-pretty-code põe tabindex=0 no <pre> (rolagem por teclado): role=group +
+// aria-label dão nome ao que recebe o foco, sem virar landmark.
+function MdxPre({ className, ...props }: ComponentPropsWithoutRef<'pre'>) {
+  const t = useTranslations('a11y');
+  return (
+    <pre
+      role="group"
+      aria-label={t('codeBlock')}
+      className={cn(
+        'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-xs leading-relaxed',
+        '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs [&_code]:leading-relaxed',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 const components: MDXComponents = {
   h1: ({ className, ...props }: ComponentPropsWithoutRef<'h1'>) => (
     <h1
@@ -114,16 +138,26 @@ const components: MDXComponents = {
   ),
   h2: createMdxHeading(
     'h2',
-    'text-foreground mt-12 mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight',
+    'text-foreground max-w-measure mt-12 mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight',
   ),
-  h3: createMdxHeading('h3', 'text-foreground mt-8 mb-3 scroll-mt-24 text-xl font-medium'),
+  h3: createMdxHeading(
+    'h3',
+    'text-foreground max-w-measure mt-8 mb-3 scroll-mt-24 text-xl font-medium',
+  ),
+  // `![]()` vira <p><img>: aí o p solta a medida e a imagem ocupa a coluna, como figura.
   p: ({ className, ...props }: ComponentPropsWithoutRef<'p'>) => (
-    <p className={cn('text-foreground my-5 leading-7 text-pretty', className)} {...props} />
+    <p
+      className={cn(
+        'text-foreground max-w-measure my-5 leading-7 text-pretty has-[>img]:max-w-none',
+        className,
+      )}
+      {...props}
+    />
   ),
   ul: ({ className, ...props }: ComponentPropsWithoutRef<'ul'>) => (
     <ul
       className={cn(
-        'text-foreground marker:text-muted-foreground my-5 list-disc space-y-2 pl-6 leading-7',
+        'text-foreground marker:text-muted-foreground max-w-measure my-5 list-disc space-y-2 pl-6 leading-7',
         className,
       )}
       {...props}
@@ -132,7 +166,7 @@ const components: MDXComponents = {
   ol: ({ className, ...props }: ComponentPropsWithoutRef<'ol'>) => (
     <ol
       className={cn(
-        'text-foreground marker:text-muted-foreground my-5 list-decimal space-y-2 pl-6 leading-7',
+        'text-foreground marker:text-muted-foreground max-w-measure my-5 list-decimal space-y-2 pl-6 leading-7',
         className,
       )}
       {...props}
@@ -144,10 +178,11 @@ const components: MDXComponents = {
   blockquote: ({ className, ...props }: ComponentPropsWithoutRef<'blockquote'>) => (
     // Painel tonal, não faixa lateral colorida (ban a side-stripe). Profundidade é
     // tonal: uma camada de carvão mais clara, plana, sem sombra projetada.
+    // Caixa na coluna inteira; o texto de dentro preenche a caixa, sem a medida.
     <blockquote
       className={cn(
         'bg-muted/40 text-foreground border-border my-6 rounded-sm border px-5 py-4',
-        '[&>p]:my-0 [&>p+p]:mt-3',
+        '[&>p]:my-0 [&>p]:max-w-none [&>p+p]:mt-3',
         className,
       )}
       {...props}
@@ -155,18 +190,7 @@ const components: MDXComponents = {
   ),
   hr: () => <DashedDivider />,
   a: MdxAnchor,
-  pre: ({ className, ...props }: ComponentPropsWithoutRef<'pre'>) => (
-    // Superfície do bloco vem do token (keepBackground:false no rehype-pretty-code);
-    // o tema shiki só colore os tokens. Reseta o "chip" do code inline aqui dentro.
-    <pre
-      className={cn(
-        'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-sm leading-relaxed',
-        '[&_code]:bg-transparent [&_code]:p-0',
-        className,
-      )}
-      {...props}
-    />
-  ),
+  pre: MdxPre,
   figcaption: ({ className, ...props }: ComponentPropsWithoutRef<'figcaption'>) => (
     <figcaption
       className={cn(

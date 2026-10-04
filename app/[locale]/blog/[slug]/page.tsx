@@ -89,7 +89,7 @@ export default async function PostPage({ params }: Props) {
   const shareUrl = `${SITE_URL}/${locale}/blog/${slug}`;
 
   return (
-    <Container size="prose" className="relative py-16 sm:py-24">
+    <Container size="sm" className="relative py-16 sm:py-24">
       <JsonLd data={blogPostingJsonLd(post, locale)} />
       <article>
         <header>

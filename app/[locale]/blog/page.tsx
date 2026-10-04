@@ -59,7 +59,7 @@ export default async function BlogIndexPage({ params }: Props) {
   }));
 
   return (
-    <Container size="prose" className="py-16 sm:py-24">
+    <Container size="sm" className="py-16 sm:py-24">
       <header>
         <h1 className="enter-rise text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
           {t('nav.blog')}

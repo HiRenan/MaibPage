@@ -71,10 +71,15 @@ errada.
 Por isso, o script usa `r, g, b` direto na fórmula e aplica apenas um clamp em
 `[0, 1]` para limitar valores fora do gamut:
 
+{/* prettier-ignore */}
 ```js
 function luminance([L, C, H]) {
   const { r, g, b } = oklchToLinear(L, C, H);
-  return 0.2126 * clamp01(r) + 0.7152 * clamp01(g) + 0.0722 * clamp01(b);
+  return (
+    0.2126 * clamp01(r) +
+    0.7152 * clamp01(g) +
+    0.0722 * clamp01(b)
+  );
 }
 ```
 

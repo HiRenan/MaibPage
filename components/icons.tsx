@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react';
 
 // Marcas sociais como SVG sólido (currentColor). lucide-react removeu os ícones
-// de marca (Github/Linkedin) por questões de trademark; mantemos o trio sólido
+// de marca (Github/Linkedin) por questões de trademark; mantemos o conjunto sólido
 // coerente aqui. Paths: Simple Icons (CC0). Tamanho via className (ex. size-4).
+// Exceção: o MaibMonogram, no fim, é de traço (o M do favicon), não marca social.
 
 export function GithubIcon(props: ComponentProps<'svg'>) {
   return (
@@ -40,6 +41,25 @@ export function XIcon(props: ComponentProps<'svg'>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
       <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.153h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+    </svg>
+  );
+}
+
+// Monograma da MAIB: o mesmo M do favicon (app/icon.svg), do apple-icon e do card
+// OG. Traço em currentColor; quem usa decide a cor (no header, ember).
+export function MaibMonogram(props: ComponentProps<'svg'>) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <path d="M8 24 L8 8 L16 17 L24 8 L24 24" />
     </svg>
   );
 }

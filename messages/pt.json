@@ -11,7 +11,6 @@
     "blog": "Blog"
   },
   "common": {
-    "localeName": "Português",
     "switchLanguage": "Mudar idioma para {target}"
   },
   "command": {
@@ -51,11 +50,11 @@
     "skipToContent": "Pular para o conteúdo",
     "mainNav": "Navegação principal",
     "opensInNewTab": "abre em nova aba",
-    "headingAnchor": "Link direto para esta seção"
+    "headingAnchor": "Link direto para esta seção",
+    "codeBlock": "Bloco de código"
   },
   "footer": {
     "rights": "Todos os direitos reservados.",
-    "builtWith": "Feito com Next.js",
     "social": {
       "github": "Perfil do Renan no GitHub",
       "linkedin": "Perfil do Renan no LinkedIn",
@@ -72,22 +71,30 @@
   "home": {
     "hero": {
       "name": "Renan Mocelin",
-      "role": "engenheiro de IA · MAIB"
+      "role": "engenheiro de IA · MAIB",
+      "pov": "Faço sistemas com LLM que funcionam fora do demo.",
+      "proof": [
+        { "year": "2026", "label": "Airbus Prize na final mundial do ActInSpace (Bordeaux)" },
+        { "year": "2026", "label": "residência em IA no SENAI/SC" },
+        { "year": "2025", "label": "2º lugar no AKCIT" }
+      ],
+      "commandHint": "pra achar páginas e posts"
     },
     "about": {
-      "lead": "Sou engenheiro de IA e trabalho com modelos de linguagem em produção. Faço programação determinística de LLM, RAG e automações que precisam funcionar fora do demo.",
-      "p3": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. No ano anterior, fiquei em 2º lugar no AKCIT. Aqui escrevo sobre o que aprendo no trabalho e no meu dia a dia com programação e IA.",
+      "p3": "Aqui escrevo sobre o que aprendo no trabalho e no meu dia a dia com programação e IA.",
       "tags": ["Claude Code", "RAG", "automação", "LLMs em produção", "consultoria de IA"],
       "readMore": "Mais sobre mim"
     },
     "featured": {
       "heading": "Posts recentes",
       "viewAll": "Ver todos os posts"
-    },
-    "contact": {
-      "heading": "Contato",
-      "email": "renanryuakame@gmail.com"
     }
+  },
+  "maib": {
+    "heading": "Trabalhar com a MAIB",
+    "offerTerm": "O que faz",
+    "offer": "Consultoria e automação com IA: RAG, agentes e LLMs em produção.",
+    "contactTerm": "Contato"
   },
   "about": {
     "metaTitle": "Sobre · MAIB",
@@ -118,10 +125,6 @@
     "journey": {
       "heading": "Jornada",
       "body": "Em 2026, ganhei o Airbus Prize com a equipe IGNITE na final mundial do ActInSpace, em Bordeaux, representando o Brasil. Em 2025, fiquei em 2º lugar no AKCIT. Também fiz residência em IA no SENAI/SC e hoje trabalho na Freedom.AI enquanto toco a MAIB."
-    },
-    "contact": {
-      "heading": "Contato",
-      "body": "Pra conversar sobre um projeto da MAIB, me chama por email ou LinkedIn."
     }
   },
   "experience": {
