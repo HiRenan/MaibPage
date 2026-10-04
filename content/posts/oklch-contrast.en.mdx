@@ -71,10 +71,15 @@ incorrect ratio.
 The script therefore uses `r, g, b` directly in the formula and only applies a
 clamp to `[0, 1]` for out-of-gamut values:
 
+{/* prettier-ignore */}
 ```js
 function luminance([L, C, H]) {
   const { r, g, b } = oklchToLinear(L, C, H);
-  return 0.2126 * clamp01(r) + 0.7152 * clamp01(g) + 0.0722 * clamp01(b);
+  return (
+    0.2126 * clamp01(r) +
+    0.7152 * clamp01(g) +
+    0.0722 * clamp01(b)
+  );
 }
 ```
 
