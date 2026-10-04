@@ -107,7 +107,7 @@ glifos ▸ → ⌘ ↗ ↵ não estão no subset `latin` servido e vêm da fonte
 
 - **Display** (peso alto, `clamp()` generoso, line-height ~1): heros e marcos. Contraste de peso ≥1.25 entre passos.
 - **Headline / Title**: seções e títulos de post.
-- **Body** (peso regular): corpo. Largura 65–75ch; line-height folgado no dark quente (luz no escuro pede +0.05–0.1).
+- **Body** (peso regular): corpo. 65–75 caracteres por linha: no post, `max-w-measure` (token `--container-measure`, 34rem) dá 63–68 de média e nenhuma linha acima de 75. Medida em rem, não em `ch`: o `ch` mede o "0" da Chivo, um quarto mais largo que a letra média, e o `70ch` antigo passava de 80. Line-height folgado no dark quente (luz no escuro pede +0.05–0.1).
 - **Label / Mono** (mono, tracking levemente aberto, caixa alta curta): metadados, kbd, código inline, comandos da ⌘+K.
 
 ### Named Rules
@@ -152,6 +152,16 @@ entre as linhas). "O que faz" é prosa, na grotesca; "Contato" é dado, no mono:
 por extenso no `mailto` e LinkedIn em nova aba. Sem card, sem botão de CTA, sem
 formulário.
 
+**Coluna de leitura.** Home, About, Experiência, Projetos, blog e post usam a mesma
+coluna (`Container size="sm"`), então a borda esquerda não pula de uma rota pra
+outra. No post, o texto corre na medida e o que é caixa (código, figura, citação)
+ocupa a coluna inteira; o sumário (`xl`) fica fora dela, à direita.
+
+**Header.** Do `md` pra cima, grid `1fr auto 1fr`: monograma e wordmark à esquerda,
+nav no eixo da página (o mesmo da coluna), idioma e ⌘+K à direita. Os controles
+não encolhem (`w-max`): se faltar espaço, a nav sai uns px do eixo antes de qualquer
+rótulo quebrar. No mobile a nav desce pra segunda linha, sem hambúrguer.
+
 ## 6. Do's and Don'ts
 
 ### Do:
@@ -159,7 +169,7 @@ formulário.
 - **Do** manter o acento Ember em ≤10% da tela; deixar contraste e peso carregarem o resto (A Regra do Mono Quente).
 - **Do** tintar todo neutro na direção quente; jamais `#000` ou `#fff` puros.
 - **Do** usar a grotesca pra ler e o mono só pra sinalizar (A Regra dos Dois Registros).
-- **Do** segurar o corpo do blog em 65–75ch, com line-height folgado e contraste AAA no dark quente.
+- **Do** segurar o corpo do blog em 65–75 caracteres por linha (`max-w-measure`), com line-height folgado e contraste AAA no dark quente.
 - **Do** reservar uma única entrada coreografada por jornada; o resto responde. Honrar `prefers-reduced-motion`.
 - **Do** usar vidro só na ⌘+K, frosted matte, com conteúdo real atrás.
 - **Do** transmitir significado sempre por cor + peso/ícone/texto, nunca por cor sozinha (daltônico-safe).

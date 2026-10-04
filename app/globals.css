@@ -100,6 +100,12 @@
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
 
+  /* Medida do corpo do post (gera max-w-measure): 34rem dá 63–68 caracteres por
+     linha em média no corpo de 16px, nenhuma linha acima de 75. Em rem, não em ch:
+     o ch mede o "0" da Chivo, um quarto mais largo que a letra média, e o 70ch
+     antigo passava de 80 caracteres. */
+  --container-measure: 34rem;
+
   /* Ease-out exponencial — a curva de assinatura (Regra da Entrada Única) */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 

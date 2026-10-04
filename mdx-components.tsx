@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils';
 // grotesca pra ler, mono só pra sinalizar, divisor tracejado, links em ember
 // SEMPRE sublinhados (significado nunca só por cor — daltônico-safe).
 // Server-first: sem 'use client' (o Link do next-intl e o next/image rodam no RSC).
+// Texto corre na medida (max-w-measure, 65–75 caracteres por linha); o que é caixa
+// (código, figura, citação) ocupa a coluna inteira.
 
 const linkClass = cn(
   'text-primary decoration-primary/40 font-medium underline underline-offset-2',
@@ -114,16 +116,22 @@ const components: MDXComponents = {
   ),
   h2: createMdxHeading(
     'h2',
-    'text-foreground mt-12 mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight',
+    'text-foreground max-w-measure mt-12 mb-4 scroll-mt-24 text-2xl font-semibold tracking-tight',
   ),
-  h3: createMdxHeading('h3', 'text-foreground mt-8 mb-3 scroll-mt-24 text-xl font-medium'),
+  h3: createMdxHeading(
+    'h3',
+    'text-foreground max-w-measure mt-8 mb-3 scroll-mt-24 text-xl font-medium',
+  ),
   p: ({ className, ...props }: ComponentPropsWithoutRef<'p'>) => (
-    <p className={cn('text-foreground my-5 leading-7 text-pretty', className)} {...props} />
+    <p
+      className={cn('text-foreground max-w-measure my-5 leading-7 text-pretty', className)}
+      {...props}
+    />
   ),
   ul: ({ className, ...props }: ComponentPropsWithoutRef<'ul'>) => (
     <ul
       className={cn(
-        'text-foreground marker:text-muted-foreground my-5 list-disc space-y-2 pl-6 leading-7',
+        'text-foreground marker:text-muted-foreground max-w-measure my-5 list-disc space-y-2 pl-6 leading-7',
         className,
       )}
       {...props}
@@ -132,7 +140,7 @@ const components: MDXComponents = {
   ol: ({ className, ...props }: ComponentPropsWithoutRef<'ol'>) => (
     <ol
       className={cn(
-        'text-foreground marker:text-muted-foreground my-5 list-decimal space-y-2 pl-6 leading-7',
+        'text-foreground marker:text-muted-foreground max-w-measure my-5 list-decimal space-y-2 pl-6 leading-7',
         className,
       )}
       {...props}
