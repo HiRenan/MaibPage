@@ -38,10 +38,23 @@ estética de ferramenta.
 - **Uma entrada-assinatura por jornada**; o resto é resposta. `prefers-reduced-motion` respeitado.
 - **Sinal sobre ruído**: densidade generosa, nada decorativo sobrevive.
 
-**A Regra da Entrada Única.** Uma coreografia de entrada por jornada, deliberada
-(ex. o hero da home). Todo o resto é resposta: hover, foco, estado, abrir/fechar
-⌘+K. `prefers-reduced-motion` mata a entrada e entrega o estático. Sem bounce, sem
-elástico; ease-out exponencial.
+**A Regra da Entrada Única.** Uma coreografia de entrada por jornada, deliberada:
+na home, as Marcas de Registro desenham a moldura do hero; nas demais rotas, título
+e lead sobem em dois passos (`enter-rise`). O h1 nunca leva delay (é o candidato a
+LCP); no hero da home ele nem anima. Todo o resto é resposta: hover, foco, estado,
+abrir/fechar ⌘+K. `prefers-reduced-motion` mata a entrada e entrega o estático. Sem
+bounce, sem elástico; ease-out exponencial.
+
+**As Marcas de Registro.** Os quatro Ls de canto do card OG (`/api/og`) são a
+assinatura que o card e o site dividem: L de 2px em `--mark` (3.17:1 sobre o fundo;
+em `--border`, a 1.5:1, o desenho sumia), cinza e nunca ember, porque emolduram com
+precisão sem gastar o sinal. No site elas só existem no
+hero da home, como a entrada: cada braço cresce a partir do vértice (`scale`,
+compositado, `--duration-draw` de 900ms + `--ease-out-expo`; em 480ms a curva faz
+quase todo o traço em 100ms e o desenho não se vê) e o par de baixo entra um
+`--enter-stagger` depois. Ficam fora do texto (12px no mobile, 20px do `sm` pra
+cima) e são `aria-hidden`. Não viram moldura de card nem enfeite de outra seção: uma
+moldura só, onde a jornada começa.
 
 ## 2. Colors
 
@@ -52,7 +65,7 @@ cor literal fora de `globals.css`.)_
 
 ### Primary
 
-- **Sinal Ember** (`[a resolver na implementação — OKLCH, família quente: ember/âmbar/cobre]`): links, foco, estado ativo, item selecionado na ⌘+K. Restrito a ≤10% de qualquer tela. Nunca roxo, nunca azul-elétrico, nunca neon.
+- **Sinal Ember** (`[a resolver na implementação — OKLCH, família quente: ember/âmbar/cobre]`): links, foco, estado ativo, item selecionado na ⌘+K. Fora desses usos, o único ember é o monograma M do header (o mesmo M do favicon e do card OG). Restrito a ≤10% de qualquer tela. Nunca roxo, nunca azul-elétrico, nunca neon.
 
 ### Neutral
 
@@ -72,21 +85,29 @@ parece que está aceso por dentro, está errado.
 
 ## 3. Typography
 
-**Display / Headings:** neo-grotesque de precisão `[a escolher na implementação — candidatos: ABC Diatype, Söhne, PP Neue Montreal]`
-**Body:** a mesma grotesca, peso regular, para leitura longa
-**Label / Mono / Código / ⌘+K:** mono de instrumento `[a escolher — candidatos: Berkeley Mono, Söhne Mono, MD IO]`
+**Display / Headings:** Chivo (OFL, variável 100–900), peso 600–700, tracking apertado
+**Body:** Chivo, peso regular, para leitura longa
+**Label / Mono / Código / ⌘+K:** Martian Mono (OFL, variável 100–800)
 
-**Character:** uma grotesca exata e sem maneirismo faz o trabalho de ler; um mono
-de instrumento entra como sinal técnico, não como fantasia de terminal. Não há
-terceira fonte: o display nasce de contraste brutal de peso e tamanho dentro da
-grotesca, não de uma família decorativa. Geist (default do scaffold) é substituído
-por escolha deliberada.
+**Character:** uma grotesca firme e sem maneirismo faz o trabalho de ler; um mono
+largo, de instrumento, entra como sinal técnico, não como fantasia de terminal. Não
+há terceira fonte: o display nasce de contraste brutal de peso e tamanho dentro da
+grotesca, não de uma família decorativa. O par saiu de amostras lado a lado no
+lugar da Geist (default do scaffold); a Chivo segura o tracking apertado dos
+títulos sem colar as palavras.
+
+**Métrica a lembrar:** a Martian Mono é 17% mais larga que uma mono comum (avanço
+0.70em) e tem x-height alta (0.60). Texto mono longo quebra antes. Bloco de código
+usa `text-xs`: com essa x-height, 12px parece uma mono comum em 14px e cabe ~68
+colunas na coluna do post. O eixo `wdth` (75–112.5) estreitaria sem trocar de fonte,
+mas fica fora: deixaria o arquivo pré-carregado 63% maior (23,5 → 38,5 KB). Os
+glifos ▸ → ⌘ ↗ ↵ não estão no subset `latin` servido e vêm da fonte do sistema.
 
 ### Hierarchy
 
 - **Display** (peso alto, `clamp()` generoso, line-height ~1): heros e marcos. Contraste de peso ≥1.25 entre passos.
 - **Headline / Title**: seções e títulos de post.
-- **Body** (peso regular): corpo. Largura 65–75ch; line-height folgado no dark quente (luz no escuro pede +0.05–0.1).
+- **Body** (peso regular): corpo. 65–75 caracteres por linha: no post, `max-w-measure` (token `--container-measure`, 34rem) dá 63–68 de média e nenhuma linha acima de 75. Medida em rem, não em `ch`: o `ch` mede o "0" da Chivo, um quarto mais largo que a letra média, e o `70ch` antigo passava de 80. Line-height folgado no dark quente (luz no escuro pede +0.05–0.1).
 - **Label / Mono** (mono, tracking levemente aberto, caixa alta curta): metadados, kbd, código inline, comandos da ⌘+K.
 
 ### Named Rules
@@ -124,6 +145,23 @@ página, item ativo marcado pelo Sinal Ember, mono nos comandos. É o momento de
 vanguarda do sistema e o único vidro. Tratar como peça de identidade, não como
 busca genérica.
 
+**Bloco "Trabalhar com a MAIB"** (`components/maib-block.tsx`). Fecho da home e do
+About: a pessoa puxa, a oferta fecha quieta embaixo. Rótulo mono `▸` como as outras
+seções e o mesmo `<dl>` dos valores do About (termo à esquerda, hairline tracejada
+entre as linhas). "O que faz" é prosa, na grotesca; "Contato" é dado, no mono: email
+por extenso no `mailto` e LinkedIn em nova aba. Sem card, sem botão de CTA, sem
+formulário.
+
+**Coluna de leitura.** Home, About, Experiência, Projetos, blog e post usam a mesma
+coluna (`Container size="sm"`), então a borda esquerda não pula de uma rota pra
+outra. No post, o texto corre na medida e o que é caixa (código, figura, citação)
+ocupa a coluna inteira; o sumário (`xl`) fica fora dela, à direita.
+
+**Header.** Do `md` pra cima, grid `1fr auto 1fr`: monograma e wordmark à esquerda,
+nav no eixo da página (o mesmo da coluna), idioma e ⌘+K à direita. Os controles
+não encolhem (`w-max`): se faltar espaço, a nav sai uns px do eixo antes de qualquer
+rótulo quebrar. No mobile a nav desce pra segunda linha, sem hambúrguer.
+
 ## 6. Do's and Don'ts
 
 ### Do:
@@ -131,7 +169,7 @@ busca genérica.
 - **Do** manter o acento Ember em ≤10% da tela; deixar contraste e peso carregarem o resto (A Regra do Mono Quente).
 - **Do** tintar todo neutro na direção quente; jamais `#000` ou `#fff` puros.
 - **Do** usar a grotesca pra ler e o mono só pra sinalizar (A Regra dos Dois Registros).
-- **Do** segurar o corpo do blog em 65–75ch, com line-height folgado e contraste AAA no dark quente.
+- **Do** segurar o corpo do blog em 65–75 caracteres por linha (`max-w-measure`), com line-height folgado e contraste AAA no dark quente.
 - **Do** reservar uma única entrada coreografada por jornada; o resto responde. Honrar `prefers-reduced-motion`.
 - **Do** usar vidro só na ⌘+K, frosted matte, com conteúdo real atrás.
 - **Do** transmitir significado sempre por cor + peso/ícone/texto, nunca por cor sozinha (daltônico-safe).

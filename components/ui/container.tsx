@@ -9,7 +9,6 @@ const containerVariants = cva('mx-auto w-full px-6 sm:px-8', {
       sm: 'max-w-2xl',
       md: 'max-w-4xl',
       lg: 'max-w-6xl',
-      prose: 'max-w-[70ch]',
     },
   },
   defaultVariants: {
