@@ -14,12 +14,14 @@ const items = [
 
 // Nav principal. Client por causa do usePathname (estado ativo). Item ativo
 // sinaliza por cor + peso + aria-current — nunca só por cor (daltônico-safe).
+// flex-wrap: com espaçamento de texto aumentado (WCAG 1.4.12), em 320px o "Blog"
+// desce de linha em vez de vazar da tela.
 export function NavLinks() {
   const t = useTranslations('nav');
   const pathname = usePathname();
 
   return (
-    <ul className="flex items-center gap-4 sm:gap-6">
+    <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-x-6">
       {items.map(({ href, key }) => {
         const active = pathname === href || pathname.startsWith(`${href}/`);
 
