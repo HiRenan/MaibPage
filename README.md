@@ -4,7 +4,7 @@ Site institucional + pessoal sob [maib.com.br](https://maib.com.br) — híbrido
 
 ## Status
 
-Greenfield — bootstrap em andamento.
+Site implementado com páginas em PT/EN, experiência profissional, blog MDX e paleta de comandos. O repositório inclui testes Vitest e CI para lint, tipos, testes e build. Pendências e prioridades de entrega continuam no Linear; esta descrição não certifica o estado do deploy.
 
 ## Roadmap
 
