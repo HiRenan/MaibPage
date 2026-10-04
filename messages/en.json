@@ -81,7 +81,7 @@
       "commandHint": "to find pages and posts"
     },
     "about": {
-      "p3": "Here I write about what I learn at work and in my day-to-day life with programming and AI.",
+      "p3": "Here I write about what I learn at work and in my day-to-day with programming and AI.",
       "tags": ["Claude Code", "RAG", "automation", "LLMs in production", "AI consulting"],
       "readMore": "More about me"
     },
