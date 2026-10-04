@@ -104,6 +104,28 @@ function MdxImage({ src, alt = '', width, height, className }: ComponentPropsWit
   );
 }
 
+// Superfície do bloco vem do token (keepBackground:false no rehype-pretty-code);
+// o tema shiki só colore os tokens. Reseta o "chip" do code inline aqui dentro.
+// Bloco em text-xs: a Martian Mono é larga (0.70em) e de x-height alta, então
+// 12px tem o tamanho aparente de uma mono comum em 14px e cabe ~68 colunas.
+// O rehype-pretty-code põe tabindex=0 no <pre> (rolagem por teclado): role=group +
+// aria-label dão nome ao que recebe o foco, sem virar landmark.
+function MdxPre({ className, ...props }: ComponentPropsWithoutRef<'pre'>) {
+  const t = useTranslations('a11y');
+  return (
+    <pre
+      role="group"
+      aria-label={t('codeBlock')}
+      className={cn(
+        'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-xs leading-relaxed',
+        '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs [&_code]:leading-relaxed',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 const components: MDXComponents = {
   h1: ({ className, ...props }: ComponentPropsWithoutRef<'h1'>) => (
     <h1
@@ -168,20 +190,7 @@ const components: MDXComponents = {
   ),
   hr: () => <DashedDivider />,
   a: MdxAnchor,
-  pre: ({ className, ...props }: ComponentPropsWithoutRef<'pre'>) => (
-    // Superfície do bloco vem do token (keepBackground:false no rehype-pretty-code);
-    // o tema shiki só colore os tokens. Reseta o "chip" do code inline aqui dentro.
-    // Bloco em text-xs: a Martian Mono é larga (0.70em) e de x-height alta, então
-    // 12px tem o tamanho aparente de uma mono comum em 14px e cabe ~68 colunas.
-    <pre
-      className={cn(
-        'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-xs leading-relaxed',
-        '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs [&_code]:leading-relaxed',
-        className,
-      )}
-      {...props}
-    />
-  ),
+  pre: MdxPre,
   figcaption: ({ className, ...props }: ComponentPropsWithoutRef<'figcaption'>) => (
     <figcaption
       className={cn(

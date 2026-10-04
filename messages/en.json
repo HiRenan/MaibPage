@@ -50,7 +50,8 @@
     "skipToContent": "Skip to content",
     "mainNav": "Main navigation",
     "opensInNewTab": "opens in a new tab",
-    "headingAnchor": "Direct link to this section"
+    "headingAnchor": "Direct link to this section",
+    "codeBlock": "Code block"
   },
   "footer": {
     "rights": "All rights reserved.",

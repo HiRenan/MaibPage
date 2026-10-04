@@ -50,7 +50,8 @@
     "skipToContent": "Pular para o conteúdo",
     "mainNav": "Navegação principal",
     "opensInNewTab": "abre em nova aba",
-    "headingAnchor": "Link direto para esta seção"
+    "headingAnchor": "Link direto para esta seção",
+    "codeBlock": "Bloco de código"
   },
   "footer": {
     "rights": "Todos os direitos reservados.",

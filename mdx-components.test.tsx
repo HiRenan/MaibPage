@@ -17,9 +17,9 @@ vi.mock('@/i18n/navigation', () => ({
   },
 }));
 
-// MdxAnchor lê a11y.opensInNewTab via useTranslations (RSC). No teste, o provider
+// MdxAnchor e MdxPre leem a11y via useTranslations (RSC). No teste, o provider
 // client entrega as mensagens síncronas.
-const messages = { a11y: { opensInNewTab: 'abre em nova aba' } };
+const messages = { a11y: { opensInNewTab: 'abre em nova aba', codeBlock: 'Bloco de código' } };
 function renderWithIntl(ui: ReactNode) {
   return render(
     <NextIntlClientProvider locale="pt" messages={messages}>
@@ -33,6 +33,7 @@ function renderWithIntl(ui: ReactNode) {
 const components = useMDXComponents();
 const Hr = components.hr as ComponentType;
 const Anchor = components.a as ComponentType<{ href: string; children: ReactNode }>;
+const Pre = components.pre as ComponentType<ComponentPropsWithoutRef<'pre'>>;
 
 describe('mdx-components', () => {
   it('mapeia <hr> pro DashedDivider (separator tracejado)', () => {
@@ -57,5 +58,17 @@ describe('mdx-components', () => {
     expect(link.getAttribute('rel')).toContain('noopener');
     // a11y: leitor de tela sabe que abre nova aba (texto sr-only, não só o glifo ↗).
     expect(screen.getByText('abre em nova aba')).toHaveClass('sr-only');
+  });
+
+  it('dá nome ao bloco de código focável, sem virar landmark', () => {
+    // tabIndex=0 é o que o rehype-pretty-code injeta no <pre> do build.
+    renderWithIntl(
+      <Pre tabIndex={0}>
+        <code>const x = 1;</code>
+      </Pre>,
+    );
+    const block = screen.getByRole('group', { name: 'Bloco de código' });
+    expect(block.tagName).toBe('PRE');
+    expect(block).toHaveAttribute('tabindex', '0');
   });
 });
