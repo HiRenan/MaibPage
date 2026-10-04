@@ -19,6 +19,7 @@ const LIFT = '#191714'; // --card        oklch(0.205 0.007 70) — lift tonal
 const PAPEL = '#e8e4dc'; // --foreground  oklch(0.92  0.012 85)
 const MUTED = '#aaa49c'; // --muted-fg    oklch(0.722 0.014 75)
 const BORDA = '#35322e'; // --border      oklch(0.32  0.008 72)
+const MARCA = '#67625d'; // --mark        oklch(0.5   0.01  72) — marcas de registro
 const EMBER = '#df8537'; // --primary     oklch(0.7   0.142 58) — o único sinal
 
 // Carrega a fonte do bundle co-localizado. Falha vira null -> ImageResponse usa a
@@ -56,8 +57,9 @@ export function GET(req: Request): ImageResponse {
   if (martianMono)
     fonts.push({ name: 'Martian Mono', data: martianMono, weight: 500, style: 'normal' });
 
-  // Marcas de registro nos cantos — "tudo foi medido e montado". Border-gray, não
-  // ember: emolduram com precisão sem gastar o sinal. L de 2px em cada canto.
+  // Marcas de registro nos cantos — "tudo foi medido e montado". Cinza (--mark,
+  // 3.17:1), não ember: emolduram com precisão sem gastar o sinal. L de 2px em cada
+  // canto, o mesmo L que desenha a entrada do hero da home.
   const TICK = 24;
   const tick = (corner: 'tl' | 'tr' | 'bl' | 'br') => {
     const top = corner[0] === 't';
@@ -68,8 +70,8 @@ export function GET(req: Request): ImageResponse {
       height: TICK,
       [top ? 'top' : 'bottom']: 30,
       [left ? 'left' : 'right']: 30,
-      [top ? 'borderTop' : 'borderBottom']: `2px solid ${BORDA}`,
-      [left ? 'borderLeft' : 'borderRight']: `2px solid ${BORDA}`,
+      [top ? 'borderTop' : 'borderBottom']: `2px solid ${MARCA}`,
+      [left ? 'borderLeft' : 'borderRight']: `2px solid ${MARCA}`,
     };
   };
 

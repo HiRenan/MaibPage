@@ -46,10 +46,12 @@ abrir/fechar ⌘+K. `prefers-reduced-motion` mata a entrada e entrega o estátic
 bounce, sem elástico; ease-out exponencial.
 
 **As Marcas de Registro.** Os quatro Ls de canto do card OG (`/api/og`) são a
-assinatura que o card e o site dividem: L de 2px em `--border`, cinza e nunca
-ember, porque emolduram com precisão sem gastar o sinal. No site elas só existem no
+assinatura que o card e o site dividem: L de 2px em `--mark` (3.17:1 sobre o fundo;
+em `--border`, a 1.5:1, o desenho sumia), cinza e nunca ember, porque emolduram com
+precisão sem gastar o sinal. No site elas só existem no
 hero da home, como a entrada: cada braço cresce a partir do vértice (`scale`,
-compositado, `--duration-enter` + `--ease-out-expo`) e o par de baixo entra um
+compositado, `--duration-draw` de 900ms + `--ease-out-expo`; em 480ms a curva faz
+quase todo o traço em 100ms e o desenho não se vê) e o par de baixo entra um
 `--enter-stagger` depois. Ficam fora do texto (12px no mobile, 20px do `sm` pra
 cima) e são `aria-hidden`. Não viram moldura de card nem enfeite de outra seção: uma
 moldura só, onde a jornada começa.
@@ -63,7 +65,7 @@ cor literal fora de `globals.css`.)_
 
 ### Primary
 
-- **Sinal Ember** (`[a resolver na implementação — OKLCH, família quente: ember/âmbar/cobre]`): links, foco, estado ativo, item selecionado na ⌘+K. Restrito a ≤10% de qualquer tela. Nunca roxo, nunca azul-elétrico, nunca neon.
+- **Sinal Ember** (`[a resolver na implementação — OKLCH, família quente: ember/âmbar/cobre]`): links, foco, estado ativo, item selecionado na ⌘+K. Em repouso, só o monograma M do header (o mesmo lockup do favicon e do card OG). Restrito a ≤10% de qualquer tela. Nunca roxo, nunca azul-elétrico, nunca neon.
 
 ### Neutral
 

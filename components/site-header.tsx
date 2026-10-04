@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { CommandMenu } from '@/components/command-menu';
+import { MaibMonogram } from '@/components/icons';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { NavLinks } from '@/components/nav-links';
 import { Container } from '@/components/ui/container';
@@ -22,11 +23,14 @@ export async function SiteHeader() {
         size="lg"
         className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4 md:h-16 md:flex-nowrap md:py-0"
       >
+        {/* Lockup do card OG: monograma ember + wordmark mono. É o único ember em
+            repouso na página (Regra do Mono Quente: a cor aponta a marca). */}
         <Link
           href="/"
           aria-label={`MAIB · ${t('nav.home')}`}
-          className="text-foreground hover:text-primary duration-base ease-out-expo order-1 font-mono text-base font-semibold tracking-[0.15em] uppercase transition-colors"
+          className="text-foreground hover:text-primary duration-base ease-out-expo order-1 inline-flex items-center gap-2 font-mono text-base font-semibold tracking-[0.15em] uppercase transition-colors"
         >
+          <MaibMonogram className="text-primary -ml-1.5 size-7" />
           MAIB
         </Link>
 

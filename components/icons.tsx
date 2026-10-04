@@ -43,3 +43,22 @@ export function XIcon(props: ComponentProps<'svg'>) {
     </svg>
   );
 }
+
+// Monograma da MAIB: o mesmo M do favicon (app/icon.svg), do apple-icon e do card
+// OG. Traço em currentColor; quem usa decide a cor (no header, ember).
+export function MaibMonogram(props: ComponentProps<'svg'>) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <path d="M8 24 L8 8 L16 17 L24 8 L24 24" />
+    </svg>
+  );
+}

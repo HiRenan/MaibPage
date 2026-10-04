@@ -36,6 +36,11 @@
   --border: oklch(0.32 0.008 72);
   --input: oklch(0.32 0.008 72);
 
+  /* Marcas de Registro (hero da home + card OG): 3.17:1 sobre o --background, o
+     bastante pra o desenho da entrada se notar (em --border, 1.5:1, ele sumia).
+     Mesma rampa quente, entre a borda e o muted; cinza, nunca ember. */
+  --mark: oklch(0.5 0.01 72);
+
   /* Sinal Ember — o único croma de marca, família quente */
   --primary: oklch(0.7 0.142 58);
   --primary-foreground: oklch(0.18 0.022 60);
@@ -61,6 +66,10 @@
      Em :root de propósito: imunes ao tree-shaking do @theme. */
   --duration-enter: 480ms;
   --enter-stagger: 80ms;
+  /* Desenho das Marcas de Registro: com o ease-out-expo, 480ms faz 77% do traço
+     nos primeiros 100ms e vira um "pop"; 900ms espalha o desenho por ~300ms que
+     o olho acompanha. Só as marcas usam; o texto da home já nasce parado. */
+  --duration-draw: 900ms;
 }
 
 @theme inline {
@@ -198,10 +207,10 @@
 
 /*
   Marcas de Registro: as do card OG, agora como entrada da home. Cada canto
-  desenha um L de 2px em --border, o mesmo do card (::before = braço horizontal,
-  ::after = vertical), que cresce a partir do vértice. Com 1px o desenho some no
-  carvão. Só transform (scale), então é compositado. O par de baixo entra um
-  stagger depois; com reduced-motion as marcas já nascem desenhadas.
+  desenha um L de 2px em --mark, o mesmo do card (::before = braço horizontal,
+  ::after = vertical), que cresce a partir do vértice. Só transform (scale), então
+  é compositado. O par de baixo entra um stagger depois; com reduced-motion as
+  marcas já nascem desenhadas.
 */
 @keyframes reg-mark-x {
   from {
@@ -225,19 +234,19 @@
   .reg-mark::after {
     content: '';
     position: absolute;
-    background-color: var(--border);
+    background-color: var(--mark);
   }
 
   .reg-mark::before {
     inset-inline: 0;
     height: 2px;
-    animation: reg-mark-x var(--duration-enter) var(--ease-out-expo) both;
+    animation: reg-mark-x var(--duration-draw) var(--ease-out-expo) both;
   }
 
   .reg-mark::after {
     inset-block: 0;
     width: 2px;
-    animation: reg-mark-y var(--duration-enter) var(--ease-out-expo) both;
+    animation: reg-mark-y var(--duration-draw) var(--ease-out-expo) both;
   }
 
   .reg-mark[data-corner^='t']::before {
