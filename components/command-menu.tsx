@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { CommandTrigger } from '@/components/command-trigger';
 import type { PostCommandItem } from '@/lib/posts';
@@ -18,37 +18,45 @@ const CommandPalette = dynamic(
 // portaliza pro body, então a posição de montagem não importa visualmente.
 export function CommandMenu({ posts }: { posts: PostCommandItem[] }) {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
   // Latch: monta a paleta na 1ª interação (atalho/clique) e a mantém montada —
   // reaberturas instantâneas. Setado nos handlers, não num effect (lint:
   // react-hooks/set-state-in-effect). open só vira true por estes dois caminhos.
   const [loaded, setLoaded] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
+  // Atalho, Escape, clique externo e seleção compartilham o mesmo reset.
+  const handleOpenChange = useCallback((next: boolean) => {
+    setLoaded(true);
+    setOpen(next);
+    if (!next) setSearch('');
+  }, []);
+
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       // ⌘K (Mac) / Ctrl+K (Win/Linux) alterna a paleta. Esc fecha (Radix Dialog).
       if (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
-        setLoaded(true);
-        setOpen((value) => !value);
+        handleOpenChange(!open);
       }
     }
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [open, handleOpenChange]);
 
   return (
     <>
-      <CommandTrigger
-        ref={triggerRef}
-        onClick={() => {
-          setLoaded(true);
-          setOpen(true);
-        }}
-      />
+      <CommandTrigger ref={triggerRef} onClick={() => handleOpenChange(true)} />
       {loaded && (
-        <CommandPalette open={open} onOpenChange={setOpen} triggerRef={triggerRef} posts={posts} />
+        <CommandPalette
+          open={open}
+          onOpenChange={handleOpenChange}
+          search={search}
+          onSearchChange={setSearch}
+          triggerRef={triggerRef}
+          posts={posts}
+        />
       )}
     </>
   );
