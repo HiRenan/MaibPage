@@ -87,7 +87,7 @@ Repositório: [`HiRenan/MaibPage`](https://github.com/HiRenan/MaibPage) · Branc
 Direção estratégica e visual mora em arquivos dedicados na raiz — fonte canônica pra qualquer trabalho de UI/design. Ler **antes** de mexer em interface:
 
 - **`PRODUCT.md`** — estratégia: register (`brand`), users, propósito, personalidade (**preciso · técnico · experimental**), anti-referências e os 5 princípios de design.
-- **`DESIGN.md`** — tokens visuais (cor OKLCH, tipografia, motion). *A gerar — ainda não existe.*
+- **`DESIGN.md`** — tokens visuais (cor OKLCH, tipografia, motion).
 
 Postura travada: **dark anti-neon** (carvão quente, zero glow), **glass só na paleta ⌘+K**. Anti-refs duras: IA-genérica neon/roxo e SaaS corporativo com stock-IA.
 

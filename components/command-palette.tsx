@@ -2,7 +2,7 @@
 
 import { Briefcase, FileText, FolderGit2, Home, Languages, User } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { type RefObject, useState } from 'react';
+import type { RefObject } from 'react';
 import { Dialog } from 'radix-ui';
 
 import {
@@ -22,6 +22,8 @@ import type { PostCommandItem } from '@/lib/posts';
 type CommandPaletteProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  search: string;
+  onSearchChange: (search: string) => void;
   triggerRef?: RefObject<HTMLButtonElement | null>;
   posts: PostCommandItem[];
 };
@@ -38,32 +40,32 @@ const navItems = [
 // (metáfora Spotlight/Raycast) sobre um scrim quente que escurece a página.
 // Vidro = --popover translúcido + backdrop-blur; NUNCA luz colorida atrás (= neon).
 // Entrada coreografada (ease-out-expo) via globals.css; reduced-motion zera lá.
-export function CommandPalette({ open, onOpenChange, triggerRef, posts }: CommandPaletteProps) {
+export function CommandPalette({
+  open,
+  onOpenChange,
+  search,
+  onSearchChange,
+  triggerRef,
+  posts,
+}: CommandPaletteProps) {
   const t = useTranslations('command');
   const tNav = useTranslations('nav');
   const tCommon = useTranslations('common');
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
-  const [search, setSearch] = useState('');
 
   const other = routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
   const switchLabel = tCommon('switchLanguage', { target: other.toUpperCase() });
 
-  // Reset da busca ao fechar: a paleta abre sempre limpa, nunca com o último termo.
-  function handleOpenChange(next: boolean) {
-    if (!next) setSearch('');
-    onOpenChange(next);
-  }
-
   // Fecha antes de agir: a paleta não fica pendurada sobre a navegação.
   function run(action: () => void) {
-    handleOpenChange(false);
+    onOpenChange(false);
     action();
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={handleOpenChange}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-background/60 fixed inset-0 z-50 backdrop-blur-sm data-[state=closed]:animate-[cmdk-overlay-out_120ms_ease-out] data-[state=open]:animate-[cmdk-overlay-in_160ms_var(--ease-out-expo)]" />
         <Dialog.Content
@@ -79,7 +81,11 @@ export function CommandPalette({ open, onOpenChange, triggerRef, posts }: Comman
         >
           <Dialog.Title className="sr-only">{t('title')}</Dialog.Title>
           <Command loop className="bg-transparent">
-            <CommandInput placeholder={t('placeholder')} value={search} onValueChange={setSearch} />
+            <CommandInput
+              placeholder={t('placeholder')}
+              value={search}
+              onValueChange={onSearchChange}
+            />
             <CommandList>
               <CommandEmpty>{t('empty')}</CommandEmpty>
 
