@@ -127,7 +127,7 @@ export function CommandPalette({ open, onOpenChange, triggerRef, posts }: Comman
                     >
                       <FileText aria-hidden />
                       <span>{post.title}</span>
-                      <span className="text-muted-foreground ml-auto font-mono text-xs tabular-nums">
+                      <span className="text-muted-foreground ml-auto shrink-0 font-mono text-xs whitespace-nowrap tabular-nums">
                         {post.date}
                       </span>
                     </CommandItem>
