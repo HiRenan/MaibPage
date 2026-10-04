@@ -51,10 +51,11 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
     description: t('description'),
     alternates: {
       canonical: `/${locale}`,
+      // x-default no idioma padrão do routing, como o lib/seo faz nas outras páginas.
       languages: {
         'pt-BR': '/pt',
         en: '/en',
-        'x-default': '/pt',
+        'x-default': `/${routing.defaultLocale}`,
       },
       types: {
         'application/rss+xml': `/api/rss/${locale}.xml`,
