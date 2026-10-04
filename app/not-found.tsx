@@ -10,6 +10,8 @@ export default function GlobalNotFound() {
   return (
     <html lang="pt">
       <body className="bg-background text-foreground flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center antialiased">
+        {/* Sem metadata fora do [locale]: o React 19 sobe o <title> pro <head> (WCAG 2.4.2). */}
+        <title>Página não encontrada · Page not found</title>
         <p className="text-muted-foreground font-mono text-sm">404</p>
         <h1 className="text-2xl font-semibold tracking-tight text-balance">
           Página não encontrada
