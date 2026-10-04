@@ -122,9 +122,13 @@ const components: MDXComponents = {
     'h3',
     'text-foreground max-w-measure mt-8 mb-3 scroll-mt-24 text-xl font-medium',
   ),
+  // `![]()` vira <p><img>: aí o p solta a medida e a imagem ocupa a coluna, como figura.
   p: ({ className, ...props }: ComponentPropsWithoutRef<'p'>) => (
     <p
-      className={cn('text-foreground max-w-measure my-5 leading-7 text-pretty', className)}
+      className={cn(
+        'text-foreground max-w-measure my-5 leading-7 text-pretty has-[>img]:max-w-none',
+        className,
+      )}
       {...props}
     />
   ),
@@ -152,10 +156,11 @@ const components: MDXComponents = {
   blockquote: ({ className, ...props }: ComponentPropsWithoutRef<'blockquote'>) => (
     // Painel tonal, não faixa lateral colorida (ban a side-stripe). Profundidade é
     // tonal: uma camada de carvão mais clara, plana, sem sombra projetada.
+    // Caixa na coluna inteira; o texto de dentro preenche a caixa, sem a medida.
     <blockquote
       className={cn(
         'bg-muted/40 text-foreground border-border my-6 rounded-sm border px-5 py-4',
-        '[&>p]:my-0 [&>p+p]:mt-3',
+        '[&>p]:my-0 [&>p]:max-w-none [&>p+p]:mt-3',
         className,
       )}
       {...props}
@@ -167,7 +172,7 @@ const components: MDXComponents = {
     // Superfície do bloco vem do token (keepBackground:false no rehype-pretty-code);
     // o tema shiki só colore os tokens. Reseta o "chip" do code inline aqui dentro.
     // Bloco em text-xs: a Martian Mono é larga (0.70em) e de x-height alta, então
-    // 12px tem o tamanho aparente de uma mono comum em 14px e cabe ~70 colunas.
+    // 12px tem o tamanho aparente de uma mono comum em 14px e cabe ~68 colunas.
     <pre
       className={cn(
         'bg-card text-foreground border-border my-6 overflow-x-auto rounded-sm border p-4 font-mono text-xs leading-relaxed',

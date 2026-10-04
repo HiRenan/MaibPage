@@ -26,8 +26,9 @@ export async function SiteHeader() {
         size="lg"
         className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4 md:grid md:h-16 md:grid-cols-[1fr_auto_1fr] md:py-0"
       >
-        {/* Lockup do card OG: monograma ember + wordmark mono. É o único ember em
-            repouso na página (Regra do Mono Quente: a cor aponta a marca). */}
+        {/* Lockup do card OG: monograma ember + wordmark mono. Fora de link, foco e
+            estado ativo, é o único ember da página (Regra do Mono Quente: a cor
+            aponta a marca). */}
         <Link
           href="/"
           aria-label={`MAIB · ${t('nav.home')}`}

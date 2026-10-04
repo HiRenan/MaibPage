@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react';
 
 // Marcas sociais como SVG sólido (currentColor). lucide-react removeu os ícones
-// de marca (Github/Linkedin) por questões de trademark; mantemos o trio sólido
+// de marca (Github/Linkedin) por questões de trademark; mantemos o conjunto sólido
 // coerente aqui. Paths: Simple Icons (CC0). Tamanho via className (ex. size-4).
+// Exceção: o MaibMonogram, no fim, é de traço (o M do favicon), não marca social.
 
 export function GithubIcon(props: ComponentProps<'svg'>) {
   return (

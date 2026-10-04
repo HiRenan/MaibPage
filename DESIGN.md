@@ -65,7 +65,7 @@ cor literal fora de `globals.css`.)_
 
 ### Primary
 
-- **Sinal Ember** (`[a resolver na implementação — OKLCH, família quente: ember/âmbar/cobre]`): links, foco, estado ativo, item selecionado na ⌘+K. Em repouso, só o monograma M do header (o mesmo lockup do favicon e do card OG). Restrito a ≤10% de qualquer tela. Nunca roxo, nunca azul-elétrico, nunca neon.
+- **Sinal Ember** (`[a resolver na implementação — OKLCH, família quente: ember/âmbar/cobre]`): links, foco, estado ativo, item selecionado na ⌘+K. Fora desses usos, o único ember é o monograma M do header (o mesmo M do favicon e do card OG). Restrito a ≤10% de qualquer tela. Nunca roxo, nunca azul-elétrico, nunca neon.
 
 ### Neutral
 
@@ -98,7 +98,7 @@ títulos sem colar as palavras.
 
 **Métrica a lembrar:** a Martian Mono é 17% mais larga que uma mono comum (avanço
 0.70em) e tem x-height alta (0.60). Texto mono longo quebra antes. Bloco de código
-usa `text-xs`: com essa x-height, 12px parece uma mono comum em 14px e cabe ~70
+usa `text-xs`: com essa x-height, 12px parece uma mono comum em 14px e cabe ~68
 colunas na coluna do post. O eixo `wdth` (75–112.5) estreitaria sem trocar de fonte,
 mas fica fora: deixaria o arquivo pré-carregado 63% maior (23,5 → 38,5 KB). Os
 glifos ▸ → ⌘ ↗ ↵ não estão no subset `latin` servido e vêm da fonte do sistema.
