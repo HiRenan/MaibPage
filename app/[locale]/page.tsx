@@ -7,6 +7,7 @@ import { FeaturedPosts } from '@/components/home/featured-posts';
 import { Hero } from '@/components/home/hero';
 import { JsonLd } from '@/components/json-ld';
 import { MaibBlock } from '@/components/maib-block';
+import { CascadeList } from '@/components/ui/cascade-list';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
@@ -64,13 +65,13 @@ export default async function HomePage({ params }: Props) {
           /about (F8 — antes era rota morta). Posição e prova moram no hero. */}
       <section className="flex flex-col gap-6">
         <p className="text-muted-foreground text-pretty">{t('about.p3')}</p>
-        <ul className="flex flex-wrap gap-2">
+        <CascadeList className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <li key={tag}>
               <MonoTag size="sm">{tag}</MonoTag>
             </li>
           ))}
-        </ul>
+        </CascadeList>
         <Link
           href="/about"
           className="group text-muted-foreground hover:text-primary focus-visible:text-primary duration-base ease-out-expo self-start font-mono text-sm underline-offset-4 transition-colors hover:underline"
