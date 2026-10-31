@@ -1,3 +1,4 @@
+import { CascadeList } from '@/components/ui/cascade-list';
 import { MonoTag } from '@/components/ui/mono-tag';
 
 type SkillGroupProps = {
@@ -16,13 +17,13 @@ export function SkillGroup({ label, skills }: SkillGroupProps) {
         <span aria-hidden>▸ </span>
         {label}
       </h3>
-      <ul className="flex flex-wrap items-center gap-2">
+      <CascadeList className="flex flex-wrap items-center gap-2">
         {skills.map((skill) => (
           <li key={skill}>
             <MonoTag size="sm">{skill}</MonoTag>
           </li>
         ))}
-      </ul>
+      </CascadeList>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { CascadeList } from '@/components/ui/cascade-list';
 import { MonoTag } from '@/components/ui/mono-tag';
 import { Link } from '@/i18n/navigation';
 
@@ -51,13 +52,13 @@ export function PostCard({
       <p className="text-muted-foreground mt-3 text-pretty">{description}</p>
 
       {tags.length > 0 && (
-        <ul className="mt-4 flex flex-wrap items-center gap-2">
+        <CascadeList className="mt-4 flex flex-wrap items-center gap-2">
           {tags.map((tag) => (
             <li key={tag}>
               <MonoTag size="sm">{tag}</MonoTag>
             </li>
           ))}
-        </ul>
+        </CascadeList>
       )}
     </Link>
   );

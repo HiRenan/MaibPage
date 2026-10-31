@@ -7,6 +7,7 @@ import type { ComponentType } from 'react';
 import { JsonLd } from '@/components/json-ld';
 import { ShareLinks } from '@/components/share-links';
 import { TableOfContents } from '@/components/table-of-contents';
+import { CascadeList } from '@/components/ui/cascade-list';
 import { Container } from '@/components/ui/container';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
@@ -105,13 +106,13 @@ export default async function PostPage({ params }: Props) {
             <span aria-hidden>·</span>
             <span>{t('post.readingTime', { minutes: post.readingTime })}</span>
             {post.tags.length > 0 && (
-              <ul className="flex flex-wrap items-center gap-2">
+              <CascadeList className="flex flex-wrap items-center gap-2">
                 {post.tags.map((tag) => (
                   <li key={tag}>
                     <MonoTag size="sm">{tag}</MonoTag>
                   </li>
                 ))}
-              </ul>
+              </CascadeList>
             )}
             {hasOther && (
               // aria-label leads with the visible "{locale} → {otherLocale}" so it's a

@@ -1,3 +1,4 @@
+import { CascadeList } from '@/components/ui/cascade-list';
 import { MonoTag } from '@/components/ui/mono-tag';
 import { cn } from '@/lib/utils';
 
@@ -48,13 +49,13 @@ export function ProjectCard({
         </div>
         <p className="text-muted-foreground text-pretty">{description}</p>
         {stack.length > 0 && (
-          <ul className="mt-1 flex flex-wrap items-center gap-2">
+          <CascadeList className="mt-1 flex flex-wrap items-center gap-2">
             {stack.map((tech) => (
               <li key={tech}>
                 <MonoTag size="sm">{tech}</MonoTag>
               </li>
             ))}
-          </ul>
+          </CascadeList>
         )}
         {links.length > 0 && (
           <ul className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
