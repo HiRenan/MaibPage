@@ -66,6 +66,9 @@
      Em :root de propósito: imunes ao tree-shaking do @theme. */
   --duration-enter: 480ms;
   --enter-stagger: 80ms;
+  /* Cascata dos chips (CascadeList): mais curta que o --enter-stagger, que separa
+     só 2 passos; uma lista de 8 chips a 80ms arrastaria a entrada. */
+  --cascade-stagger: 40ms;
   /* Desenho das Marcas de Registro: com o ease-out-expo, 480ms faz 77% do traço
      nos primeiros 100ms e vira um "pop"; 900ms espalha o desenho por ~300ms que
      o olho acompanha. Só as marcas usam; o texto da home já nasce parado. */
@@ -190,9 +193,10 @@
 /*
   Entrada-assinatura (Regra da Entrada Única) — uma coreografia por jornada: na
   home, as Marcas de Registro (abaixo) desenham a moldura do hero; no header das
-  demais rotas, enter-rise em 2 passos (título + lead), e nada mais. CSS-only,
-  server-first. O bloco reduced-motion acima zera duração E delay -> entrega o
-  estático sem flash. h1 nunca leva delay (candidato a LCP).
+  demais rotas, enter-rise em 2 passos (título + lead), CSS-only e server-first.
+  A única exceção é a cascata dos chips ao rolar (CascadeList, logo abaixo). O
+  bloco reduced-motion acima zera duração E delay -> entrega o estático sem
+  flash. h1 nunca leva delay (candidato a LCP).
 */
 @keyframes enter-rise {
   from {
@@ -208,6 +212,27 @@
 
   .enter-rise-2 {
     animation-delay: var(--enter-stagger);
+  }
+}
+
+/*
+  Cascata dos chips (CascadeList): o anime.js sobe cada item quando a lista entra
+  na tela. Antes de hidratar os itens já nascem invisíveis, senão o chip aparece,
+  some e entra. O inline style do anime vence esta regra durante e depois da
+  animação. Sem JS ou com reduced-motion a regra não casa: o chip aparece parado.
+*/
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-cascade] > * {
+    opacity: 0;
+  }
+}
+
+/* Impressão/PDF: lista que ainda não entrou na tela tem opacity 0 inline do anime.
+   O !important é o que vence o inline. */
+@media print {
+  [data-cascade] > * {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

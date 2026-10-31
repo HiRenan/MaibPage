@@ -1,5 +1,6 @@
 import { Fragment, type ComponentProps, type ComponentType } from 'react';
 
+import { CascadeList } from '@/components/ui/cascade-list';
 import { DashedDivider } from '@/components/ui/dashed-divider';
 import { MonoTag } from '@/components/ui/mono-tag';
 import { PRESENT } from '@/data/experience';
@@ -66,13 +67,13 @@ export function Timeline({ entries, presentLabel, projectsWithLabel }: TimelineP
                   </p>
                 )}
                 {entry.tags && entry.tags.length > 0 && (
-                  <ul className="mt-1 flex flex-wrap items-center gap-2">
+                  <CascadeList className="mt-1 flex flex-wrap items-center gap-2">
                     {entry.tags.map((tag) => (
                       <li key={tag}>
                         <MonoTag size="sm">{tag}</MonoTag>
                       </li>
                     ))}
-                  </ul>
+                  </CascadeList>
                 )}
               </div>
             </div>

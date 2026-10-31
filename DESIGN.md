@@ -35,7 +35,7 @@ estética de ferramenta.
 - **Mono + 1 sinal quente**: contraste e peso carregam; um acento ember ocupa ≤10%.
 - **Dois registros tipográficos**: grotesca de precisão pra ler, mono de instrumento pra sinalizar.
 - **Plano por padrão**; a única profundidade real é o vidro da paleta ⌘+K.
-- **Uma entrada-assinatura por jornada**; o resto é resposta. `prefers-reduced-motion` respeitado.
+- **Uma entrada-assinatura por jornada**; o resto é resposta (exceção: chips mono entram em cascata ao rolar). `prefers-reduced-motion` respeitado.
 - **Sinal sobre ruído**: densidade generosa, nada decorativo sobrevive.
 
 **A Regra da Entrada Única.** Uma coreografia de entrada por jornada, deliberada:
@@ -44,6 +44,11 @@ e lead sobem em dois passos (`enter-rise`). O h1 nunca leva delay (é o candidat
 LCP); no hero da home ele nem anima. Todo o resto é resposta: hover, foco, estado,
 abrir/fechar ⌘+K. `prefers-reduced-motion` mata a entrada e entrega o estático. Sem
 bounce, sem elástico; ease-out exponencial.
+
+Uma exceção, e só uma: as listas de chips mono (`CascadeList`, via anime.js) entram
+em cascata quando aparecem na tela. Cada chip acende e sobe 6px, um
+`--cascade-stagger` (40ms) depois do anterior, com a mesma duração e curva da
+entrada. Toca uma vez por lista. Nada mais se mexe ao rolar.
 
 **As Marcas de Registro.** Os quatro Ls de canto do card OG (`/api/og`) são a
 assinatura que o card e o site dividem: L de 2px em `--mark` (3.17:1 sobre o fundo;
@@ -170,7 +175,7 @@ rótulo quebrar. No mobile a nav desce pra segunda linha, sem hambúrguer.
 - **Do** tintar todo neutro na direção quente; jamais `#000` ou `#fff` puros.
 - **Do** usar a grotesca pra ler e o mono só pra sinalizar (A Regra dos Dois Registros).
 - **Do** segurar o corpo do blog em 65–75 caracteres por linha (`max-w-measure`), com line-height folgado e contraste AAA no dark quente.
-- **Do** reservar uma única entrada coreografada por jornada; o resto responde. Honrar `prefers-reduced-motion`.
+- **Do** reservar uma única entrada coreografada por jornada; o resto responde (a cascata dos chips é a exceção registrada). Honrar `prefers-reduced-motion`.
 - **Do** usar vidro só na ⌘+K, frosted matte, com conteúdo real atrás.
 - **Do** transmitir significado sempre por cor + peso/ícone/texto, nunca por cor sozinha (daltônico-safe).
 
