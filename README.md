@@ -74,7 +74,7 @@ Em MDX, o componente `MdxImage` (`mdx-components.tsx`) já aplica isso: passe `w
 
 ## Stack alvo
 
-Next.js 16 (App Router, RSC) · TypeScript · Tailwind v4 · shadcn/ui · MDX (`@next/mdx` + `gray-matter` + `rehype-pretty-code`/shiki) · next-intl (PT-BR + EN) · cmdk (⌘+K) · Vercel (Fluid Compute, Node 24 LTS, `vercel.ts`).
+Next.js 16 (App Router, RSC) · TypeScript · Tailwind v4 · shadcn/ui · MDX (`@next/mdx` + `gray-matter` + `rehype-pretty-code`/shiki) · next-intl (PT-BR + EN) · cmdk (⌘+K) · anime.js (cascata dos chips) · Vercel (Fluid Compute, Node 24 LTS, `vercel.ts`).
 
 ## Instruções pra agentes
 
